@@ -20,8 +20,7 @@ namespace Egorozh.ColorPicker
         private HslColor _hslColor;
 
         private LightnessColorSlider _lightnessColorSlider;
-
-        private ScreenColorPicker _screenColorPicker;
+        
         private ScreenColorPickerPort _screenColorPickerPort;
         private ColorWheel _wheel;
 
@@ -130,24 +129,7 @@ namespace Egorozh.ColorPicker
                 }
             }
         }
-
-        /// <summary>
-        /// Gets or sets the linked <see cref="ScreenColorPicker"/>.
-        /// </summary>
-        public virtual ScreenColorPicker ScreenColorPicker
-        {
-            get => _screenColorPicker;
-            set
-            {
-                if (this.ScreenColorPicker != value)
-                {
-                    _screenColorPicker = value;
-
-                    this.OnScreenColorPickerChanged(EventArgs.Empty);
-                }
-            }
-        }
-
+        
         public ScreenColorPickerPort ScreenColorPickerPort
         {
             get => _screenColorPickerPort;
@@ -250,21 +232,7 @@ namespace Egorozh.ColorPicker
 
             LightnessColorSliderChanged?.Invoke(this, e);
         }
-
-        /// <summary>
-        /// Raises the <see cref="ScreenColorPickerChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnScreenColorPickerChanged(EventArgs e)
-        {
-            if (this.ScreenColorPicker != null)
-            {
-                this.BindEvents(this.ScreenColorPicker);
-            }
-
-            ScreenColorPickerChanged?.Invoke(this, e);
-        }
-
+        
         /// <summary>
         /// Sets the color of the given editor.
         /// </summary>
@@ -291,7 +259,7 @@ namespace Egorozh.ColorPicker
                     this.LockUpdates = true;
                     this.SetColor(this.ColorGrid, sender);
                     this.SetColor(this.ColorWheel, sender);
-                    this.SetColor(this.ScreenColorPicker, sender);
+                    this.SetColor(this.ScreenColorPickerPort, sender);
                     this.SetColor(this.ColorEditor, sender);
                     this.SetColor(this.LightnessColorSlider, sender);
                 }

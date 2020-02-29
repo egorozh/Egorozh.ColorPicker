@@ -12,7 +12,10 @@ namespace Egorozh.ColorPicker.WPF.Client
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new ColorPickerDialog();
+            var dialog = new ColorPickerDialog
+            {
+                Owner = this
+            };
 
             var res = dialog.ShowDialog();
         }

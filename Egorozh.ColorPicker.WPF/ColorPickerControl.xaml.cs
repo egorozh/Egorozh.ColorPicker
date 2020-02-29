@@ -90,12 +90,9 @@ namespace Egorozh.ColorPicker
 
         private void InitWinFormsComponents()
         {
-            ScreenColorPicker.Color = System.Drawing.Color.Black;
-
-            //ScreenColorPicker.Image = GetDropperImage();
-
-            ScreenColorPicker.AutoSize = true;
-            ScreenColorPicker.Zoom = 6;
+            ScreenColorPickerPort.Color = System.Drawing.Color.Black;
+            
+            ScreenColorPickerPort.Zoom = 6;
 
             ColorWheel.Color = System.Drawing.Color.FromArgb(0, 0, 0);
             ColorWheel.Size = new System.Drawing.Size(192, 147);
@@ -117,7 +114,6 @@ namespace Egorozh.ColorPicker
                 ColorEditor = ColorEditor,
                 ColorGrid = ColorGrid,
                 ColorWheel = ColorWheel,
-                ScreenColorPicker = ScreenColorPicker,
                 ScreenColorPickerPort = ScreenColorPickerPort
             };
 

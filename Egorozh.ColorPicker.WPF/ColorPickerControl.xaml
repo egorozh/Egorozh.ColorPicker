@@ -246,7 +246,7 @@
             <Grid Grid.Column="2"
                   Margin="0 6">
 
-                <Grid VerticalAlignment="Top"
+                <Grid VerticalAlignment="Center"
                       Width="85"
                       Height="85">
 
