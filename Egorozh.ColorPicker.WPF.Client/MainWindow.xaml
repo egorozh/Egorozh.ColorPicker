@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Egorozh.ColorPicker.WPF.Client"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
-    </Grid>
+    <Button Click="ButtonBase_OnClick">
+
+    </Button>
 </Window>

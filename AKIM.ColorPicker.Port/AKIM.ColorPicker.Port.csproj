@@ -4,20 +4,25 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <RootNamespace>Egorozh.ColorPicker</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FodyWeavers.xml" />
     <None Remove="Resources\eyedropper.cur" />
     <None Remove="Resources\eyedropper.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
     <Resource Include="Resources\eyedropper.cur" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\eyedropper.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="WinFormsClasses\Controls\ColorEditorManager.cs" />
     <Compile Update="WinFormsClasses\Controls\ColorGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -39,6 +44,18 @@
     <Compile Update="WinFormsClasses\Controls\SaturationColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="WinFormsClasses\Controls\ScreenColorPicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0660" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.6" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="AKIM.ColorPicker.Port.ScreenColorPickerPort"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
+             mc:Ignorable="d"
+
+             d:DesignWidth="85"
+             d:DesignHeight="85"
+
+             x:Name="UserControl">
+
+    <Border>
+
+        <Grid ClipToBounds="True">
+
+            <Image SnapsToDevicePixels="False"
+                   x:Name="SnapshotImage" />
+
+            <Grid Margin="-3 -3 0 0" >
+                <Grid.Background>
+                    <VisualBrush TileMode="Tile"
+                                 Viewport="0 0 6 6"
+                                 ViewportUnits="Absolute"
+                                 Stretch="Uniform">
+                        <VisualBrush.Visual>
+                            <Image Stretch="None" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True">
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Geometry="M 0 -2 L 0 2">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 0 6 L 0 10">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 0 14 L 0 18">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 0 22.99 L 0 23">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 0 0 L 2 0">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 6 0 L 10 0">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 14 0 L 18 0">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                                <GeometryDrawing Geometry="M 22.99 0 L 23 0">
+                                                    <GeometryDrawing.Pen>
+                                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                                    </GeometryDrawing.Pen>
+                                                </GeometryDrawing>
+
+                                            </DrawingGroup>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+
+                    <!--<DrawingBrush TileMode="Tile"
+                                  Viewport="0 0 6 6"
+                                  ViewportUnits="Absolute"
+                                  Stretch="Uniform">
+
+
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup>
+                                <GeometryDrawing Geometry="M 0 -2 L 0 2">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 0 6 L 0 10">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 0 14 L 0 18">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 0 22.99 L 0 23">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 0 0 L 2 0">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 6 0 L 10 0">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 14 0 L 18 0">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                                <GeometryDrawing Geometry="M 22.99 0 L 23 0">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#A0A0A0"
+                                             Thickness="4" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>-->
+
+                </Grid.Background>
+            </Grid>
+
+            <Rectangle x:Name="TargetPixelRect"
+                       Visibility="Hidden"
+                       Width="9"
+                       Height="9"
+                       StrokeThickness="1"
+                       Stroke="{Binding ElementName=UserControl, Path=Foreground}" />
+
+            <ContentControl Margin="25"
+                            x:Name="InitImageContentControl" />
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

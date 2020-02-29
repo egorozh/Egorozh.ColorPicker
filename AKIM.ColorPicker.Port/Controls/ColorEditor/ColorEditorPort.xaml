@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="AKIM.ColorPicker.Port.ColorEditorPort"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:AKIM.ColorPicker.Port"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:forms="clr-namespace:AKIM.ColorPicker.Forms"
+             xmlns:forms1="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="mah:NumericUpDown" BasedOn="{StaticResource {x:Type mah:NumericUpDown}}">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="WindowsFormsHost" >
+            <Setter Property="Margin" Value="2" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock>RGB:</TextBlock>
+
+        <!-- R -->
+
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="R: " />
+
+        <WindowsFormsHost Grid.Row="1" Grid.Column="1">
+            <forms:RgbaColorSlider x:Name="rColorBar"
+                                   ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="rNumericUpDown"
+                           Grid.Row="1" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="255"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!-- G -->
+
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Text="G: " />
+
+        <WindowsFormsHost Grid.Row="2" Grid.Column="1">
+            <forms:RgbaColorSlider x:Name="gColorBar"
+                                   ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="gNumericUpDown"
+                           Grid.Row="2" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="255"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!-- B -->
+
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="B: " />
+
+        <WindowsFormsHost Grid.Row="3" Grid.Column="1">
+            <forms:RgbaColorSlider x:Name="bColorBar" 
+                                   ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="bNumericUpDown"
+                           Grid.Row="3" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="255"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!--Hex-->
+
+        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Text="Hex: " />
+
+        <WindowsFormsHost Grid.Row="4" Grid.Column="1">
+            <forms1:ComboBox x:Name="hexTextBox"
+                             DrawItem="HexTextBox_OnDrawItem"
+                             DropDown="HexTextBox_OnDropDown"
+                             SelectedIndexChanged="HexTextBox_OnSelectedIndexChanged"
+                             TextChanged="HexTextBox_OnTextChanged"
+                             KeyDown="HexTextBox_OnKeyDown" />
+        </WindowsFormsHost>
+
+        <TextBlock Grid.Row="5" Grid.Column="0"
+                   Text="HSL: " />
+
+        <!-- H -->
+
+        <TextBlock Grid.Row="6" Grid.Column="0"
+                   Text="H: " />
+
+        <WindowsFormsHost Grid.Row="6" Grid.Column="1">
+            <forms:HueColorSlider x:Name="hColorBar" 
+                                  ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="hNumericUpDown"
+                           Grid.Row="6" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="359"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!-- S -->
+
+        <TextBlock Grid.Row="7" Grid.Column="0"
+                   Text="S: " />
+
+        <WindowsFormsHost Grid.Row="7" Grid.Column="1">
+            <forms:SaturationColorSlider x:Name="sColorBar" 
+                                         ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="sNumericUpDown"
+                           Grid.Row="7" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="100"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!-- L -->
+
+        <TextBlock Grid.Row="8" Grid.Column="0"
+                   Text="L: " />
+
+        <WindowsFormsHost Grid.Row="8" Grid.Column="1">
+            <forms:LightnessColorSlider x:Name="lColorBar" 
+                                        ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="lNumericUpDown"
+                           Grid.Row="8" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="100"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!-- Alpha -->
+
+        <TextBlock Grid.Row="9" Grid.Column="0"
+                   Text="Alpha: " />
+
+        <WindowsFormsHost Grid.Row="9" Grid.Column="1">
+            <forms:RgbaColorSlider x:Name="aColorBar" 
+                                   ValueChanged="ColorBar_OnValueChanged" />
+        </WindowsFormsHost>
+
+        <mah:NumericUpDown x:Name="aNumericUpDown"
+                           Grid.Row="9" Grid.Column="2"
+                           Minimum="0"
+                           Maximum="255"
+                           ValueChanged="NumericUpDown_OnValueChanged" />
+
+    </Grid>
+
+</UserControl>
