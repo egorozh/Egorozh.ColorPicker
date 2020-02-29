@@ -13,7 +13,7 @@ namespace Egorozh.ColorPicker
 
         private Color _color;
 
-        private ColorEditorPort _colorEditor;
+        private ColorEditor _colorEditor;
 
         private ColorGrid _grid;
 
@@ -45,7 +45,7 @@ namespace Egorozh.ColorPicker
         /// <summary>
         /// Gets or sets the linked <see cref="ColorEditor"/>.
         /// </summary>
-        public virtual ColorEditorPort ColorEditor
+        public virtual ColorEditor ColorEditor
         {
             get => _colorEditor;
             set

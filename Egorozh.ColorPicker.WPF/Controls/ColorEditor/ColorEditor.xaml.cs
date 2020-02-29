@@ -11,7 +11,7 @@ using SystemColors = System.Drawing.SystemColors;
 
 namespace Egorozh.ColorPicker
 {
-    public partial class ColorEditorPort : IColorEditor
+    public partial class ColorEditor : IColorEditor
     {
         #region Private Fields
 
@@ -28,11 +28,11 @@ namespace Egorozh.ColorPicker
         #region Dependency Properties
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            nameof(Color), typeof(Color), typeof(ColorEditorPort), new PropertyMetadata(Color.Black, ColorChangedS));
+            nameof(Color), typeof(Color), typeof(ColorEditor), new PropertyMetadata(Color.Black, ColorChangedS));
 
         private static void ColorChangedS(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorEditorPort colorEditor)
+            if (d is ColorEditor colorEditor)
                 colorEditor.ColorPropertyChanged((Color) e.OldValue, (Color) e.NewValue);
         }
 
@@ -90,7 +90,7 @@ namespace Egorozh.ColorPicker
 
         #region Constructor
 
-        public ColorEditorPort()
+        public ColorEditor()
         {
             InitializeComponent();
 
