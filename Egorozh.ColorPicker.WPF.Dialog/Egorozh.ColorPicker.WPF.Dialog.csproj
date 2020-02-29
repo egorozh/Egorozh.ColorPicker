@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj" />
+  </ItemGroup>
 
 </Project>

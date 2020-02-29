@@ -3,6 +3,42 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Egorozh.ColorPicker</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\eyedropper.cur" />
+    <None Remove="Resources\eyedropper.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\eyedropper.cur" />
+    <Resource Include="Resources\eyedropper.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="WinFormsClasses\Controls\ColorGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="WinFormsClasses\Controls\ColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="WinFormsClasses\Controls\ColorWheel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="WinFormsClasses\Controls\HueColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="WinFormsClasses\Controls\LightnessColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="WinFormsClasses\Controls\RgbaColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="WinFormsClasses\Controls\SaturationColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
 
 </Project>

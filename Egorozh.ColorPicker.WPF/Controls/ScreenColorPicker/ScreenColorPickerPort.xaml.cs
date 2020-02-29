@@ -1,0 +1,178 @@
+﻿using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using Color = System.Drawing.Color;
+using Point = System.Drawing.Point;
+
+namespace Egorozh.ColorPicker
+{
+    public partial class ScreenColorPickerPort : IColorEditor
+    {
+        #region Private Fields
+
+        private Color _color;
+        private bool _isCapturing;
+
+        #endregion
+
+        #region Dependency Properties
+
+        public static readonly DependencyProperty InitImageProperty = DependencyProperty.Register(
+            nameof(InitImage), typeof(FrameworkElement), typeof(ScreenColorPickerPort),
+            new PropertyMetadata(default(FrameworkElement), InitImageChanged));
+
+        private Bitmap _bitmap;
+
+        private static void InitImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ScreenColorPickerPort screenColorPicker)
+                screenColorPicker.InitImageContentControl.Content = e.NewValue;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public int Zoom { get; set; } = 7;
+
+        public Color Color
+        {
+            get => _color;
+            set => SetColor(value);
+        }
+
+        public FrameworkElement InitImage
+        {
+            get => (FrameworkElement) GetValue(InitImageProperty);
+            set => SetValue(InitImageProperty, value);
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler ColorChanged;
+
+        #endregion
+
+        #region Constructor
+
+        public ScreenColorPickerPort()
+        {
+            InitializeComponent();
+            
+            RenderOptions.SetBitmapScalingMode(SnapshotImage, BitmapScalingMode.NearestNeighbor);
+      
+            MouseLeftButtonDown += UIElement_OnMouseLeftButtonDown;
+            MouseMove += UIElement_OnMouseMove;
+            MouseLeftButtonUp += UIElement_OnMouseLeftButtonUp;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void OnColorChanged(EventArgs e)
+        {
+            ColorChanged?.Invoke(this, e);
+        }
+
+        private void SetColor(Color color)
+        {
+            if (_color != color)
+            {
+                _color = color;
+
+                this.OnColorChanged(EventArgs.Empty);
+            }
+        }
+
+        private void UpdateSnapshot()
+        {
+            TargetPixelRect.Visibility = Visibility.Visible;
+            InitImageContentControl.Content = null;
+
+            CreateSnapshotBitmap();
+            
+            using var graphics = Graphics.FromImage(_bitmap);
+            
+            graphics.Clear(Color.Empty);
+
+            var cursor = GetMousePosition();
+            cursor.X -= _bitmap.Width / 2;
+            cursor.Y -= _bitmap.Height / 2;
+            
+            graphics.CopyFromScreen(cursor, Point.Empty, _bitmap.Size);
+            
+            Color = _bitmap.GetPixel(_bitmap.Width / 2, _bitmap.Height / 2);
+
+            SnapshotImage.Source = PortExtensions.ToWpfBitmap(_bitmap);
+        }
+
+        private void CreateSnapshotBitmap()
+        {
+            if (_bitmap == null)
+            {
+                var snapshotWidth = (int) Math.Ceiling((double) (ActualWidth / Zoom));
+                var snapshotHeight = (int) Math.Ceiling((double) (ActualHeight / Zoom));
+
+                _bitmap = new Bitmap(snapshotWidth, snapshotHeight,
+                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            }
+        }
+        
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public int X;
+            public int Y;
+        };
+
+        public static Point GetMousePosition()
+        {
+            var w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+        #region Mouse Events
+
+        private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!_isCapturing)
+            {
+                Cursor = ColorPickerControl.EyedropperCursor;
+                _isCapturing = true;
+                Mouse.Capture(this);
+            }
+        }
+
+        private void UIElement_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isCapturing)
+                UpdateSnapshot();
+        }
+
+        private void UIElement_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_isCapturing)
+            {
+                Cursor = Cursors.Arrow;
+                _isCapturing = false;
+                Mouse.Capture(null);
+            }
+        }
+
+        #endregion
+
+        #endregion
+    }
+}
