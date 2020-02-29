@@ -1,0 +1,1 @@
+# Egorozh.ColorPicker.WPF
