@@ -21,6 +21,16 @@ namespace Egorozh.ColorPicker
 
         #region Dependency Properties
 
+        public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
+            nameof(NumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Style)));
+
+        public Style NumericUpDownStyle
+        {
+            get => (Style) GetValue(NumericUpDownStyleProperty);
+            set => SetValue(NumericUpDownStyleProperty, value);
+        }
+
         public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
             nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerControl),
             new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
@@ -75,6 +85,8 @@ namespace Egorozh.ColorPicker
         {
             InitializeComponent();
 
+            NumericUpDownStyle = (Style) this.FindResource("NumericUpDownStyle");
+
             BaseUri = BaseUriHelper.GetBaseUri(this);
 
             TransparentTile = (DrawingGroup) this.FindResource("TransparencyTile");
@@ -92,7 +104,7 @@ namespace Egorozh.ColorPicker
             ScreenColorPicker.Color = System.Drawing.Color.Black;
 
             ScreenColorPicker.Zoom = 6;
-            
+
             ColorEditor.Color = System.Drawing.Color.FromArgb(0, 0, 0);
 
             ColorGrid.AutoAddColors = false;
@@ -113,10 +125,10 @@ namespace Egorozh.ColorPicker
 
                 ScreenColorPicker = ScreenColorPicker
             };
-            
+
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
-        
+
         private void ColorChanged()
         {
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;
