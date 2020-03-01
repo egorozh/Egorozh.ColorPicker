@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Egorozh.ColorPicker.WPF.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
 
-    <Button Click="ButtonBase_OnClick">
+        WindowStartupLocation="CenterScreen">
 
-    </Button>
+    <Button Click="ButtonBase_OnClick" />
 </Window>

@@ -7,9 +7,9 @@ using System.Windows.Media;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
-namespace Egorozh.ColorPicker
+namespace Egorozh.ColorPicker   
 {
-    public partial class ScreenColorPickerPort : IColorEditor
+    public partial class ScreenColorPicker : IColorEditor
     {
         #region Private Fields
 
@@ -21,14 +21,14 @@ namespace Egorozh.ColorPicker
         #region Dependency Properties
 
         public static readonly DependencyProperty InitImageProperty = DependencyProperty.Register(
-            nameof(InitImage), typeof(FrameworkElement), typeof(ScreenColorPickerPort),
+            nameof(InitImage), typeof(FrameworkElement), typeof(ScreenColorPicker),
             new PropertyMetadata(default(FrameworkElement), InitImageChanged));
 
         private Bitmap _bitmap;
 
         private static void InitImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ScreenColorPickerPort screenColorPicker)
+            if (d is ScreenColorPicker screenColorPicker)
                 screenColorPicker.InitImageContentControl.Content = e.NewValue;
         }
 
@@ -60,7 +60,7 @@ namespace Egorozh.ColorPicker
 
         #region Constructor
 
-        public ScreenColorPickerPort()
+        public ScreenColorPicker()
         {
             InitializeComponent();
             
@@ -124,22 +124,10 @@ namespace Egorozh.ColorPicker
             }
         }
         
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref Win32Point pt);
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
-        {
-            public int X;
-            public int Y;
-        };
-
         public static Point GetMousePosition()
         {
-            var w32Mouse = new Win32Point();
-            GetCursorPos(ref w32Mouse);
+            var w32Mouse = new NativeMethods.Win32Point();
+            NativeMethods.GetCursorPos(ref w32Mouse);
             return new Point(w32Mouse.X, w32Mouse.Y);
         }
 

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Color = System.Windows.Media.Color;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
@@ -29,7 +27,8 @@ namespace Egorozh.ColorPicker
 
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            nameof(Color), typeof(Color), typeof(ColorPickerControl), new PropertyMetadata(default(Color), ColorChanged));
+            nameof(Color), typeof(Color), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Color), ColorChanged));
 
         private static void ColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -78,25 +77,22 @@ namespace Egorozh.ColorPicker
 
             BaseUri = BaseUriHelper.GetBaseUri(this);
 
-            TransparentTile = (DrawingGroup)this.FindResource("TransparencyTile");
-            EyedropperCursor = ((System.Windows.Input.Cursor)this.FindResource("EyedropperCursor"));
+            TransparentTile = (DrawingGroup) this.FindResource("TransparencyTile");
+            EyedropperCursor = ((System.Windows.Input.Cursor) this.FindResource("EyedropperCursor"));
 
             InitWinFormsComponents();
         }
 
         #endregion
-        
+
         #region Private Fields
 
         private void InitWinFormsComponents()
         {
-            ScreenColorPickerPort.Color = System.Drawing.Color.Black;
+            ScreenColorPicker.Color = System.Drawing.Color.Black;
+
+            ScreenColorPicker.Zoom = 6;
             
-            ScreenColorPickerPort.Zoom = 6;
-
-            ColorWheel.Color = System.Drawing.Color.FromArgb(0, 0, 0);
-            ColorWheel.Size = new System.Drawing.Size(192, 147);
-
             ColorEditor.Color = System.Drawing.Color.FromArgb(0, 0, 0);
 
             ColorGrid.AutoAddColors = false;
@@ -114,41 +110,13 @@ namespace Egorozh.ColorPicker
                 ColorEditor = ColorEditor,
                 ColorGrid = ColorGrid,
                 ColorWheel = ColorWheel,
-                ScreenColorPickerPort = ScreenColorPickerPort
-            };
 
+                ScreenColorPicker = ScreenColorPicker
+            };
+            
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
-
-        private Image GetDropperImage()
-        {
-            var droppperImage = (DrawingImage)FindResource("DropperDrawingImage");
-
-            var visual = new DrawingVisual();
-
-            using (var dc = visual.RenderOpen())
-            {
-                dc.DrawDrawing(droppperImage.Drawing);
-                dc.Close();
-            }
-
-            var target = new RenderTargetBitmap((int)visual.Drawing.Bounds.Right / 20,
-                (int)visual.Drawing.Bounds.Bottom / 20,
-                96.0, 96.0, PixelFormats.Pbgra32);
-            target.Render(visual);
-
-            using Stream stream = new MemoryStream();
-
-            BitmapEncoder encoder = new PngBitmapEncoder();
-
-            encoder.Frames.Add(BitmapFrame.Create(target));
-            encoder.Save(stream);
-
-            var image = Image.FromStream(stream);
-
-            return image;
-        }
-
+        
         private void ColorChanged()
         {
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;
@@ -213,7 +181,7 @@ namespace Egorozh.ColorPicker
                                 palette.Add(System.Drawing.Color.White);
                             }
 
-                            ColorGrid.Colors = palette;
+                            //ColorGrid.Colors = palette;
                         }
                     }
                     else
@@ -258,7 +226,7 @@ namespace Egorozh.ColorPicker
                     {
                         using (FileStream file = File.OpenWrite(dialog.FileName))
                         {
-                            serializer.Serialize(file, ColorGrid.Colors);
+                            //serializer.Serialize(file, ColorGrid.Colors);
                         }
                     }
                     catch (Exception ex)
@@ -285,8 +253,8 @@ namespace Egorozh.ColorPicker
 
             var res = GetColorForPaletteAction?.Invoke(ref color);
 
-            if (res.HasValue && res.Value)
-                ColorGrid.Colors[e.ColorIndex] = color.ToColor();
+            //if (res.HasValue && res.Value)
+            //    ColorGrid.Colors[e.ColorIndex] = color.ToColor();
         }
 
         private static bool GetColorForPalette(ref Color color)

@@ -13,16 +13,17 @@ namespace Egorozh.ColorPicker
 
         private Color _color;
 
-        private ColorEditorPort _colorEditor;
+        private ColorEditor _colorEditor;
 
         private ColorGrid _grid;
 
         private HslColor _hslColor;
 
         private LightnessColorSlider _lightnessColorSlider;
-        
-        private ScreenColorPickerPort _screenColorPickerPort;
-        private ColorWheel _wheel;
+
+        private ScreenColorPicker _screenColorPicker;
+
+        private ColorWheel _colorWheel;
 
         #endregion
 
@@ -31,12 +32,8 @@ namespace Egorozh.ColorPicker
         public event EventHandler ColorEditorChanged;
 
         public event EventHandler ColorGridChanged;
-
-        public event EventHandler ColorWheelChanged;
-
+        
         public event EventHandler LightnessColorSliderChanged;
-
-        public event EventHandler ScreenColorPickerChanged;
 
         #endregion
 
@@ -45,16 +42,16 @@ namespace Egorozh.ColorPicker
         /// <summary>
         /// Gets or sets the linked <see cref="ColorEditor"/>.
         /// </summary>
-        public virtual ColorEditorPort ColorEditor
+        public virtual ColorEditor ColorEditor
         {
             get => _colorEditor;
             set
             {
-                if (this.ColorEditor != value)
+                if (ColorEditor != value)
                 {
                     _colorEditor = value;
 
-                    this.OnColorEditorChanged(EventArgs.Empty);
+                    OnColorEditorChanged(EventArgs.Empty);
                 }
             }
         }
@@ -67,29 +64,11 @@ namespace Egorozh.ColorPicker
             get => _grid;
             set
             {
-                if (this.ColorGrid != value)
+                if (ColorGrid != value)
                 {
                     _grid = value;
 
-                    this.OnColorGridChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the linked <see cref="ColorWheel"/>.
-        /// </summary>
-
-        public virtual ColorWheel ColorWheel
-        {
-            get => _wheel;
-            set
-            {
-                if (this.ColorWheel != value)
-                {
-                    _wheel = value;
-
-                    this.OnColorWheelChanged(EventArgs.Empty);
+                    OnColorGridChanged(EventArgs.Empty);
                 }
             }
         }
@@ -103,12 +82,12 @@ namespace Egorozh.ColorPicker
             get => _hslColor;
             set
             {
-                if (this.HslColor != value)
+                if (HslColor != value)
                 {
                     _hslColor = value;
                     _color = value.ToRgbColor();
 
-                    this.OnColorChanged(EventArgs.Empty);
+                    OnColorChanged(EventArgs.Empty);
                 }
             }
         }
@@ -121,29 +100,46 @@ namespace Egorozh.ColorPicker
             get => _lightnessColorSlider;
             set
             {
-                if (this.LightnessColorSlider != value)
+                if (LightnessColorSlider != value)
                 {
                     _lightnessColorSlider = value;
 
-                    this.OnLightnessColorSliderChanged(EventArgs.Empty);
+                    OnLightnessColorSliderChanged(EventArgs.Empty);
                 }
             }
         }
-        
-        public ScreenColorPickerPort ScreenColorPickerPort
+
+        public ScreenColorPicker ScreenColorPicker
         {
-            get => _screenColorPickerPort;
-            set => SetScreenColorPickerPort(value);
+            get => _screenColorPicker;
+            set => SetScreenColorPicker(value);
         }
 
-        private void SetScreenColorPickerPort(ScreenColorPickerPort value)
+        public ColorWheel ColorWheel
         {
-            if (_screenColorPickerPort != value)
-            {
-                _screenColorPickerPort = value;
+            get => _colorWheel;
+            set => SetColorWheelPort(value);
+        }
 
-                if (_screenColorPickerPort != null)
-                    BindEvents(_screenColorPickerPort);
+        private void SetColorWheelPort(ColorWheel value)
+        {
+            if (_colorWheel != value)
+            {
+                _colorWheel = value;
+
+                if (_colorWheel != null)
+                    BindEvents(_colorWheel);
+            }
+        }
+
+        private void SetScreenColorPicker(ScreenColorPicker value)
+        {
+            if (_screenColorPicker != value)
+            {
+                _screenColorPicker = value;
+
+                if (_screenColorPicker != null)
+                    BindEvents(_screenColorPicker);
             }
         }
 
@@ -163,7 +159,7 @@ namespace Egorozh.ColorPicker
         /// <param name="control">The <see cref="IColorEditor"/> to bind to.</param>
         protected virtual void BindEvents(IColorEditor control)
         {
-            control.ColorChanged += this.ColorChangedHandler;
+            control.ColorChanged += ColorChangedHandler;
         }
 
         /// <summary>
@@ -172,7 +168,7 @@ namespace Egorozh.ColorPicker
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnColorChanged(EventArgs e)
         {
-            this.Synchronize(this);
+            Synchronize(this);
 
             ColorChanged?.Invoke(this, e);
         }
@@ -183,9 +179,9 @@ namespace Egorozh.ColorPicker
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnColorEditorChanged(EventArgs e)
         {
-            if (this.ColorEditor != null)
+            if (ColorEditor != null)
             {
-                this.BindEvents(this.ColorEditor);
+                BindEvents(ColorEditor);
             }
 
             ColorEditorChanged?.Invoke(this, e);
@@ -197,26 +193,12 @@ namespace Egorozh.ColorPicker
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnColorGridChanged(EventArgs e)
         {
-            if (this.ColorGrid != null)
+            if (ColorGrid != null)
             {
-                this.BindEvents(this.ColorGrid);
+                BindEvents(ColorGrid);
             }
 
             ColorGridChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="ColorWheelChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnColorWheelChanged(EventArgs e)
-        {
-            if (this.ColorWheel != null)
-            {
-                this.BindEvents(this.ColorWheel);
-            }
-
-            ColorWheelChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -225,14 +207,14 @@ namespace Egorozh.ColorPicker
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected virtual void OnLightnessColorSliderChanged(EventArgs e)
         {
-            if (this.LightnessColorSlider != null)
+            if (LightnessColorSlider != null)
             {
-                this.BindEvents(this.LightnessColorSlider);
+                BindEvents(LightnessColorSlider);
             }
 
             LightnessColorSliderChanged?.Invoke(this, e);
         }
-        
+
         /// <summary>
         /// Sets the color of the given editor.
         /// </summary>
@@ -241,9 +223,7 @@ namespace Egorozh.ColorPicker
         protected virtual void SetColor(IColorEditor control, IColorEditor sender)
         {
             if (control != null && control != sender)
-            {
                 control.Color = sender.Color;
-            }
         }
 
         /// <summary>
@@ -252,20 +232,20 @@ namespace Egorozh.ColorPicker
         /// <param name="sender">The <see cref="IColorEditor"/> triggering the update.</param>
         protected virtual void Synchronize(IColorEditor sender)
         {
-            if (!this.LockUpdates)
+            if (!LockUpdates)
             {
                 try
                 {
-                    this.LockUpdates = true;
-                    this.SetColor(this.ColorGrid, sender);
-                    this.SetColor(this.ColorWheel, sender);
-                    this.SetColor(this.ScreenColorPickerPort, sender);
-                    this.SetColor(this.ColorEditor, sender);
-                    this.SetColor(this.LightnessColorSlider, sender);
+                    LockUpdates = true;
+                    SetColor(ColorGrid, sender);
+                    SetColor(ColorWheel, sender);
+                    SetColor(ScreenColorPicker, sender);
+                    SetColor(ColorEditor, sender);
+                    SetColor(LightnessColorSlider, sender);
                 }
                 finally
                 {
-                    this.LockUpdates = false;
+                    LockUpdates = false;
                 }
             }
         }
@@ -277,14 +257,14 @@ namespace Egorozh.ColorPicker
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void ColorChangedHandler(object sender, EventArgs e)
         {
-            if (!this.LockUpdates)
+            if (!LockUpdates)
             {
                 var source = (IColorEditor) sender;
 
-                this.LockUpdates = true;
-                this.Color = source.Color;
-                this.LockUpdates = false;
-                this.Synchronize(source);
+                LockUpdates = true;
+                Color = source.Color;
+                LockUpdates = false;
+                Synchronize(source);
             }
         }
 
@@ -308,7 +288,7 @@ namespace Egorozh.ColorPicker
                     _color = value;
                     _hslColor = new HslColor(value);
 
-                    this.OnColorChanged(EventArgs.Empty);
+                    OnColorChanged(EventArgs.Empty);
                 }
             }
         }

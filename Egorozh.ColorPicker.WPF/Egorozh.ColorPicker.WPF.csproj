@@ -5,16 +5,24 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
+    <Authors>egorozh</Authors>
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</RepositoryUrl>
+    <PackageTags>Color, ColorPicker, WPF</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\eyedropper.cur" />
     <None Remove="Resources\eyedropper.png" />
+    <None Remove="Resources\HsvWheelEffect.ps" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\eyedropper.cur" />
     <Resource Include="Resources\eyedropper.png" />
+    <Resource Include="Resources\HsvWheelEffect.ps" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,9 +30,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="WinFormsClasses\Controls\ColorSlider.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="WinFormsClasses\Controls\ColorWheel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="WinFormsClasses\Controls\HueColorSlider.cs">
