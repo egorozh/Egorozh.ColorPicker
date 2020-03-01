@@ -11,12 +11,17 @@
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</RepositoryUrl>
     <PackageTags>Color, ColorPicker, WPF</PackageTags>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\eyedropper.cur" />
     <None Remove="Resources\eyedropper.png" />
     <None Remove="Resources\HsvWheelEffect.ps" />
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
