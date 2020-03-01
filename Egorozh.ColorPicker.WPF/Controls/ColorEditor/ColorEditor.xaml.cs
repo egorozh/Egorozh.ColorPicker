@@ -27,6 +27,15 @@ namespace Egorozh.ColorPicker
 
         #region Dependency Properties
 
+        public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
+            nameof(NumericUpDownStyle), typeof(Style), typeof(ColorEditor), new PropertyMetadata(default(Style)));
+
+        public Style NumericUpDownStyle
+        {
+            get => (Style) GetValue(NumericUpDownStyleProperty);
+            set => SetValue(NumericUpDownStyleProperty, value);
+        }
+
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             nameof(Color), typeof(Color), typeof(ColorEditor), new PropertyMetadata(Color.Black, ColorChangedS));
 
@@ -249,7 +258,7 @@ namespace Egorozh.ColorPicker
             if (hexTextBox.Items.Count != 0)
             {
                 hexTextBox.DropDownWidth = hexTextBox.ItemHeight * 2 + hexTextBox.Items.Cast<string>()
-                    .Max(s => TextRenderer.MeasureText(s, hexTextBox.Font).Width);
+                                               .Max(s => TextRenderer.MeasureText(s, hexTextBox.Font).Width);
             }
         }
 
@@ -292,7 +301,7 @@ namespace Egorozh.ColorPicker
                 this.LockUpdates = true;
 
                 if (sender == aNumericUpDown || sender == rNumericUpDown || sender == gNumericUpDown ||
-                         sender == bNumericUpDown)
+                    sender == bNumericUpDown)
                 {
                     useRgb = true;
                 }

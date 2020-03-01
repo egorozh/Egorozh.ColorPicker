@@ -14,7 +14,7 @@ namespace Egorozh.ColorPicker
     [TemplatePart(Name = PART_NumericUp, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_NumericDown, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
-    internal class NumericUpDown : Control
+    public class NumericUpDown : Control
     {
         public static readonly RoutedEvent ValueIncrementedEvent = EventManager.RegisterRoutedEvent("ValueIncremented",
             RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));

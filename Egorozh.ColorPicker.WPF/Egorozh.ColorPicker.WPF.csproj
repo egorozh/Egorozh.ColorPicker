@@ -6,12 +6,13 @@
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
     <Authors>egorozh</Authors>
-    <Version>0.1.0</Version>
+    <Version>0.1.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</RepositoryUrl>
     <PackageTags>Color, ColorPicker, WPF</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Description>ColorPicker Control</Description>
   </PropertyGroup>
 
   <ItemGroup>
