@@ -2,24 +2,16 @@
 
 namespace Egorozh.ColorPicker
 {
-  // Cyotek Color Picker controls library
-  // Copyright © 2013-2017 Cyotek Ltd.
-  // http://cyotek.com/blog/tag/colorpicker
+    public class ColorHitTestInfo
+    {
+        #region Properties
 
-  // Licensed under the MIT License. See license.txt for the full text.
+        public Color Color { get; set; }
 
-  // If you use this code in your applications, donations or attribution are welcome
+        public int Index { get; set; }
 
-  public class ColorHitTestInfo
-  {
-    #region Properties
+        public ColorSource Source { get; set; }
 
-    public Color Color { get; set; }
-
-    public int Index { get; set; }
-
-    public ColorSource Source { get; set; }
-
-    #endregion
-  }
+        #endregion
+    }
 }

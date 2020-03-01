@@ -48,6 +48,18 @@ namespace Egorozh.ColorPicker
 
         private const string _user32DllName = "user32.dll";
 
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public int X;
+            public int Y;
+        };
+
         /// <summary>
         ///   Logical pixels inch in X
         /// </summary>
