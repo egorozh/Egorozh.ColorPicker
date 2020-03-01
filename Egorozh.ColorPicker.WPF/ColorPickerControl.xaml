@@ -126,15 +126,10 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Margin="6">
-                <WindowsFormsHost>
-                    <forms:ColorWheel x:Name="ColorWheel" />
-                </WindowsFormsHost>
 
-                <local:ColorWheelPort x:Name="ColorWheelPort" 
-                                      Width="147"
-                                      Height="147"/>
+                <local:ColorWheel x:Name="ColorWheel"/>
 
-                <!--<StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                             Margin="0 4">
 
                     <Button Width="24" Height="24"
@@ -237,7 +232,7 @@
 
                 <WindowsFormsHost>
                     <forms:ColorGrid x:Name="ColorGrid" />
-                </WindowsFormsHost>-->
+                </WindowsFormsHost>
             </StackPanel>
 
             <StackPanel Grid.Column="1"

@@ -26,9 +26,6 @@
     <Compile Update="WinFormsClasses\Controls\ColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="WinFormsClasses\Controls\ColorWheel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="WinFormsClasses\Controls\HueColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>

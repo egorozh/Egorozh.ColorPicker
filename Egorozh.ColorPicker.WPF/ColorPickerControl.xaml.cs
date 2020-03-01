@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Color = System.Windows.Media.Color;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
@@ -94,64 +92,31 @@ namespace Egorozh.ColorPicker
             ScreenColorPicker.Color = System.Drawing.Color.Black;
 
             ScreenColorPicker.Zoom = 6;
-
-            ColorWheel.Color = System.Drawing.Color.FromArgb(0, 0, 0);
-            ColorWheel.Size = new System.Drawing.Size(192, 147);
-
+            
             ColorEditor.Color = System.Drawing.Color.FromArgb(0, 0, 0);
 
-            //ColorGrid.AutoAddColors = false;
-            //ColorGrid.Size = new System.Drawing.Size(192, 92);
-            //ColorGrid.CellBorderStyle = ColorCellBorderStyle.None;
-            //ColorGrid.EditMode = ColorEditingMode.Both;
-            //ColorGrid.Palette = ColorPalette.Paint;
-            //ColorGrid.SelectedCellStyle = ColorGridSelectedCellStyle.Standard;
-            //ColorGrid.ShowCustomColors = false;
+            ColorGrid.AutoAddColors = false;
+            ColorGrid.Size = new System.Drawing.Size(192, 92);
+            ColorGrid.CellBorderStyle = ColorCellBorderStyle.None;
+            ColorGrid.EditMode = ColorEditingMode.Both;
+            ColorGrid.Palette = ColorPalette.Paint;
+            ColorGrid.SelectedCellStyle = ColorGridSelectedCellStyle.Standard;
+            ColorGrid.ShowCustomColors = false;
 
-            //ColorGrid.EditingColor += ColorGrid_EditingColor;
+            ColorGrid.EditingColor += ColorGrid_EditingColor;
 
             _colorEditorManager = new ColorEditorManager
             {
                 ColorEditor = ColorEditor,
-                //ColorGrid = ColorGrid,
+                ColorGrid = ColorGrid,
                 ColorWheel = ColorWheel,
-                ColorWheelPort = ColorWheelPort,
 
                 ScreenColorPicker = ScreenColorPicker
             };
-
+            
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
-
-        private Image GetDropperImage()
-        {
-            var droppperImage = (DrawingImage) FindResource("DropperDrawingImage");
-
-            var visual = new DrawingVisual();
-
-            using (var dc = visual.RenderOpen())
-            {
-                dc.DrawDrawing(droppperImage.Drawing);
-                dc.Close();
-            }
-
-            var target = new RenderTargetBitmap((int) visual.Drawing.Bounds.Right / 20,
-                (int) visual.Drawing.Bounds.Bottom / 20,
-                96.0, 96.0, PixelFormats.Pbgra32);
-            target.Render(visual);
-
-            using Stream stream = new MemoryStream();
-
-            BitmapEncoder encoder = new PngBitmapEncoder();
-
-            encoder.Frames.Add(BitmapFrame.Create(target));
-            encoder.Save(stream);
-
-            var image = Image.FromStream(stream);
-
-            return image;
-        }
-
+        
         private void ColorChanged()
         {
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;

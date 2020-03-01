@@ -1,10 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Brush = System.Drawing.Brush;
@@ -36,36 +34,7 @@ namespace Egorozh.ColorPicker
 
             return new TextureBrush(Image.FromStream(stream), WrapMode.Tile);
         }
-
-        public static Cursor CreateEyedropperCursor()
-        {
-            //    var curs = AkimColorPicker.EyedropperCursor;
-
-            //    SafeFileHandle panHandle = new SafeFileHandle(, false);
-            //    this.Cursor = System.Windows.Interop.CursorInteropHelper.Create(panHandle);
-
-            var baseUri = ColorPickerControl.BaseUri;
-            var cursorUri = new Uri(baseUri, @"/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur");
-
-            var info =
-                System.Windows.Application.GetResourceStream(cursorUri);
-
-            return new Cursor(info.Stream);
-        }
-
-        public static Bitmap ToWinFormsBitmap(BitmapSource bitmapsource)
-        {
-            MemoryStream stream = new MemoryStream();
-
-            BitmapEncoder enc = new BmpBitmapEncoder();
-            enc.Frames.Add(BitmapFrame.Create(bitmapsource));
-            enc.Save(stream);
-
-            Bitmap tempBitmap = new Bitmap(stream);
-
-            return new Bitmap(tempBitmap);
-        }
-
+        
         public static BitmapSource ToWpfBitmap(Bitmap bitmap)
         {
             MemoryStream stream = new MemoryStream();
