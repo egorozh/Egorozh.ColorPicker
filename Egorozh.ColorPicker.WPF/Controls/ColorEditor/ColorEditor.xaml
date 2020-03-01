@@ -11,14 +11,10 @@
 
     <UserControl.Resources>
         <Style TargetType="{x:Type colorPicker:NumericUpDown}">
-            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
-            <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
-            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+      
+      
             <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="MinHeight" Value="26" />
             <Setter Property="MinWidth" Value="62" />
@@ -72,13 +68,12 @@
                                           Delay="{TemplateBinding Delay}"
                                           Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Foreground="{TemplateBinding Foreground}"
-                                          IsTabStop="False"
-                                          Style="{DynamicResource MahApps.Styles.Button.Chromeless}">
+                                          IsTabStop="False">
                                     <Path x:Name="PolygonUp"
                                       Width="14"
                                       Height="14"
                                       Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "
-                                      Fill="{DynamicResource MahApps.Brushes.Gray1}"
+                                      Fill="{TemplateBinding Foreground}"
                                       Stretch="Fill" />
                                 </RepeatButton>
                                 <RepeatButton x:Name="PART_NumericDown"
@@ -89,13 +84,12 @@
                                           Delay="{TemplateBinding Delay}"
                                           Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Foreground="{TemplateBinding Foreground}"
-                                          IsTabStop="False"
-                                          Style="{DynamicResource MahApps.Styles.Button.Chromeless}">
+                                          IsTabStop="False">
                                     <Path x:Name="PolygonDown"
                                       Width="14"
                                       Height="3"
                                       Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "
-                                      Fill="{DynamicResource MahApps.Brushes.Gray1}"
+                                      Fill="{TemplateBinding Foreground}"
                                       Stretch="Fill" />
                                 </RepeatButton>
                             </Grid>

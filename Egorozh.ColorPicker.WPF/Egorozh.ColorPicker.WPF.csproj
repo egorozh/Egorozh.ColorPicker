@@ -10,11 +10,13 @@
   <ItemGroup>
     <None Remove="Resources\eyedropper.cur" />
     <None Remove="Resources\eyedropper.png" />
+    <None Remove="Resources\HsvWheelEffect.ps" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\eyedropper.cur" />
     <Resource Include="Resources\eyedropper.png" />
+    <Resource Include="Resources\HsvWheelEffect.ps" />
   </ItemGroup>
 
   <ItemGroup>

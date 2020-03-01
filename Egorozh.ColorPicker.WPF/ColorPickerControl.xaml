@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="Egorozh.ColorPicker.ColorPickerControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 
              xmlns:local="clr-namespace:Egorozh.ColorPicker"
              xmlns:forms="clr-namespace:AKIM.ColorPicker.Forms"
-             mc:Ignorable="d" 
-             
+             mc:Ignorable="d"
+
              x:Name="ColorPicker">
 
     <UserControl.Resources>
@@ -130,7 +130,11 @@
                     <forms:ColorWheel x:Name="ColorWheel" />
                 </WindowsFormsHost>
 
-                <StackPanel Orientation="Horizontal"
+                <local:ColorWheelPort x:Name="ColorWheelPort" 
+                                      Width="147"
+                                      Height="147"/>
+
+                <!--<StackPanel Orientation="Horizontal"
                             Margin="0 4">
 
                     <Button Width="24" Height="24"
@@ -233,7 +237,7 @@
 
                 <WindowsFormsHost>
                     <forms:ColorGrid x:Name="ColorGrid" />
-                </WindowsFormsHost>
+                </WindowsFormsHost>-->
             </StackPanel>
 
             <StackPanel Grid.Column="1"
@@ -250,12 +254,12 @@
                       Width="85"
                       Height="85">
 
-                    <local:ScreenColorPickerPort x:Name="ScreenColorPickerPort" 
-                                                ToolTip="Click and drag to select screen color">
-                        <local:ScreenColorPickerPort.InitImage>
+                    <local:ScreenColorPicker x:Name="ScreenColorPicker"
+                                             ToolTip="Click and drag to select screen color">
+                        <local:ScreenColorPicker.InitImage>
                             <Image Source="{StaticResource DropperDrawingImage}" />
-                        </local:ScreenColorPickerPort.InitImage>
-                    </local:ScreenColorPickerPort>
+                        </local:ScreenColorPicker.InitImage>
+                    </local:ScreenColorPicker>
 
                 </Grid>
 

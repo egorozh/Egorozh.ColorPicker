@@ -7,9 +7,9 @@ using System.Windows.Media;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
-namespace Egorozh.ColorPicker
+namespace Egorozh.ColorPicker   
 {
-    public partial class ScreenColorPickerPort : IColorEditor
+    public partial class ScreenColorPicker : IColorEditor
     {
         #region Private Fields
 
@@ -21,14 +21,14 @@ namespace Egorozh.ColorPicker
         #region Dependency Properties
 
         public static readonly DependencyProperty InitImageProperty = DependencyProperty.Register(
-            nameof(InitImage), typeof(FrameworkElement), typeof(ScreenColorPickerPort),
+            nameof(InitImage), typeof(FrameworkElement), typeof(ScreenColorPicker),
             new PropertyMetadata(default(FrameworkElement), InitImageChanged));
 
         private Bitmap _bitmap;
 
         private static void InitImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ScreenColorPickerPort screenColorPicker)
+            if (d is ScreenColorPicker screenColorPicker)
                 screenColorPicker.InitImageContentControl.Content = e.NewValue;
         }
 
@@ -60,7 +60,7 @@ namespace Egorozh.ColorPicker
 
         #region Constructor
 
-        public ScreenColorPickerPort()
+        public ScreenColorPicker()
         {
             InitializeComponent();
             
