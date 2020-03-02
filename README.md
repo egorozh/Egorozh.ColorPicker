@@ -10,3 +10,5 @@
 | ScreenColorPicker    | портирован  
 
 ### Внешний вид контрола на данный момент:
+
+![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob/master/ExampleDialog.png "Пример диалогого окна")
