@@ -10,7 +10,7 @@ using Brush = System.Drawing.Brush;
 namespace Egorozh.ColorPicker
 {
     internal static class PortExtensions
-    {
+    {   
         public static Brush CreateTransparencyBrush()
         {
             var dg = ColorPickerControl.TransparentTile;

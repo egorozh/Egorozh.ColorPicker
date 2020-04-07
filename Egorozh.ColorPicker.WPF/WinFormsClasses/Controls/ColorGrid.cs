@@ -167,6 +167,16 @@ namespace AKIM.ColorPicker.Forms
             _selectedCellStyle = ColorGridSelectedCellStyle.Zoomed;
             _palette = ColorPalette.Named;
 
+
+            AutoAddColors = false;
+            Size = new System.Drawing.Size(192, 92);
+            CellBorderStyle = ColorCellBorderStyle.None;
+            EditMode = ColorEditingMode.Both;
+            Palette = ColorPalette.Paint;
+            SelectedCellStyle = ColorGridSelectedCellStyle.Standard;
+            ShowCustomColors = false;
+
+
             this.SetScaledCellSize();
             this.RefreshColors();
         }

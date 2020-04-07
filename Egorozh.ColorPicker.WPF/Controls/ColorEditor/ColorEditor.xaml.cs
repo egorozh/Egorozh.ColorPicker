@@ -107,6 +107,8 @@ namespace Egorozh.ColorPicker
             gColorBar.Channel = RgbaChannel.Green;
             bColorBar.Channel = RgbaChannel.Blue;
             aColorBar.Channel = RgbaChannel.Alpha;
+
+            Color = System.Drawing.Color.FromArgb(0, 0, 0);
         }
 
         #endregion
@@ -258,7 +260,7 @@ namespace Egorozh.ColorPicker
             if (hexTextBox.Items.Count != 0)
             {
                 hexTextBox.DropDownWidth = hexTextBox.ItemHeight * 2 + hexTextBox.Items.Cast<string>()
-                                               .Max(s => TextRenderer.MeasureText(s, hexTextBox.Font).Width);
+                    .Max(s => TextRenderer.MeasureText(s, hexTextBox.Font).Width);
             }
         }
 

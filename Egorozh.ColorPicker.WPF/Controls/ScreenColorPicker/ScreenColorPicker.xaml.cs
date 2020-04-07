@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
-namespace Egorozh.ColorPicker   
+namespace Egorozh.ColorPicker
 {
     public partial class ScreenColorPicker : IColorEditor
     {
         #region Private Fields
 
+        private Bitmap _bitmap;
         private Color _color;
         private bool _isCapturing;
 
@@ -20,11 +20,12 @@ namespace Egorozh.ColorPicker
 
         #region Dependency Properties
 
+        public static readonly DependencyProperty EyedropperCursorProperty = DependencyProperty.Register(
+            nameof(EyedropperCursor), typeof(Cursor), typeof(ScreenColorPicker), new PropertyMetadata(Cursors.Arrow));
+
         public static readonly DependencyProperty InitImageProperty = DependencyProperty.Register(
             nameof(InitImage), typeof(FrameworkElement), typeof(ScreenColorPicker),
             new PropertyMetadata(default(FrameworkElement), InitImageChanged));
-
-        private Bitmap _bitmap;
 
         private static void InitImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -50,6 +51,12 @@ namespace Egorozh.ColorPicker
             set => SetValue(InitImageProperty, value);
         }
 
+        public Cursor EyedropperCursor
+        {
+            get => (Cursor) GetValue(EyedropperCursorProperty);
+            set => SetValue(EyedropperCursorProperty, value);
+        }
+
         #endregion
 
         #region Events
@@ -63,9 +70,12 @@ namespace Egorozh.ColorPicker
         public ScreenColorPicker()
         {
             InitializeComponent();
-            
+
             RenderOptions.SetBitmapScalingMode(SnapshotImage, BitmapScalingMode.NearestNeighbor);
-      
+
+            Color = System.Drawing.Color.Black;
+            Zoom = 6;
+
             MouseLeftButtonDown += UIElement_OnMouseLeftButtonDown;
             MouseMove += UIElement_OnMouseMove;
             MouseLeftButtonUp += UIElement_OnMouseLeftButtonUp;
@@ -96,17 +106,17 @@ namespace Egorozh.ColorPicker
             InitImageContentControl.Content = null;
 
             CreateSnapshotBitmap();
-            
+
             using var graphics = Graphics.FromImage(_bitmap);
-            
+
             graphics.Clear(Color.Empty);
 
             var cursor = GetMousePosition();
             cursor.X -= _bitmap.Width / 2;
             cursor.Y -= _bitmap.Height / 2;
-            
+
             graphics.CopyFromScreen(cursor, Point.Empty, _bitmap.Size);
-            
+
             Color = _bitmap.GetPixel(_bitmap.Width / 2, _bitmap.Height / 2);
 
             SnapshotImage.Source = PortExtensions.ToWpfBitmap(_bitmap);
@@ -123,7 +133,7 @@ namespace Egorozh.ColorPicker
                     System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             }
         }
-        
+
         public static Point GetMousePosition()
         {
             var w32Mouse = new NativeMethods.Win32Point();
@@ -137,7 +147,7 @@ namespace Egorozh.ColorPicker
         {
             if (!_isCapturing)
             {
-                Cursor = ColorPickerControl.EyedropperCursor;
+                Cursor = EyedropperCursor;
                 _isCapturing = true;
                 Mouse.Capture(this);
             }

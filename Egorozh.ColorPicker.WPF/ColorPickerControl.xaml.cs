@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Color = System.Windows.Media.Color;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
@@ -19,17 +18,14 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
+        public static DrawingGroup TransparentTile;
+
         #region Dependency Properties
 
         public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
             nameof(NumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
             new PropertyMetadata(default(Style)));
 
-        public Style NumericUpDownStyle
-        {
-            get => (Style) GetValue(NumericUpDownStyleProperty);
-            set => SetValue(NumericUpDownStyleProperty, value);
-        }
 
         public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
             nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerControl),
@@ -49,6 +45,28 @@ namespace Egorozh.ColorPicker
         public static readonly DependencyProperty ShowAlphaChannelProperty = DependencyProperty.Register(
             nameof(ShowAlphaChannel), typeof(bool), typeof(ColorPickerControl), new PropertyMetadata(true));
 
+        #endregion
+
+        #region Public Properties
+        
+        public Style NumericUpDownStyle
+        {
+            get => (Style) GetValue(NumericUpDownStyleProperty);
+            set => SetValue(NumericUpDownStyleProperty, value);
+        }
+
+        public Color Color
+        {
+            get => (Color) GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
+        }
+        
+        public GetColorHandler GetColorForPaletteAction
+        {
+            get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
+            set => SetValue(GetColorForPaletteActionProperty, value);
+        }
+
         public bool ShowAlphaChannel
         {
             get => (bool) GetValue(ShowAlphaChannelProperty);
@@ -57,24 +75,12 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
-        #region Public Properties
+        #region Static Constructor
 
-        public static System.Windows.Input.Cursor EyedropperCursor;
-
-        public static DrawingGroup TransparentTile;
-
-        public Color Color
+        static ColorPickerControl()
         {
-            get => (Color) GetValue(ColorProperty);
-            set => SetValue(ColorProperty, value);
-        }
-
-        public static Uri BaseUri { get; private set; }
-
-        public GetColorHandler GetColorForPaletteAction
-        {
-            get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
-            set => SetValue(GetColorForPaletteActionProperty, value);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPickerControl),
+                new FrameworkPropertyMetadata(typeof(ColorPickerControl)));
         }
 
         #endregion
@@ -84,13 +90,8 @@ namespace Egorozh.ColorPicker
         public ColorPickerControl()
         {
             InitializeComponent();
-
-            NumericUpDownStyle = (Style) this.FindResource("NumericUpDownStyle");
-
-            BaseUri = BaseUriHelper.GetBaseUri(this);
-
+            
             TransparentTile = (DrawingGroup) this.FindResource("TransparencyTile");
-            EyedropperCursor = ((System.Windows.Input.Cursor) this.FindResource("EyedropperCursor"));
 
             InitWinFormsComponents();
         }
@@ -101,20 +102,6 @@ namespace Egorozh.ColorPicker
 
         private void InitWinFormsComponents()
         {
-            ScreenColorPicker.Color = System.Drawing.Color.Black;
-
-            ScreenColorPicker.Zoom = 6;
-
-            ColorEditor.Color = System.Drawing.Color.FromArgb(0, 0, 0);
-
-            ColorGrid.AutoAddColors = false;
-            ColorGrid.Size = new System.Drawing.Size(192, 92);
-            ColorGrid.CellBorderStyle = ColorCellBorderStyle.None;
-            ColorGrid.EditMode = ColorEditingMode.Both;
-            ColorGrid.Palette = ColorPalette.Paint;
-            ColorGrid.SelectedCellStyle = ColorGridSelectedCellStyle.Standard;
-            ColorGrid.ShowCustomColors = false;
-
             ColorGrid.EditingColor += ColorGrid_EditingColor;
 
             _colorEditorManager = new ColorEditorManager
@@ -122,7 +109,6 @@ namespace Egorozh.ColorPicker
                 ColorEditor = ColorEditor,
                 ColorGrid = ColorGrid,
                 ColorWheel = ColorWheel,
-
                 ScreenColorPicker = ScreenColorPicker
             };
 
@@ -265,8 +251,8 @@ namespace Egorozh.ColorPicker
 
             var res = GetColorForPaletteAction?.Invoke(ref color);
 
-            //if (res.HasValue && res.Value)
-            //    ColorGrid.Colors[e.ColorIndex] = color.ToColor();
+            if (res.HasValue && res.Value)
+                ColorGrid.Colors[e.ColorIndex] = color.ToColor();
         }
 
         private static bool GetColorForPalette(ref Color color)
@@ -288,6 +274,4 @@ namespace Egorozh.ColorPicker
 
         #endregion
     }
-
-    public delegate bool GetColorHandler(ref Color color);
 }
