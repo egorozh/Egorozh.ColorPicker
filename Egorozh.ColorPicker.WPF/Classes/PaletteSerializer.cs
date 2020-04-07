@@ -20,6 +20,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -332,6 +333,8 @@ namespace Egorozh.ColorPicker
         /// <returns>The <see cref="ColorCollection" /> being deserialized.</returns>
         public abstract ColorCollection Deserialize(Stream stream);
 
+        public abstract ColorCollectionNew DeserializeNew(Stream stream);
+
         /// <summary>
         /// Deserializes the <see cref="ColorCollection" /> contained by the specified <see cref="Stream" />.
         /// </summary>
@@ -356,6 +359,8 @@ namespace Egorozh.ColorPicker
         /// <param name="stream">The <see cref="Stream" /> used to write the palette.</param>
         /// <param name="palette">The <see cref="ColorCollection" /> to serialize.</param>
         public abstract void Serialize(Stream stream, ColorCollection palette);
+
+        public abstract void Serialize(Stream stream, ColorCollectionNew palette);
 
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream"/>.

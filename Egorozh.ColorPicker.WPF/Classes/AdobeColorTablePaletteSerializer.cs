@@ -157,6 +157,51 @@ namespace Egorozh.ColorPicker
             return results;
         }
 
+        public override ColorCollectionNew DeserializeNew(Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            var results = new ColorCollectionNew();
+
+            var count = (int)(stream.Length / 3);
+
+            for (int i = 0; i < count; i++)
+            {
+                int r;
+                int g;
+                int b;
+
+                r = stream.ReadByte();
+                g = stream.ReadByte();
+                b = stream.ReadByte();
+
+                results.Add(System.Windows.Media.Color.FromRgb((byte) r, (byte) g, (byte) b));
+            }
+
+            if (count == 257)
+            {
+                int realCount;
+
+                // undocumented on the spec page, but when poking around
+                // the Optimized Colors preset files of CS2, I found that
+                // four extra bytes were added to some files. The second of
+                // these extra bytes specified how many colours are
+                // really in use (anything else is just padding)
+
+                realCount = results[256].G;
+
+                while (results.Count > realCount)
+                {
+                    results.RemoveAt(realCount);
+                }
+            }
+
+            return results;
+        }
+
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream" />.
         /// </summary>
@@ -204,6 +249,53 @@ namespace Egorozh.ColorPicker
                 // of used colours
                 stream.WriteByte(0);
                 stream.WriteByte((byte) count);
+                stream.WriteByte(0);
+                stream.WriteByte(0);
+            }
+
+            stream.Flush();
+        }
+
+        public override void Serialize(Stream stream, ColorCollectionNew palette)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (palette == null)
+            {
+                throw new ArgumentNullException(nameof(palette));
+            }
+
+            var count = palette.Count;
+
+            if (count > 256)
+            {
+                throw new InvalidDataException("A maximum of 255 colors are supported by this format.");
+            }
+
+            foreach (System.Windows.Media.Color color in palette)
+            {
+                stream.WriteByte(color.R);
+                stream.WriteByte(color.G);
+                stream.WriteByte(color.B);
+            }
+
+            if (count < 256)
+            {
+                // add padding
+                for (int i = count; i < 256; i++)
+                {
+                    stream.WriteByte(0);
+                    stream.WriteByte(0);
+                    stream.WriteByte(0);
+                }
+
+                // add an extra four bytes which seem to describe the number
+                // of used colours
+                stream.WriteByte(0);
+                stream.WriteByte((byte)count);
                 stream.WriteByte(0);
                 stream.WriteByte(0);
             }

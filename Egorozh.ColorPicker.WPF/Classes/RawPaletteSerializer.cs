@@ -20,6 +20,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System;
 using System.Drawing;
 using System.IO;
@@ -135,6 +136,30 @@ namespace Egorozh.ColorPicker
             return results;
         }
 
+        public override ColorCollectionNew DeserializeNew(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            var results = new ColorCollectionNew();
+
+
+            for (var i = 0; i < stream.Length / 3; i++)
+            {
+                int r;
+                int g;
+                int b;
+
+                r = stream.ReadByte();
+                g = stream.ReadByte();
+                b = stream.ReadByte();
+
+                results.Add(System.Windows.Media.Color.FromRgb((byte) r, (byte) g, (byte) b));
+            }
+
+            return results;
+        }
+
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream" />.
         /// </summary>
@@ -153,6 +178,24 @@ namespace Egorozh.ColorPicker
             }
 
             foreach (Color color in palette)
+            {
+                stream.WriteByte(color.R);
+                stream.WriteByte(color.G);
+                stream.WriteByte(color.B);
+            }
+
+            stream.Flush();
+        }
+
+        public override void Serialize(Stream stream, ColorCollectionNew palette)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            if (palette == null)
+                throw new ArgumentNullException(nameof(palette));
+
+            foreach (var color in palette)
             {
                 stream.WriteByte(color.R);
                 stream.WriteByte(color.G);

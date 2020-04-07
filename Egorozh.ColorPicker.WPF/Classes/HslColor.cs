@@ -20,6 +20,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System;
 using System.Drawing;
 using System.Text;
@@ -256,6 +257,73 @@ namespace Egorozh.ColorPicker
             return Color.FromArgb(alpha, (int) colors[0], (int) colors[1], (int) colors[2]);
         }
 
+        public System.Windows.Media.Color ToRgbColorNew() => ToRgbColorNew(A);
+
+        public System.Windows.Media.Color ToRgbColorNew(int alpha)
+        {
+            double q;
+            if (this.L < 0.5)
+            {
+                q = this.L * (1 + this.S);
+            }
+            else
+            {
+                q = this.L + this.S - this.L * this.S;
+            }
+
+            double p = 2 * this.L - q;
+            double hk = this.H / 360;
+
+            // r,g,b colors
+            double[] tc = new[]
+            {
+                hk + 1d / 3d,
+                hk,
+                hk - 1d / 3d
+            };
+            double[] colors = new[]
+            {
+                0.0,
+                0.0,
+                0.0
+            };
+
+            for (int color = 0; color < colors.Length; color++)
+            {
+                if (tc[color] < 0)
+                {
+                    tc[color] += 1;
+                }
+
+                if (tc[color] > 1)
+                {
+                    tc[color] -= 1;
+                }
+
+                if (tc[color] < 1d / 6d)
+                {
+                    colors[color] = p + (q - p) * 6 * tc[color];
+                }
+                else if (tc[color] >= 1d / 6d && tc[color] < 1d / 2d)
+                {
+                    colors[color] = q;
+                }
+                else if (tc[color] >= 1d / 2d && tc[color] < 2d / 3d)
+                {
+                    colors[color] = p + (q - p) * 6 * (2d / 3d - tc[color]);
+                }
+                else
+                {
+                    colors[color] = p;
+                }
+
+                colors[color] *= 255;
+            }
+
+            return System.Windows.Media.Color.FromArgb((byte) alpha, (byte) colors[0], (byte) colors[1],
+                (byte) colors[2]);
+        }
+        
         public override string ToString()
         {
             StringBuilder builder;

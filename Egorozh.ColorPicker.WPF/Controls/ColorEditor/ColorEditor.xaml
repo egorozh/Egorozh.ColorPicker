@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 
              xmlns:forms="clr-namespace:AKIM.ColorPicker.Forms"
-             xmlns:forms1="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-             xmlns:colorPicker="clr-namespace:Egorozh.ColorPicker"
+             xmlns:local="clr-namespace:Egorozh.ColorPicker"
              mc:Ignorable="d"
 
              x:Name="UserControl">
@@ -14,11 +13,11 @@
     <UserControl.Resources>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Setter Property="Margin" Value="2" />
+            <Setter Property="Margin" Value="0 2" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style TargetType="WindowsFormsHost">
-            <Setter Property="Margin" Value="2" />
+            <Setter Property="Margin" Value="0 2" />
         </Style>
     </UserControl.Resources>
 
@@ -43,9 +42,9 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock>RGB:</TextBlock>
-
         <!--#region RGB -->
+
+        <TextBlock>RGB:</TextBlock>
 
         <!-- R -->
 
@@ -57,12 +56,12 @@
                                    ValueChanged="ColorBar_OnValueChanged" />
         </WindowsFormsHost>
 
-        <colorPicker:NumericUpDown x:Name="rNumericUpDown"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Grid.Row="1" Grid.Column="2"
-                                   Minimum="0"
-                                   Maximum="255"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:NumericUpDown x:Name="rNumericUpDown"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Grid.Row="1" Grid.Column="2"
+                             Minimum="0"
+                             Maximum="255"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
 
         <!-- G -->
 
@@ -74,12 +73,12 @@
                                    ValueChanged="ColorBar_OnValueChanged" />
         </WindowsFormsHost>
 
-        <colorPicker:NumericUpDown x:Name="gNumericUpDown"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Grid.Row="2" Grid.Column="2"
-                                   Minimum="0"
-                                   Maximum="255"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:NumericUpDown x:Name="gNumericUpDown"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Grid.Row="2" Grid.Column="2"
+                             Minimum="0"
+                             Maximum="255"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
 
         <!-- B -->
 
@@ -91,24 +90,24 @@
                                    ValueChanged="ColorBar_OnValueChanged" />
         </WindowsFormsHost>
 
-        <colorPicker:NumericUpDown x:Name="bNumericUpDown"
-                                   Grid.Row="3" Grid.Column="2"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Minimum="0"
-                                   Maximum="255"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:NumericUpDown x:Name="bNumericUpDown"
+                             Grid.Row="3" Grid.Column="2"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Minimum="0"
+                             Maximum="255"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
         <!--#endregion-->
 
         <!--Hex-->
 
         <TextBlock Grid.Row="4" Grid.Column="0"
                    Text="Hex: " />
-   
+
         <ComboBox Grid.Row="4" Grid.Column="1"
                   IsEditable="True"
                   x:Name="hexTextBox"
-                  SelectionChanged="HexTextBox_OnSelectionChanged" 
-                  TextBoxBase.TextChanged="HexTextBox_OnTextChanged"/>
+                  SelectionChanged="HexTextBox_OnSelectionChanged"
+                  TextBoxBase.TextChanged="HexTextBox_OnTextChanged" />
 
         <TextBlock Grid.Row="5" Grid.Column="0"
                    Text="HSL: " />
@@ -120,17 +119,21 @@
         <TextBlock Grid.Row="6" Grid.Column="0"
                    Text="H: " />
 
-        <WindowsFormsHost Grid.Row="6" Grid.Column="1">
+        <!--<WindowsFormsHost Grid.Row="6" Grid.Column="1">
             <forms:HueColorSlider x:Name="hColorBar"
                                   ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>
+        </WindowsFormsHost>-->
 
-        <colorPicker:NumericUpDown x:Name="hNumericUpDown"
-                                   Grid.Row="6" Grid.Column="2"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Minimum="0"
-                                   Maximum="359"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:HueColorSliderNew Grid.Row="6" Grid.Column="1"
+                                 x:Name="hColorBar"
+                                 ValueChanged="HColorBar_OnValueChanged" />
+
+        <local:NumericUpDown x:Name="hNumericUpDown"
+                             Grid.Row="6" Grid.Column="2"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Minimum="0"
+                             Maximum="359"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
 
         <!-- S -->
 
@@ -142,12 +145,12 @@
                                          ValueChanged="ColorBar_OnValueChanged" />
         </WindowsFormsHost>
 
-        <colorPicker:NumericUpDown x:Name="sNumericUpDown"
-                                   Grid.Row="7" Grid.Column="2"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Minimum="0"
-                                   Maximum="100"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:NumericUpDown x:Name="sNumericUpDown"
+                             Grid.Row="7" Grid.Column="2"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Minimum="0"
+                             Maximum="100"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
 
         <!-- L -->
 
@@ -159,12 +162,12 @@
                                         ValueChanged="ColorBar_OnValueChanged" />
         </WindowsFormsHost>
 
-        <colorPicker:NumericUpDown x:Name="lNumericUpDown"
-                                   Grid.Row="8" Grid.Column="2"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Minimum="0"
-                                   Maximum="100"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:NumericUpDown x:Name="lNumericUpDown"
+                             Grid.Row="8" Grid.Column="2"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Minimum="0"
+                             Maximum="100"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
 
         <!--#endregion-->
 
@@ -178,12 +181,12 @@
                                    ValueChanged="ColorBar_OnValueChanged" />
         </WindowsFormsHost>
 
-        <colorPicker:NumericUpDown x:Name="aNumericUpDown"
-                                   Grid.Row="9" Grid.Column="2"
-                                   Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                                   Minimum="0"
-                                   Maximum="255"
-                                   ValueChanged="NumericUpDown_OnValueChanged" />
+        <local:NumericUpDown x:Name="aNumericUpDown"
+                             Grid.Row="9" Grid.Column="2"
+                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                             Minimum="0"
+                             Maximum="255"
+                             ValueChanged="NumericUpDown_OnValueChanged" />
 
     </Grid>
 

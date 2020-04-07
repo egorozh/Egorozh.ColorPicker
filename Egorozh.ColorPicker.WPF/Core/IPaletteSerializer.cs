@@ -89,12 +89,16 @@ namespace Egorozh.ColorPicker
         /// <returns>The <see cref="ColorCollection"/> being deserialized.</returns>
         ColorCollection Deserialize(Stream stream);
 
+        ColorCollectionNew DeserializeNew(Stream stream);
+            
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection"/> and writes the palette to a file using the specified <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> used to write the palette.</param>
         /// <param name="palette">The <see cref="ColorCollection"/> to serialize.</param>
         void Serialize(Stream stream, ColorCollection palette);
+
+        void Serialize(Stream stream, ColorCollectionNew palette);
 
         #endregion
     }

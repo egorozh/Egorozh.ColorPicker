@@ -431,6 +431,55 @@ namespace Egorozh.ColorPicker
             }
         }
 
+        private void HColorBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!LockUpdates)
+            {
+                var useHsl = false;
+                var useRgb = false;
+
+                LockUpdates = true;
+
+                if (sender == aColorBar || sender == rColorBar || sender == gColorBar || sender == bColorBar)
+                {
+                    aNumericUpDown.Value = (int)aColorBar.Value;
+                    rNumericUpDown.Value = (int)rColorBar.Value;
+                    gNumericUpDown.Value = (int)gColorBar.Value;
+                    bNumericUpDown.Value = (int)bColorBar.Value;
+
+                    useRgb = true;
+                }
+                else if (sender == hColorBar || sender == lColorBar || sender == sColorBar)
+                {
+                    hNumericUpDown.Value = (int)hColorBar.Value;
+                    sNumericUpDown.Value = (int)sColorBar.Value;
+                    lNumericUpDown.Value = (int)lColorBar.Value;
+
+                    useHsl = true;
+                }
+
+
+                if (useRgb)
+                {
+                    var color = Color.FromArgb((int)aNumericUpDown.Value, (int)rNumericUpDown.Value,
+                        (int)gNumericUpDown.Value, (int)bNumericUpDown.Value);
+
+                    Color = color;
+                    HslColor = new HslColor(color);
+                }
+                else if (useHsl)
+                {
+                    var color = new HslColor((int)aNumericUpDown.Value, (double)hNumericUpDown.Value,
+                        (double)sNumericUpDown.Value / 100, (double)lNumericUpDown.Value / 100);
+                    HslColor = color;
+                    Color = color.ToRgbColor();
+                }
+
+                LockUpdates = false;
+                UpdateFields(true);
+            }
+        }
+
         #endregion
     }
 }

@@ -20,6 +20,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System;
 using System.Drawing;
 using System.IO;
@@ -181,6 +182,82 @@ namespace Egorozh.ColorPicker
             return results;
         }
 
+        public override ColorCollectionNew DeserializeNew(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            var results = new ColorCollectionNew();
+
+            using (var reader = new StreamReader(stream))
+            {
+                var readingPalette = false;
+
+                // check signature
+                var header = reader.ReadLine();
+
+                if (header != "GIMP Palette")
+                {
+                    throw new InvalidDataException("Invalid palette file");
+                }
+
+                // read the swatches
+                var swatchIndex = 0;
+
+                while (!reader.EndOfStream)
+                {
+                    var data = reader.ReadLine();
+
+                    if (!string.IsNullOrEmpty(data))
+                    {
+                        if (data[0] == '#')
+                        {
+                            // comment
+                            readingPalette = true;
+                        }
+                        else if (!readingPalette)
+                        {
+                            // custom attribute
+                        }
+                        else if (readingPalette)
+                        {
+                            int r;
+                            int g;
+                            int b;
+                            string name;
+
+                            // TODO: Optimize this a touch. Microoptimization? Maybe.
+
+                            var parts = !string.IsNullOrEmpty(data)
+                                ? data.Split(new[]
+                                {
+                                    ' ',
+                                    '\t'
+                                }, StringSplitOptions.RemoveEmptyEntries)
+                                : new string[0];
+                            name = parts.Length > 3 ? string.Join(" ", parts, 3, parts.Length - 3) : null;
+
+                            if (!int.TryParse(parts[0], out r) || !int.TryParse(parts[1], out g) ||
+                                !int.TryParse(parts[2], out b))
+                            {
+                                throw new InvalidDataException(
+                                    $"Invalid palette contents found with data '{data}'");
+                            }
+
+                            results.Add(System.Windows.Media.Color.FromRgb((byte) r, (byte) g, (byte) b));
+#if USENAMEHACK
+              results.SetName(swatchIndex, name);
+#endif
+
+                            swatchIndex++;
+                        }
+                    }
+                }
+            }
+
+            return results;
+        }
+
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream" />.
         /// </summary>
@@ -232,6 +309,48 @@ namespace Egorozh.ColorPicker
 
                     swatchIndex++;
                 }
+            }
+        }
+
+        public override void Serialize(Stream stream, ColorCollectionNew palette)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            if (palette == null)
+                throw new ArgumentNullException(nameof(palette));
+
+            var swatchIndex = 0;
+
+            // TODO: Allow name and columns attributes to be specified
+
+            using var writer = new StreamWriter(stream, Encoding.ASCII);
+
+            writer.WriteLine("GIMP Palette");
+            writer.WriteLine("Name: ");
+            writer.WriteLine("Columns: 8");
+            writer.WriteLine("#");
+
+            foreach (var color in palette)
+            {
+                writer.Write("{0,-3} ", color.R);
+                writer.Write("{0,-3} ", color.G);
+                writer.Write("{0,-3} ", color.B);
+#if USENAMEHACK
+          writer.Write(palette.GetName(swatchIndex));
+#else
+                if (color.IsNamedColor())
+                {
+                    writer.Write(color.Name());
+                }
+                else
+                {
+                    writer.Write("#{0:X2}{1:X2}{2:X2} Swatch {3}", color.R, color.G, color.B, swatchIndex);
+                }
+#endif
+                writer.WriteLine();
+
+                swatchIndex++;
             }
         }
 
