@@ -132,8 +132,10 @@
                                       Style="{StaticResource RepeatButtonTransparent}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb x:Name="Thumb" Focusable="False" Height="18" OverridesDefaultStyle="True"
-                               Template="{StaticResource SliderThumbHorizontalDefault}" VerticalAlignment="Center"
+                        <Thumb x:Name="Thumb" Focusable="False" Height="18" 
+                               OverridesDefaultStyle="True"
+                               Template="{StaticResource SliderThumbHorizontalDefault}" 
+                               VerticalAlignment="Center"
                                Width="11" />
                     </Track.Thumb>
                 </Track>
@@ -166,6 +168,7 @@
 
     <Style TargetType="local:ColorSliderNew">
         <Setter Property="Template" Value="{StaticResource SliderTemplate}" />
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
     </Style>
 
     <!--#endregion-->
