@@ -37,7 +37,7 @@ namespace AKIM.ColorPicker.Forms
     /// </summary>
     [DefaultProperty("Color")]
     [DefaultEvent("ColorChanged")]
-    public class ColorGrid : Control, IColorEditor
+    public class ColorGridOld : Control, IColorEditor
     {
         #region Constants
 
@@ -137,7 +137,7 @@ namespace AKIM.ColorPicker.Forms
 
         #region Constructors
 
-        public ColorGrid()
+        public ColorGridOld()
         {
             this.SetStyle(
                 ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer |

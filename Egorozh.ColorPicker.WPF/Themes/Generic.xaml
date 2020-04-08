@@ -29,6 +29,46 @@
 
     <!--#endregion-->
 
+    <Style TargetType="{x:Type Button}" x:Key="ColorButton">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="1.5" />
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="BorderBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid Background="{StaticResource TransparencyBrush}">
+
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                SnapsToDevicePixels="true">
+                            <Border x:Name="innerBorder"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1" />
+                        </Border>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush"
+                                    Value="Black" />
+                            <Setter Property="BorderBrush" TargetName="innerBorder"
+                                    Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--#region Slider-->
 
     <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
@@ -119,6 +159,19 @@
     </Style>
 
     <!--#endregion-->
+
+    <Style TargetType="local:ColorGrid">
+
+        <Setter Property="ColorButtonStyle" Value="{StaticResource ColorButton}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ColorGrid">
+                    <ContentPresenter Content="{TemplateBinding Content}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="NumericUpDownStyle"
            TargetType="{x:Type local:NumericUpDown}">
@@ -332,5 +385,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 
 </ResourceDictionary>

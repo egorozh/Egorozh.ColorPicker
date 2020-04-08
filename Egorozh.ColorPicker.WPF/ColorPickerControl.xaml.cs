@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using Color = System.Windows.Media.Color;
+using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
@@ -125,7 +126,7 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #region Private Fields
-        
+
         private void ColorChanged()
         {
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;
@@ -164,16 +165,16 @@ namespace Egorozh.ColorPicker
                     var serializer = PaletteSerializer.GetSerializer(dialog.FileName);
                     if (serializer != null)
                     {
-                        ColorCollection palette;
-
                         if (!serializer.CanRead)
                         {
                             throw new InvalidOperationException("Serializer does not support reading palettes.");
                         }
 
-                        using (FileStream file = File.OpenRead(dialog.FileName))
+                        ColorCollectionNew palette;
+
+                        using (var file = File.OpenRead(dialog.FileName))
                         {
-                            palette = serializer.Deserialize(file);
+                            palette = serializer.DeserializeNew(file);
                         }
 
                         if (palette != null)
@@ -187,24 +188,24 @@ namespace Egorozh.ColorPicker
                             // or if we have less, fill in the blanks
                             while (palette.Count < 96)
                             {
-                                palette.Add(System.Drawing.Color.White);
+                                palette.Add(Colors.White);
                             }
 
-                            //ColorGrid.Colors = palette;
+                            ColorGrid.Colors = palette;
                         }
                     }
                     else
                     {
-                        //System.Windows.Forms.MessageBox.Show(
-                        //    "Sorry, unable to open palette, the file format is not supported or is not recognized.",
-                        //    "Load Palette", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(
+                            "Sorry, unable to open palette, the file format is not supported or is not recognized.",
+                            "Load Palette", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
                 catch (Exception ex)
                 {
-                    //System.Windows.Forms.MessageBox.Show(
-                    //    string.Format("Sorry, unable to open palette. {0}", ex.GetBaseException().Message),
-                    //    "Load Palette", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        $"Sorry, unable to open palette. {ex.GetBaseException().Message}",
+                        "Load Palette", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -220,9 +221,7 @@ namespace Egorozh.ColorPicker
 
             if (dialog.ShowDialog() == true)
             {
-                IPaletteSerializer serializer;
-
-                serializer = PaletteSerializer.AllSerializers.Where(s => s.CanWrite)
+                var serializer = PaletteSerializer.AllSerializers.Where(s => s.CanWrite)
                     .ElementAt(dialog.FilterIndex - 1);
                 if (serializer != null)
                 {
@@ -233,37 +232,35 @@ namespace Egorozh.ColorPicker
 
                     try
                     {
-                        using (FileStream file = File.OpenWrite(dialog.FileName))
-                        {
-                            //serializer.Serialize(file, ColorGrid.Colors);
-                        }
+                        using var file = File.OpenWrite(dialog.FileName);
+                        serializer.Serialize(file, ColorGrid.Colors);
                     }
                     catch (Exception ex)
                     {
-                        //System.Windows.Forms.MessageBox.Show(
-                        //    string.Format("Sorry, unable to save palette. {0}", ex.GetBaseException().Message),
-                        //    "Save Palette", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                            $"Sorry, unable to save palette. {ex.GetBaseException().Message}",
+                            "Save Palette", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    //System.Windows.Forms.MessageBox.Show(
-                    //    "Sorry, unable to save palette, the file format is not supported or is not recognized.",
-                    //    "Save Palette", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        "Sorry, unable to save palette, the file format is not supported or is not recognized.",
+                        "Save Palette", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
         }
 
-        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgs e)
+        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgsNew e)
         {
             e.Cancel = true;
 
-            var color = e.Color.ToColor();
+            var color = e.Color;
 
             var res = GetColorForPaletteAction?.Invoke(ref color);
 
             if (res.HasValue && res.Value)
-                ColorGrid.Colors[e.ColorIndex] = color.ToColor();
+                ColorGrid.Colors[e.ColorIndex] = color;
         }
 
         private static bool GetColorForPalette(ref Color color)

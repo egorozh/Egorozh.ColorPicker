@@ -106,7 +106,8 @@
             <StackPanel Margin="6">
 
                 <local:ColorWheel x:Name="ColorWheel"
-                                  Margin="20 0" />
+                                  Margin="20 0"
+                                  Width="150"/>
 
                 <StackPanel Orientation="Horizontal"
                             Margin="0 4">
@@ -209,9 +210,10 @@
 
                 </StackPanel>
 
-                <WindowsFormsHost>
-                    <forms:ColorGrid x:Name="ColorGrid" />
-                </WindowsFormsHost>
+                <local:ColorGrid x:Name="ColorGrid"
+                                    Width="240"
+                                    Palette="Paint" />
+
             </StackPanel>
 
             <StackPanel Grid.Column="1"
@@ -250,6 +252,7 @@
                     </Grid>
                 </Border>
             </Grid>
+
         </Grid>
     </StackPanel>
 

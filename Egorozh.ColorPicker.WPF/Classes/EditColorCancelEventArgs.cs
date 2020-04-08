@@ -20,32 +20,34 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System.ComponentModel;
 using System.Drawing;
 
 namespace Egorozh.ColorPicker
 {
-  public class EditColorCancelEventArgs : CancelEventArgs
-  {
-    #region Constructors
-
-    public EditColorCancelEventArgs(Color color, int colorIndex)
+    public class EditColorCancelEventArgs : CancelEventArgs
     {
-      this.Color = color;
-      this.ColorIndex = colorIndex;
+        #region Constructors
+
+        public EditColorCancelEventArgs(Color color, int colorIndex)
+        {
+            this.Color = color;
+            this.ColorIndex = colorIndex;
+        }
+
+        protected EditColorCancelEventArgs()
+        {
+        }
+
+        #endregion
+
+        #region Properties
+
+        public Color Color { get; protected set; }
+
+        public int ColorIndex { get; protected set; }
+
+        #endregion
     }
-
-    protected EditColorCancelEventArgs()
-    { }
-
-    #endregion
-
-    #region Properties
-
-    public Color Color { get; protected set; }
-
-    public int ColorIndex { get; protected set; }
-
-    #endregion
-  }
 }

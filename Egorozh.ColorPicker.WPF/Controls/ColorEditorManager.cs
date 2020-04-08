@@ -18,9 +18,7 @@ namespace Egorozh.ColorPicker
         private ColorGrid _grid;
 
         private HslColor _hslColor;
-
-        private LightnessColorSlider _lightnessColorSlider;
-
+        
         private ScreenColorPicker _screenColorPicker;
 
         private ColorWheel _colorWheel;
