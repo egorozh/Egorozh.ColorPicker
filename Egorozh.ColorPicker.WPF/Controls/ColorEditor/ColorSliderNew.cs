@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,9 +42,54 @@ namespace Egorozh.ColorPicker
         public static readonly DependencyProperty BarBrushProperty = DependencyProperty.Register(
             nameof(BarBrush), typeof(Brush), typeof(ColorSliderNew), new PropertyMetadata(default(Brush)));
 
+        public static readonly DependencyProperty Color1Property = DependencyProperty.Register(
+            nameof(Color1), typeof(Color), typeof(ColorSliderNew), new PropertyMetadata(default(Color), Color1Changed));
+
+        private static void Color1Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorSliderNew slider)
+                slider.PaintBar();
+        }
+
+        public static readonly DependencyProperty Color2Property = DependencyProperty.Register(
+            nameof(Color2), typeof(Color), typeof(ColorSliderNew), new PropertyMetadata(default(Color), Color2Changed));
+
+        private static void Color2Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorSliderNew slider)
+                slider.PaintBar();
+        }
+
+        public static readonly DependencyProperty Color3Property = DependencyProperty.Register(
+            nameof(Color3), typeof(Color), typeof(ColorSliderNew), new PropertyMetadata(default(Color), Color3Changed));
+
+        private static void Color3Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorSliderNew slider)
+                slider.PaintBar();
+        }
+
         #endregion
 
         #region Public Properties
+
+        public Color Color1
+        {
+            get => (Color) GetValue(Color1Property);
+            set => SetValue(Color1Property, value);
+        }
+
+        public Color Color2
+        {
+            get => (Color) GetValue(Color2Property);
+            set => SetValue(Color2Property, value);
+        }
+
+        public Color Color3
+        {
+            get => (Color) GetValue(Color3Property);
+            set => SetValue(Color3Property, value);
+        }
 
         public ColorBarStyle BarStyle
         {
@@ -138,13 +182,26 @@ namespace Egorozh.ColorPicker
         {
             double angle = Orientation == Orientation.Horizontal ? 0 : 90;
 
-            var brush = new LinearGradientBrush();
-            
+            Brush brush;
+
             switch (BarStyle)
             {
                 case ColorBarStyle.TwoColor:
+
+                    brush = new LinearGradientBrush(Color1, Color2, angle);
+
                     break;
                 case ColorBarStyle.ThreeColor:
+
+                    var grStops = new[]
+                    {
+                        new GradientStop(Color1, 0),
+                        new GradientStop(Color2, 0.5),
+                        new GradientStop(Color3, 1),
+                    };
+
+                    brush = new LinearGradientBrush(new GradientStopCollection(grStops), angle);
+
                     break;
                 case ColorBarStyle.Custom:
 
@@ -159,72 +216,15 @@ namespace Egorozh.ColorPicker
                         brush = new LinearGradientBrush(new GradientStopCollection(grs), angle);
                     }
                     else
-                    {
-                        //blend.Colors = new[]
-                        //{
-                        //                    this.Color1,
-                        //                    this.Color2
-                        //                };
-                        //blend.Positions = new[]
-                        //{
-                        //                    0F,
-                        //                    1F
-                        //                };
-                    }
+                        brush = Brushes.Transparent;
 
                     break;
+                default:
+                    brush = new LinearGradientBrush();
+                    break;
             }
-            
+
             BarBrush = brush;
-
-            //float angle;
-
-            //angle = this.Orientation == Orientation.Horizontal ? 0 : 90;
-
-            //if (this.BarBounds.Height > 0 && this.BarBounds.Width > 0)
-            //{
-            //    ColorBlend blend;
-
-            //    // HACK: Inflating the brush rectangle by 1 seems to get rid of a odd issue where the last color is drawn on the first pixel
-
-            //    blend = new ColorBlend();
-            //    using (LinearGradientBrush brush = new LinearGradientBrush(Rectangle.Inflate(this.BarBounds, 1, 1),
-            //        Color.Empty, Color.Empty, angle, false))
-            //    {
-            //        switch (this.BarStyle)
-            //        {
-            //            case ColorBarStyle.TwoColor:
-            //                blend.Colors = new[]
-            //                {
-            //                    this.Color1,
-            //                    this.Color2
-            //                };
-            //                blend.Positions = new[]
-            //                {
-            //                    0F,
-            //                    1F
-            //                };
-            //                break;
-            //            case ColorBarStyle.ThreeColor:
-            //                blend.Colors = new[]
-            //                {
-            //                    this.Color1,
-            //                    this.Color2,
-            //                    this.Color3
-            //                };
-            //                blend.Positions = new[]
-            //                {
-            //                    0,
-            //                    0.5F,
-            //                    1
-            //                };
-            //                break;
-            //    }
-
-            //        brush.InterpolationColors = blend;
-            //        e.Graphics.FillRectangle(brush, this.BarBounds);
-            //    }
-            //}
         }
 
         #endregion

@@ -50,9 +50,6 @@
     <Compile Update="WinFormsClasses\Controls\RgbaColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="WinFormsClasses\Controls\SaturationColorSlider.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
 
 </Project>

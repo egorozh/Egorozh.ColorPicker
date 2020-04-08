@@ -118,10 +118,10 @@
 
         <TextBlock Grid.Row="6" Grid.Column="0"
                    Text="H: " />
-   
-        <local:HueColorSliderNew Grid.Row="6" Grid.Column="1"
-                                 x:Name="hColorBar"
-                                 ValueChanged="HColorBar_OnValueChanged" />
+
+        <local:HueColorSlider Grid.Row="6" Grid.Column="1"
+                              x:Name="hColorBar"
+                              ValueChanged="HColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="hNumericUpDown"
                              Grid.Row="6" Grid.Column="2"
@@ -134,11 +134,10 @@
 
         <TextBlock Grid.Row="7" Grid.Column="0"
                    Text="S: " />
-
-        <WindowsFormsHost Grid.Row="7" Grid.Column="1">
-            <forms:SaturationColorSlider x:Name="sColorBar"
-                                         ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>
+      
+        <local:SaturationColorSlider Grid.Row="7" Grid.Column="1"
+                                        x:Name="sColorBar"
+                                        ValueChanged="HColorBar_OnValueChanged"/>
 
         <local:NumericUpDown x:Name="sNumericUpDown"
                              Grid.Row="7" Grid.Column="2"

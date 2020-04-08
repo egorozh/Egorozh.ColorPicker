@@ -2,9 +2,9 @@
 
 namespace Egorozh.ColorPicker
 {
-    internal class HueColorSliderNew : ColorSliderNew
+    internal class HueColorSlider : ColorSliderNew
     {
-        public HueColorSliderNew()
+        public HueColorSlider()
         {
             BarStyle = ColorBarStyle.Custom;
             Maximum = 359;
@@ -12,4 +12,4 @@ namespace Egorozh.ColorPicker
                 new ColorCollectionNew(Enumerable.Range(0, 359).Select(h => new HslColor(h, 1, 0.5).ToRgbColorNew()));
         }
     }
-}
+}   
