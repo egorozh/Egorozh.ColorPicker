@@ -176,7 +176,7 @@ namespace Egorozh.ColorPicker
                     hColorBar.Value = (int) HslColor.H;
                     sColorBar.Color = Color.ToColor();
                     sColorBar.Value = (int) (HslColor.S * 100);
-                    lColorBar.Color = Color;
+                    lColorBar.Color = Color.ToColor();
                     lColorBar.Value = (int) (HslColor.L * 100);
 
                     // Alpha

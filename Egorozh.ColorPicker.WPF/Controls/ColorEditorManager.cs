@@ -91,24 +91,7 @@ namespace Egorozh.ColorPicker
                 }
             }
         }
-
-        /// <summary>
-        /// Gets or sets the linked <see cref="LightnessColorSlider"/>.
-        /// </summary>
-        public virtual LightnessColorSlider LightnessColorSlider
-        {
-            get => _lightnessColorSlider;
-            set
-            {
-                if (LightnessColorSlider != value)
-                {
-                    _lightnessColorSlider = value;
-
-                    OnLightnessColorSliderChanged(EventArgs.Empty);
-                }
-            }
-        }
-
+        
         public ScreenColorPicker ScreenColorPicker
         {
             get => _screenColorPicker;
@@ -200,21 +183,7 @@ namespace Egorozh.ColorPicker
 
             ColorGridChanged?.Invoke(this, e);
         }
-
-        /// <summary>
-        /// Raises the <see cref="LightnessColorSliderChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnLightnessColorSliderChanged(EventArgs e)
-        {
-            if (LightnessColorSlider != null)
-            {
-                BindEvents(LightnessColorSlider);
-            }
-
-            LightnessColorSliderChanged?.Invoke(this, e);
-        }
-
+        
         /// <summary>
         /// Sets the color of the given editor.
         /// </summary>
@@ -241,7 +210,6 @@ namespace Egorozh.ColorPicker
                     SetColor(ColorWheel, sender);
                     SetColor(ScreenColorPicker, sender);
                     SetColor(ColorEditor, sender);
-                    SetColor(LightnessColorSlider, sender);
                 }
                 finally
                 {
