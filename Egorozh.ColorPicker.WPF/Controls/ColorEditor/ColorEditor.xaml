@@ -4,19 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 
-             xmlns:forms="clr-namespace:AKIM.ColorPicker.Forms"
              xmlns:local="clr-namespace:Egorozh.ColorPicker"
              mc:Ignorable="d"
 
              x:Name="UserControl">
 
     <UserControl.Resources>
-
         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
             <Setter Property="Margin" Value="0 2" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-        <Style TargetType="WindowsFormsHost">
+        <Style TargetType="local:ColorSliderNew">
             <Setter Property="Margin" Value="0 2" />
         </Style>
     </UserControl.Resources>
@@ -51,10 +49,10 @@
         <TextBlock Grid.Row="1" Grid.Column="0"
                    Text="R: " />
 
-        <WindowsFormsHost Grid.Row="1" Grid.Column="1">
-            <forms:RgbaColorSlider x:Name="rColorBar"
-                                   ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>
+        <local:RgbaColorSliderNew Grid.Row="1" Grid.Column="1"
+                                  x:Name="rColorBar"
+                                  Channel="Red"
+                                  ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="rNumericUpDown"
                              Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
@@ -68,10 +66,10 @@
         <TextBlock Grid.Row="2" Grid.Column="0"
                    Text="G: " />
 
-        <WindowsFormsHost Grid.Row="2" Grid.Column="1">
-            <forms:RgbaColorSlider x:Name="gColorBar"
-                                   ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>
+        <local:RgbaColorSliderNew Grid.Row="2" Grid.Column="1"
+                                  x:Name="gColorBar"
+                                  Channel="Green"
+                                  ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="gNumericUpDown"
                              Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
@@ -85,10 +83,10 @@
         <TextBlock Grid.Row="3" Grid.Column="0"
                    Text="B: " />
 
-        <WindowsFormsHost Grid.Row="3" Grid.Column="1">
-            <forms:RgbaColorSlider x:Name="bColorBar"
-                                   ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>
+        <local:RgbaColorSliderNew Grid.Row="3" Grid.Column="1"
+                                  x:Name="bColorBar"
+                                  Channel="Blue"
+                                  ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="bNumericUpDown"
                              Grid.Row="3" Grid.Column="2"
@@ -104,6 +102,7 @@
                    Text="Hex: " />
 
         <ComboBox Grid.Row="4" Grid.Column="1"
+                  Margin="2"
                   IsEditable="True"
                   x:Name="hexTextBox"
                   SelectionChanged="HexTextBox_OnSelectionChanged"
@@ -121,7 +120,7 @@
 
         <local:HueColorSlider Grid.Row="6" Grid.Column="1"
                               x:Name="hColorBar"
-                              ValueChanged="HColorBar_OnValueChanged" />
+                              ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="hNumericUpDown"
                              Grid.Row="6" Grid.Column="2"
@@ -137,7 +136,7 @@
 
         <local:SaturationColorSlider Grid.Row="7" Grid.Column="1"
                                      x:Name="sColorBar"
-                                     ValueChanged="HColorBar_OnValueChanged" />
+                                     ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="sNumericUpDown"
                              Grid.Row="7" Grid.Column="2"
@@ -150,10 +149,10 @@
 
         <TextBlock Grid.Row="8" Grid.Column="0"
                    Text="L: " />
-     
+
         <local:LightnessColorSlider Grid.Row="8" Grid.Column="1"
-                                       x:Name="lColorBar"
-                                       ValueChanged="HColorBar_OnValueChanged"/>
+                                    x:Name="lColorBar"
+                                    ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="lNumericUpDown"
                              Grid.Row="8" Grid.Column="2"
@@ -169,10 +168,10 @@
         <TextBlock Grid.Row="9" Grid.Column="0"
                    Text="Alpha: " />
 
-        <WindowsFormsHost Grid.Row="9" Grid.Column="1">
-            <forms:RgbaColorSlider x:Name="aColorBar"
-                                   ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>
+        <local:RgbaColorSliderNew Grid.Row="9" Grid.Column="1"
+                                  x:Name="aColorBar"
+                                  Channel="Alpha"
+                                  ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="aNumericUpDown"
                              Grid.Row="9" Grid.Column="2"

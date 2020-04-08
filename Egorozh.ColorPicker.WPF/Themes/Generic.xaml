@@ -2,6 +2,33 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Egorozh.ColorPicker">
 
+    <!--#region Transparency Brush-->
+
+    <DrawingGroup x:Key="TransparencyTile">
+        <GeometryDrawing Brush="White">
+            <GeometryDrawing.Geometry>
+                <RectangleGeometry Rect="0,0,100,100" />
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+
+        <GeometryDrawing Brush="#d7d7d7">
+            <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                    <RectangleGeometry Rect="0,0,50,50" />
+                    <RectangleGeometry Rect="50,50,50,50" />
+                </GeometryGroup>
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+    </DrawingGroup>
+
+    <DrawingBrush x:Key="TransparencyBrush"
+                  TileMode="Tile"
+                  Viewport="0 0 10 10"
+                  ViewportUnits="Absolute"
+                  Drawing="{StaticResource TransparencyTile}" />
+
+    <!--#endregion-->
+
     <!--#region Slider-->
 
     <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
@@ -54,11 +81,13 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Border x:Name="TrackBackground"
-                        Background="{TemplateBinding BarBrush}"
-                        BorderThickness="0"
-                        Margin="4,3,4,1"
-                        Grid.Row="0" />
+                <Grid Grid.Row="0"
+                      Margin="4,3,4,1"
+                      Background="{StaticResource TransparencyBrush}">
+                    <Border x:Name="TrackBackground"
+                            Background="{TemplateBinding BarBrush}"
+                            BorderThickness="0" />
+                </Grid>
 
                 <Track x:Name="PART_Track"
                        Grid.Row="1">
@@ -83,7 +112,6 @@
             </Grid>
         </Border>
     </ControlTemplate>
-
 
     <Style TargetType="local:ColorSliderNew">
         <Setter Property="Template" Value="{StaticResource SliderTemplate}" />
@@ -294,6 +322,7 @@
 
     <Style TargetType="local:ColorPickerControl">
         <Setter Property="NumericUpDownStyle" Value="{StaticResource NumericUpDownStyle}" />
+        <Setter Property="TransparentBrush" Value="{StaticResource TransparencyBrush}" />
 
         <Setter Property="Template">
             <Setter.Value>

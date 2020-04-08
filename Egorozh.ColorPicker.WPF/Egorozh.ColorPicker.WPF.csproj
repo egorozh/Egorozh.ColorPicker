@@ -6,7 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
     <Authors>egorozh</Authors>
-    <Version>0.1.2</Version>
+    <Version>0.1.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</RepositoryUrl>
@@ -39,12 +39,6 @@
 
   <ItemGroup>
     <Compile Update="WinFormsClasses\Controls\ColorGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="WinFormsClasses\Controls\ColorSlider.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="WinFormsClasses\Controls\RgbaColorSlider.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

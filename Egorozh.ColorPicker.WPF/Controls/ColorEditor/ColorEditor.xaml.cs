@@ -100,12 +100,7 @@ namespace Egorozh.ColorPicker
         {
             InitializeComponent();
 
-            rColorBar.Channel = RgbaChannel.Red;
-            gColorBar.Channel = RgbaChannel.Green;
-            bColorBar.Channel = RgbaChannel.Blue;
-            aColorBar.Channel = RgbaChannel.Alpha;
-
-            Color = Color.FromArgb(0, 0, 0);
+            Color = Color.Black;
 
             FillNamedColors();
         }
@@ -143,11 +138,11 @@ namespace Egorozh.ColorPicker
                     }
 
                     rColorBar.Value = Color.R;
-                    rColorBar.Color = Color;
+                    rColorBar.Color = Color.ToColor();
                     gColorBar.Value = Color.G;
-                    gColorBar.Color = Color;
+                    gColorBar.Color = Color.ToColor();
                     bColorBar.Value = Color.B;
-                    bColorBar.Color = Color;
+                    bColorBar.Color = Color.ToColor();
 
                     // HTML
                     if (!(userAction && hexTextBox.IsFocused))
@@ -185,7 +180,7 @@ namespace Egorozh.ColorPicker
                         aNumericUpDown.Value = Color.A;
                     }
 
-                    aColorBar.Color = Color;
+                    aColorBar.Color = Color.ToColor();
                     aColorBar.Value = Color.A;
                 }
                 finally
@@ -382,7 +377,7 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        private void ColorBar_OnValueChanged(object? sender, EventArgs e)
+        private void ColorBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!LockUpdates)
             {
@@ -422,55 +417,6 @@ namespace Egorozh.ColorPicker
                 {
                     var color = new HslColor((int) aNumericUpDown.Value, (double) hNumericUpDown.Value,
                         (double) sNumericUpDown.Value / 100, (double) lNumericUpDown.Value / 100);
-                    HslColor = color;
-                    Color = color.ToRgbColor();
-                }
-
-                LockUpdates = false;
-                UpdateFields(true);
-            }
-        }
-
-        private void HColorBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (!LockUpdates)
-            {
-                var useHsl = false;
-                var useRgb = false;
-
-                LockUpdates = true;
-
-                if (sender == aColorBar || sender == rColorBar || sender == gColorBar || sender == bColorBar)
-                {
-                    aNumericUpDown.Value = (int)aColorBar.Value;
-                    rNumericUpDown.Value = (int)rColorBar.Value;
-                    gNumericUpDown.Value = (int)gColorBar.Value;
-                    bNumericUpDown.Value = (int)bColorBar.Value;
-
-                    useRgb = true;
-                }
-                else if (sender == hColorBar || sender == lColorBar || sender == sColorBar)
-                {
-                    hNumericUpDown.Value = (int)hColorBar.Value;
-                    sNumericUpDown.Value = (int)sColorBar.Value;
-                    lNumericUpDown.Value = (int)lColorBar.Value;
-
-                    useHsl = true;
-                }
-
-
-                if (useRgb)
-                {
-                    var color = Color.FromArgb((int)aNumericUpDown.Value, (int)rNumericUpDown.Value,
-                        (int)gNumericUpDown.Value, (int)bNumericUpDown.Value);
-
-                    Color = color;
-                    HslColor = new HslColor(color);
-                }
-                else if (useHsl)
-                {
-                    var color = new HslColor((int)aNumericUpDown.Value, (double)hNumericUpDown.Value,
-                        (double)sNumericUpDown.Value / 100, (double)lNumericUpDown.Value / 100);
                     HslColor = color;
                     Color = color.ToRgbColor();
                 }

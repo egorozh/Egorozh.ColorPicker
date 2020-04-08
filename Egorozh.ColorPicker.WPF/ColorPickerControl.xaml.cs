@@ -22,6 +22,18 @@ namespace Egorozh.ColorPicker
 
         #region Dependency Properties
 
+        public static readonly DependencyProperty TransparentBrushProperty = DependencyProperty.Register(
+            nameof(TransparentBrush), typeof(Brush), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Brush), TransparentBrushChanged));
+
+        private static void TransparentBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorPickerControl control)
+            {
+                ColorPickerControl.TransparentTile = ((DrawingBrush) control.TransparentBrush).Drawing as DrawingGroup;
+            }
+        }
+
         public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
             nameof(NumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
             new PropertyMetadata(default(Style)));
@@ -48,7 +60,13 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #region Public Properties
-        
+
+        public Brush TransparentBrush
+        {
+            get => (Brush) GetValue(TransparentBrushProperty);
+            set => SetValue(TransparentBrushProperty, value);
+        }
+
         public Style NumericUpDownStyle
         {
             get => (Style) GetValue(NumericUpDownStyleProperty);
@@ -60,7 +78,7 @@ namespace Egorozh.ColorPicker
             get => (Color) GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
-        
+
         public GetColorHandler GetColorForPaletteAction
         {
             get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
@@ -90,18 +108,7 @@ namespace Egorozh.ColorPicker
         public ColorPickerControl()
         {
             InitializeComponent();
-            
-            TransparentTile = (DrawingGroup) this.FindResource("TransparencyTile");
 
-            InitWinFormsComponents();
-        }
-
-        #endregion
-
-        #region Private Fields
-
-        private void InitWinFormsComponents()
-        {
             ColorGrid.EditingColor += ColorGrid_EditingColor;
 
             _colorEditorManager = new ColorEditorManager
@@ -115,6 +122,10 @@ namespace Egorozh.ColorPicker
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
 
+        #endregion
+
+        #region Private Fields
+        
         private void ColorChanged()
         {
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;

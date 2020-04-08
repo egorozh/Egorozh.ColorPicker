@@ -57,23 +57,6 @@
             </Setter>
         </Style>
 
-        <DrawingGroup x:Key="TransparencyTile">
-            <GeometryDrawing Brush="White">
-                <GeometryDrawing.Geometry>
-                    <RectangleGeometry Rect="0,0,100,100" />
-                </GeometryDrawing.Geometry>
-            </GeometryDrawing>
-
-            <GeometryDrawing Brush="#d7d7d7">
-                <GeometryDrawing.Geometry>
-                    <GeometryGroup>
-                        <RectangleGeometry Rect="0,0,50,50" />
-                        <RectangleGeometry Rect="50,50,50,50" />
-                    </GeometryGroup>
-                </GeometryDrawing.Geometry>
-            </GeometryDrawing>
-        </DrawingGroup>
-
         <DrawingImage x:Key="DropperDrawingImage">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
@@ -105,12 +88,6 @@
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
-
-        <DrawingBrush x:Key="TransparencyBrush"
-                      TileMode="Tile"
-                      Viewport="0 0 10 10"
-                      ViewportUnits="Absolute"
-                      Drawing="{StaticResource TransparencyTile}" />
 
         <Cursor x:Key="EyedropperCursor">/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur</Cursor>
 
@@ -268,7 +245,7 @@
                         BorderThickness="1"
                         BorderBrush="{Binding ElementName=ColorPicker, Path=Foreground}">
 
-                    <Grid Background="{StaticResource TransparencyBrush}">
+                    <Grid Background="{Binding ElementName=ColorPicker, Path=TransparentBrush}">
                         <Border x:Name="PreviewPanel" />
                     </Grid>
                 </Border>
