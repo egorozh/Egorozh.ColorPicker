@@ -32,11 +32,7 @@ using Egorozh.ColorPicker;
 
 namespace AKIM.ColorPicker.Forms
 {
-    /// <summary>
-    /// Represents a grid control, which displays a collection of colors using different styles.
-    /// </summary>
-    [DefaultProperty("Color")]
-    [DefaultEvent("ColorChanged")]
+    /*
     public class ColorGridOld : Control, IColorEditor
     {
         #region Constants
@@ -104,13 +100,9 @@ namespace AKIM.ColorPicker.Forms
         private Color _color;
 
         private int _colorIndex;
-
-        private ColorCollection _colors;
-
+        
         private int _columns;
-
-        private ColorCollection _customColors;
-
+        
         private ColorEditingMode _editMode;
 
         private int _hotIndex;
@@ -965,9 +957,7 @@ namespace AKIM.ColorPicker.Forms
             this.PrimaryRows = primaryRows;
             this.CustomRows = customRows;
         }
-
-        protected virtual Brush CreateTransparencyBrush() => PortExtensions.CreateTransparencyBrush();
-
+        
         protected void DefineColorRegions(ColorCollection colors, int rangeStart, int offset)
         {
             if (colors != null)
@@ -1950,12 +1940,6 @@ namespace AKIM.ColorPicker.Forms
 
         protected virtual void PaintTransparentCell(PaintEventArgs e, Rectangle bounds)
         {
-            if (_cellBackgroundBrush == null)
-            {
-                _cellBackgroundBrush = this.CreateTransparencyBrush();
-            }
-
-            e.Graphics.FillRectangle(_cellBackgroundBrush, bounds);
         }
 
         protected virtual void ProcessMouseClick(MouseEventArgs e)
@@ -2217,4 +2201,6 @@ namespace AKIM.ColorPicker.Forms
 
         #endregion
     }
+
+    */
 }

@@ -18,23 +18,13 @@ namespace Egorozh.ColorPicker
         private ColorEditorManager _colorEditorManager;
 
         #endregion
-
-        public static DrawingGroup TransparentTile;
-
+        
         #region Dependency Properties
 
         public static readonly DependencyProperty TransparentBrushProperty = DependencyProperty.Register(
             nameof(TransparentBrush), typeof(Brush), typeof(ColorPickerControl),
-            new PropertyMetadata(default(Brush), TransparentBrushChanged));
-
-        private static void TransparentBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ColorPickerControl control)
-            {
-                ColorPickerControl.TransparentTile = ((DrawingBrush) control.TransparentBrush).Drawing as DrawingGroup;
-            }
-        }
-
+            new PropertyMetadata(default(Brush)));
+        
         public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
             nameof(NumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
             new PropertyMetadata(default(Style)));
@@ -170,7 +160,7 @@ namespace Egorozh.ColorPicker
                             throw new InvalidOperationException("Serializer does not support reading palettes.");
                         }
 
-                        ColorCollectionNew palette;
+                        ColorCollection palette;
 
                         using (var file = File.OpenRead(dialog.FileName))
                         {

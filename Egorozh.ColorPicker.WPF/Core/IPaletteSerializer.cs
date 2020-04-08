@@ -81,24 +81,10 @@ namespace Egorozh.ColorPicker
         /// <param name="stream">The stream.</param>
         /// <returns><c>true</c> if this instance can read palette data from the specified stream; otherwise, <c>false</c>.</returns>
         bool CanReadFrom(Stream stream);
-
-        /// <summary>
-        /// Deserializes the <see cref="ColorCollection"/> contained by the specified <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> that contains the palette to deserialize.</param>
-        /// <returns>The <see cref="ColorCollection"/> being deserialized.</returns>
-        ColorCollection Deserialize(Stream stream);
-
-        ColorCollectionNew DeserializeNew(Stream stream);
+        
+        ColorCollection DeserializeNew(Stream stream);
             
-        /// <summary>
-        /// Serializes the specified <see cref="ColorCollection"/> and writes the palette to a file using the specified <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> used to write the palette.</param>
-        /// <param name="palette">The <see cref="ColorCollection"/> to serialize.</param>
         void Serialize(Stream stream, ColorCollection palette);
-
-        void Serialize(Stream stream, ColorCollectionNew palette);
 
         #endregion
     }

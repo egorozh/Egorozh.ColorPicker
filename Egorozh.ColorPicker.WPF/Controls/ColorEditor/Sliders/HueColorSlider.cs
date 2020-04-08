@@ -9,7 +9,7 @@ namespace Egorozh.ColorPicker
             BarStyle = ColorBarStyle.Custom;
             Maximum = 359;
             CustomColors =
-                new ColorCollectionNew(Enumerable.Range(0, 359).Select(h => new HslColor(h, 1, 0.5).ToRgbColorNew()));
+                new ColorCollection(Enumerable.Range(0, 359).Select(h => new HslColor(h, 1, 0.5).ToRgbColorNew()));
         }
     }
 }   

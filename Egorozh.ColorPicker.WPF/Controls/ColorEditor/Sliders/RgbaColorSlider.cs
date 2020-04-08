@@ -65,7 +65,7 @@ namespace Egorozh.ColorPicker
 
         private void CreateBarColors()
         {
-            var custom = new ColorCollectionNew();
+            var custom = new ColorCollection();
             var color = Color;
 
             for (byte i = 0; i < 254; i++)

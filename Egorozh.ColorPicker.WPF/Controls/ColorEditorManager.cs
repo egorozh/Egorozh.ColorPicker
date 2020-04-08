@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using AKIM.ColorPicker.Forms;
 
 namespace Egorozh.ColorPicker
 {

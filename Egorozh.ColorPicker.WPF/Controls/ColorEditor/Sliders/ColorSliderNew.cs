@@ -30,8 +30,8 @@ namespace Egorozh.ColorPicker
         }
 
         public static readonly DependencyProperty CustomColorsProperty = DependencyProperty.Register(
-            nameof(CustomColors), typeof(ColorCollectionNew), typeof(ColorSliderNew),
-            new PropertyMetadata(default(ColorCollectionNew), CustomColorsChanged));
+            nameof(CustomColors), typeof(ColorCollection), typeof(ColorSliderNew),
+            new PropertyMetadata(default(ColorCollection), CustomColorsChanged));
 
         private static void CustomColorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -97,9 +97,9 @@ namespace Egorozh.ColorPicker
             set => SetValue(BarStyleProperty, value);
         }
 
-        public ColorCollectionNew CustomColors
+        public ColorCollection CustomColors
         {
-            get => (ColorCollectionNew) GetValue(CustomColorsProperty);
+            get => (ColorCollection) GetValue(CustomColorsProperty);
             set => SetValue(CustomColorsProperty, value);
         }
 

@@ -20,12 +20,12 @@ namespace Egorozh.ColorPicker
         private static void PaletteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ColorGrid colorGrid)
-                colorGrid.Colors = ColorPalettesNew.GetPalette(colorGrid.Palette);
+                colorGrid.Colors = ColorPalettes.GetPalette(colorGrid.Palette);
         }
 
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
-            nameof(Colors), typeof(ColorCollectionNew), typeof(ColorGrid),
-            new PropertyMetadata(default(ColorCollectionNew), ColorsChanged));
+            nameof(Colors), typeof(ColorCollection), typeof(ColorGrid),
+            new PropertyMetadata(default(ColorCollection), ColorsChanged));
 
         private static void ColorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -45,9 +45,9 @@ namespace Egorozh.ColorPicker
             set => SetValue(PaletteProperty, value);
         }
 
-        public ColorCollectionNew Colors
+        public ColorCollection Colors
         {
-            get => (ColorCollectionNew) GetValue(ColorsProperty);
+            get => (ColorCollection) GetValue(ColorsProperty);
             set => SetValue(ColorsProperty, value);
         }
 

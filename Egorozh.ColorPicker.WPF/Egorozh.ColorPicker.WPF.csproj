@@ -38,9 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="WinFormsClasses\Controls\ColorGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="WinFormsClasses\Controls\ColorGrid.cs" />
   </ItemGroup>
 
 </Project>
