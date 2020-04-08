@@ -3,17 +3,17 @@ using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
-    public class EditColorCancelEventArgsNew : CancelEventArgs
+    public class EditColorCancelEventArgs : CancelEventArgs
     {
         #region Constructors
 
-        public EditColorCancelEventArgsNew(Color color, int colorIndex)
+        public EditColorCancelEventArgs(Color color, int colorIndex)
         {
             this.Color = color;
             this.ColorIndex = colorIndex;
         }
 
-        protected EditColorCancelEventArgsNew()
+        protected EditColorCancelEventArgs()
         {
         }
 

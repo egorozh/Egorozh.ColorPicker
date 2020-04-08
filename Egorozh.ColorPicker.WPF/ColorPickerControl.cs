@@ -337,7 +337,7 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgsNew e)
+        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgs e)
         {
             e.Cancel = true;
 

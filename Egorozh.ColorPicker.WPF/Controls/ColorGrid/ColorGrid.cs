@@ -69,7 +69,7 @@ namespace Egorozh.ColorPicker
         #region Events
 
         public event EventHandler ColorChanged;
-        public event EventHandler<EditColorCancelEventArgsNew> EditingColor;
+        public event EventHandler<EditColorCancelEventArgs> EditingColor;
 
         #endregion
 
@@ -124,7 +124,7 @@ namespace Egorozh.ColorPicker
 
                 var index = (int) button.Tag;
 
-                EditingColor?.Invoke(this, new EditColorCancelEventArgsNew(brush.Color, index));
+                EditingColor?.Invoke(this, new EditColorCancelEventArgs(brush.Color, index));
 
                 var updatedColor = Colors[index];
 
