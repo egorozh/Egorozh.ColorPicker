@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
@@ -119,7 +122,7 @@ namespace Egorozh.ColorPicker
 
             Color = _bitmap.GetPixel(_bitmap.Width / 2, _bitmap.Height / 2);
 
-            SnapshotImage.Source = PortExtensions.ToWpfBitmap(_bitmap);
+            SnapshotImage.Source = ToWpfBitmap(_bitmap);
         }
 
         private void CreateSnapshotBitmap()
@@ -134,7 +137,7 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        public static Point GetMousePosition()
+        private static Point GetMousePosition()
         {
             var w32Mouse = new NativeMethods.Win32Point();
             NativeMethods.GetCursorPos(ref w32Mouse);
@@ -170,6 +173,23 @@ namespace Egorozh.ColorPicker
         }
 
         #endregion
+
+        private static BitmapSource ToWpfBitmap(Bitmap bitmap)
+        {
+            var stream = new MemoryStream();
+            bitmap.Save(stream, ImageFormat.Bmp);
+            stream.Position = 0;
+
+            var result = new BitmapImage();
+
+            result.BeginInit();
+            result.CacheOption = BitmapCacheOption.OnLoad;
+            result.StreamSource = stream;
+            result.EndInit();
+            result.Freeze();
+
+            return result;
+        }
 
         #endregion
     }

@@ -7,15 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="FodyWeavers.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Egorozh.ColorPicker.WPF.Dialog\Egorozh.ColorPicker.WPF.Dialog.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
 
 </Project>

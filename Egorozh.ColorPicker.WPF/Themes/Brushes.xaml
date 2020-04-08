@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--#region Transparency Brush-->
+
+    <DrawingGroup x:Key="TransparencyTile">
+        <GeometryDrawing Brush="White">
+            <GeometryDrawing.Geometry>
+                <RectangleGeometry Rect="0,0,100,100" />
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+
+        <GeometryDrawing Brush="#d7d7d7">
+            <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                    <RectangleGeometry Rect="0,0,50,50" />
+                    <RectangleGeometry Rect="50,50,50,50" />
+                </GeometryGroup>
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+    </DrawingGroup>
+
+    <DrawingBrush x:Key="TransparencyBrush"
+                  TileMode="Tile"
+                  Viewport="0 0 10 10"
+                  ViewportUnits="Absolute"
+                  Drawing="{StaticResource TransparencyTile}" />
+
+    <!--#endregion-->
+
+</ResourceDictionary>

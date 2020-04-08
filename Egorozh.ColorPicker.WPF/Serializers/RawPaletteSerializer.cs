@@ -103,45 +103,13 @@ namespace Egorozh.ColorPicker
 
             return result;
         }
-
-        /// <summary>
-        /// Deserializes the <see cref="ColorCollection" /> contained by the specified <see cref="Stream" />.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream" /> that contains the palette to deserialize.</param>
-        /// <returns>The <see cref="ColorCollection" /> being deserialized.</returns>
-        public override ColorCollection Deserialize(Stream stream)
-        {
-            ColorCollection results;
-
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-
-            results = new ColorCollection();
-
-            for (int i = 0; i < stream.Length / 3; i++)
-            {
-                int r;
-                int g;
-                int b;
-
-                r = stream.ReadByte();
-                g = stream.ReadByte();
-                b = stream.ReadByte();
-
-                results.Add(Color.FromArgb(r, g, b));
-            }
-
-            return results;
-        }
-
-        public override ColorCollectionNew DeserializeNew(Stream stream)
+        
+        public override ColorCollection DeserializeNew(Stream stream)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var results = new ColorCollectionNew();
+            var results = new ColorCollection();
 
 
             for (var i = 0; i < stream.Length / 3; i++)
@@ -159,35 +127,8 @@ namespace Egorozh.ColorPicker
 
             return results;
         }
-
-        /// <summary>
-        /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream" />.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream" /> used to write the palette.</param>
-        /// <param name="palette">The <see cref="ColorCollection" /> to serialize.</param>
+        
         public override void Serialize(Stream stream, ColorCollection palette)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-
-            if (palette == null)
-            {
-                throw new ArgumentNullException(nameof(palette));
-            }
-
-            foreach (Color color in palette)
-            {
-                stream.WriteByte(color.R);
-                stream.WriteByte(color.G);
-                stream.WriteByte(color.B);
-            }
-
-            stream.Flush();
-        }
-
-        public override void Serialize(Stream stream, ColorCollectionNew palette)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));

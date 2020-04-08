@@ -1,32 +1,9 @@
-﻿/*
-﻿The MIT License (MIT)
-
-Copyright © 2013-2017 Cyotek Ltd.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
@@ -92,7 +69,7 @@ namespace Egorozh.ColorPicker
         public ColorCollection(IEnumerable<int> collection)
             : this()
         {
-            this.AddRange(collection.Select(Color.FromArgb));
+            this.AddRange(collection.Select(ColorsExtensions.FromArgb));
         }
 
         /// <summary>
@@ -102,7 +79,7 @@ namespace Egorozh.ColorPicker
         public ColorCollection(System.Drawing.Imaging.ColorPalette collection)
             : this()
         {
-            this.AddRange(collection.Entries);
+            //this.AddRange(collection.Entries);
         }
 
         #endregion
@@ -135,8 +112,6 @@ namespace Egorozh.ColorPicker
         /// <exception cref="System.ArgumentException">Thrown if no <see cref="IPaletteSerializer"/> is available for the file specified by <c>fileName</c>.</exception>
         public static ColorCollection LoadPalette(string fileName)
         {
-            IPaletteSerializer serializer;
-
             if (string.IsNullOrEmpty(fileName))
             {
                 throw new ArgumentNullException(nameof(fileName));
@@ -144,20 +119,20 @@ namespace Egorozh.ColorPicker
 
             if (!File.Exists(fileName))
             {
-                throw new FileNotFoundException(string.Format("Cannot find file '{0}'", fileName), fileName);
+                throw new FileNotFoundException($"Cannot find file '{fileName}'", fileName);
             }
 
-            serializer = PaletteSerializer.GetSerializer(fileName);
+            var serializer = PaletteSerializer.GetSerializer(fileName);
+
             if (serializer == null)
             {
-                throw new ArgumentException(string.Format("Cannot find a palette serializer for '{0}'", fileName),
+                throw new ArgumentException($"Cannot find a palette serializer for '{fileName}'",
                     nameof(fileName));
             }
 
-            using (FileStream file = File.OpenRead(fileName))
-            {
-                return serializer.Deserialize(file);
-            }
+            using var file = File.OpenRead(fileName);
+
+            return serializer.DeserializeNew(file);
         }
 
         #endregion
@@ -179,7 +154,7 @@ namespace Egorozh.ColorPicker
       this.SwatchNames.Clear();
 #endif
 
-            e = new ColorCollectionEventArgs(-1, Color.Empty);
+            e = new ColorCollectionEventArgs(-1, new Color());
             this.OnItemInserted(e);
             this.OnCollectionChanged(e);
         }
@@ -191,7 +166,6 @@ namespace Egorozh.ColorPicker
         /// <param name="item">The object to insert.</param>
         protected override void InsertItem(int index, Color item)
         {
-            ColorCollectionEventArgs e;
             int key;
 
             base.InsertItem(index, item);
@@ -216,7 +190,7 @@ namespace Egorozh.ColorPicker
                 _indexedLookup = null;
             }
 
-            e = new ColorCollectionEventArgs(index, item);
+            var e = new ColorCollectionEventArgs(index, item);
             this.OnItemInserted(e);
             this.OnCollectionChanged(e);
         }
@@ -228,7 +202,6 @@ namespace Egorozh.ColorPicker
         protected override void RemoveItem(int index)
         {
             Color item;
-            ColorCollectionEventArgs e;
             int key;
 
 #if USENAMEHACK
@@ -248,7 +221,7 @@ namespace Egorozh.ColorPicker
 
             base.RemoveItem(index);
 
-            e = new ColorCollectionEventArgs(index, item);
+            var e = new ColorCollectionEventArgs(index, item);
             this.OnItemRemoved(e);
             this.OnCollectionChanged(e);
         }
@@ -414,19 +387,16 @@ namespace Egorozh.ColorPicker
         /// <exception cref="System.ArgumentException">Thrown if no <see cref="IPaletteSerializer"/> is available for the file specified by <c>fileName</c>.</exception>
         public void Save<T>(string fileName) where T : IPaletteSerializer, new()
         {
-            IPaletteSerializer serializer;
-
             if (string.IsNullOrEmpty(fileName))
             {
                 throw new ArgumentNullException(nameof(fileName));
             }
 
-            serializer = Activator.CreateInstance<T>();
+            IPaletteSerializer serializer = Activator.CreateInstance<T>();
 
-            using (FileStream file = File.OpenWrite(fileName))
-            {
-                serializer.Serialize(file, this);
-            }
+            using var file = File.OpenWrite(fileName);
+
+            serializer.Serialize(file, this);
         }
 
         /// <summary>
@@ -611,7 +581,7 @@ namespace Egorozh.ColorPicker
       if (!string.Equals(this.SwatchNames[index], name))
       {
         this.SwatchNames[index] = name;
-        this.OnCollectionChanged(new ColorCollectionEventArgs(index, this[index]));
+        this.OnCollectionChanged(new ColorCollectionNewEventArgs(index, this[index]));
       }
     }
 

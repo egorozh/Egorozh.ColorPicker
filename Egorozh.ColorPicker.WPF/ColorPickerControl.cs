@@ -2,48 +2,76 @@
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Button = System.Windows.Controls.Button;
 using Color = System.Windows.Media.Color;
+using Control = System.Windows.Controls.Control;
+using Cursor = System.Windows.Input.Cursor;
 using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace Egorozh.ColorPicker
 {
-    public partial class ColorPickerControl
+    [TemplatePart(Name = PART_ColorGrid, Type = typeof(ColorGrid))]
+    [TemplatePart(Name = PART_ColorEditor, Type = typeof(ColorEditor))]
+    [TemplatePart(Name = PART_ScreenColorPicker, Type = typeof(ScreenColorPicker))]
+    [TemplatePart(Name = PART_ColorWheel, Type = typeof(ColorWheel))]
+    [TemplatePart(Name = PART_PreviewPanel, Type = typeof(Border))]
+    [TemplatePart(Name = PART_LoadPaletteButton, Type = typeof(Button))]
+    [TemplatePart(Name = PART_SavePaletteButton, Type = typeof(Button))]
+    public class ColorPickerControl : Control
     {
         #region Private Fields
 
+        private const string PART_ColorGrid = "PART_ColorGrid";
+        private const string PART_ColorEditor = "PART_ColorEditor";
+        private const string PART_ScreenColorPicker = "PART_ScreenColorPicker";
+        private const string PART_ColorWheel = "PART_ColorWheel";
+        private const string PART_PreviewPanel = "PART_PreviewPanel";
+        private const string PART_LoadPaletteButton = "PART_LoadPaletteButton";
+        private const string PART_SavePaletteButton = "PART_SavePaletteButton";
+
         private ColorEditorManager _colorEditorManager;
+        private Border _previewPanel;
 
         #endregion
 
-        public static DrawingGroup TransparentTile;
-
         #region Dependency Properties
+
+        public static readonly DependencyProperty LoadPaletteIconProperty = DependencyProperty.Register(
+            nameof(LoadPaletteIcon), typeof(FrameworkElement), typeof(ColorPickerControl),
+            new PropertyMetadata(default(FrameworkElement)));
+
+        public static readonly DependencyProperty SavePaletteIconProperty = DependencyProperty.Register(
+            nameof(SavePaletteIcon), typeof(FrameworkElement), typeof(ColorPickerControl),
+            new PropertyMetadata(default(FrameworkElement)));
+
+        public static readonly DependencyProperty ToolBarButtonStyleProperty = DependencyProperty.Register(
+            nameof(ToolBarButtonStyle), typeof(Style), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Style)));
+
+        public static readonly DependencyProperty DropperImageProperty = DependencyProperty.Register(
+            nameof(DropperImage), typeof(FrameworkElement), typeof(ColorPickerControl),
+            new PropertyMetadata(default(FrameworkElement)));
+
+        public static readonly DependencyProperty EyedropperCursorProperty = DependencyProperty.Register(
+            nameof(EyedropperCursor), typeof(Cursor), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Cursor)));
 
         public static readonly DependencyProperty TransparentBrushProperty = DependencyProperty.Register(
             nameof(TransparentBrush), typeof(Brush), typeof(ColorPickerControl),
-            new PropertyMetadata(default(Brush), TransparentBrushChanged));
-
-        private static void TransparentBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ColorPickerControl control)
-            {
-                ColorPickerControl.TransparentTile = ((DrawingBrush) control.TransparentBrush).Drawing as DrawingGroup;
-            }
-        }
+            new PropertyMetadata(default(Brush)));
 
         public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
             nameof(NumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
             new PropertyMetadata(default(Style)));
 
-
         public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
             nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerControl),
             new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
-
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             nameof(Color), typeof(Color), typeof(ColorPickerControl),
@@ -61,6 +89,36 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #region Public Properties
+
+        public FrameworkElement LoadPaletteIcon
+        {
+            get => (FrameworkElement) GetValue(LoadPaletteIconProperty);
+            set => SetValue(LoadPaletteIconProperty, value);
+        }
+
+        public FrameworkElement SavePaletteIcon
+        {
+            get => (FrameworkElement) GetValue(SavePaletteIconProperty);
+            set => SetValue(SavePaletteIconProperty, value);
+        }
+
+        public Style ToolBarButtonStyle
+        {
+            get => (Style) GetValue(ToolBarButtonStyleProperty);
+            set => SetValue(ToolBarButtonStyleProperty, value);
+        }
+
+        public FrameworkElement DropperImage
+        {
+            get => (FrameworkElement) GetValue(DropperImageProperty);
+            set => SetValue(DropperImageProperty, value);
+        }
+
+        public Cursor EyedropperCursor
+        {
+            get => (Cursor) GetValue(EyedropperCursorProperty);
+            set => SetValue(EyedropperCursorProperty, value);
+        }
 
         public Brush TransparentBrush
         {
@@ -104,21 +162,49 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
-        #region Constructor
+        #region Public Methods
 
-        public ColorPickerControl()
+        public override void OnApplyTemplate()
         {
-            InitializeComponent();
+            base.OnApplyTemplate();
 
-            ColorGrid.EditingColor += ColorGrid_EditingColor;
+            _colorEditorManager = new ColorEditorManager();
 
-            _colorEditorManager = new ColorEditorManager
+            if (GetTemplateChild(PART_ColorGrid) is ColorGrid colorGrid)
             {
-                ColorEditor = ColorEditor,
-                ColorGrid = ColorGrid,
-                ColorWheel = ColorWheel,
-                ScreenColorPicker = ScreenColorPicker
-            };
+                colorGrid.EditingColor += ColorGrid_EditingColor;
+                _colorEditorManager.ColorGrid = colorGrid;
+            }
+
+            if (GetTemplateChild(PART_ColorEditor) is ColorEditor colorEditor)
+            {
+                _colorEditorManager.ColorEditor = colorEditor;
+            }
+
+            if (GetTemplateChild(PART_ScreenColorPicker) is ScreenColorPicker colorPicker)
+            {
+                _colorEditorManager.ScreenColorPicker = colorPicker;
+            }
+
+            if (GetTemplateChild(PART_ColorWheel) is ColorWheel colorWheel)
+            {
+                _colorEditorManager.ColorWheel = colorWheel;
+            }
+
+            if (GetTemplateChild(PART_PreviewPanel) is Border panel)
+            {
+                _previewPanel = panel;
+            }
+
+            if (GetTemplateChild(PART_LoadPaletteButton) is Button loadButton)
+            {
+                loadButton.Click += LoadBtnClick;
+            }
+
+            if (GetTemplateChild(PART_SavePaletteButton) is Button saveButton)
+            {
+                saveButton.Click += SavePalleteBtnClick;
+            }
 
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
@@ -137,7 +223,7 @@ namespace Egorozh.ColorPicker
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
 
-        private void ColorEditorManager_ColorChanged(object sender, System.EventArgs e)
+        private void ColorEditorManager_ColorChanged(object sender, EventArgs e)
         {
             Color = _colorEditorManager.Color.ToColor();
 
@@ -146,7 +232,7 @@ namespace Egorozh.ColorPicker
 
         private void UpdatePreviewBorder()
         {
-            PreviewPanel.Background = new SolidColorBrush(Color);
+            _previewPanel.Background = new SolidColorBrush(Color);
         }
 
         private void LoadBtnClick(object sender, RoutedEventArgs e)
@@ -170,7 +256,7 @@ namespace Egorozh.ColorPicker
                             throw new InvalidOperationException("Serializer does not support reading palettes.");
                         }
 
-                        ColorCollectionNew palette;
+                        ColorCollection palette;
 
                         using (var file = File.OpenRead(dialog.FileName))
                         {
@@ -191,7 +277,7 @@ namespace Egorozh.ColorPicker
                                 palette.Add(Colors.White);
                             }
 
-                            ColorGrid.Colors = palette;
+                            _colorEditorManager.ColorGrid.Colors = palette;
                         }
                     }
                     else
@@ -233,7 +319,7 @@ namespace Egorozh.ColorPicker
                     try
                     {
                         using var file = File.OpenWrite(dialog.FileName);
-                        serializer.Serialize(file, ColorGrid.Colors);
+                        serializer.Serialize(file, _colorEditorManager.ColorGrid.Colors);
                     }
                     catch (Exception ex)
                     {
@@ -251,7 +337,7 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgsNew e)
+        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgs e)
         {
             e.Cancel = true;
 
@@ -260,7 +346,7 @@ namespace Egorozh.ColorPicker
             var res = GetColorForPaletteAction?.Invoke(ref color);
 
             if (res.HasValue && res.Value)
-                ColorGrid.Colors[e.ColorIndex] = color;
+                _colorEditorManager.ColorGrid.Colors[e.ColorIndex] = color;
         }
 
         private static bool GetColorForPalette(ref Color color)
