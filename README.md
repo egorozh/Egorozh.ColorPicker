@@ -6,8 +6,8 @@ This is an attempt to port [Cyotek.Windows.Forms.ColorPicker](https://github.com
 
 | Controls          | Status              
 | -------------     |:------------------:
-| ColorEditor       | partially ported 
-| ColorGrid         | wrapped in WindowsFormsHost
+| ColorEditor       | ported 
+| ColorGrid         | ported
 | ColorWheel        | ported     
 | ScreenColorPicker | ported  
 
