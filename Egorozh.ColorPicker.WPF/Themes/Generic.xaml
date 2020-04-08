@@ -15,22 +15,7 @@
     <Cursor x:Key="EyedropperCursor">/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur</Cursor>
 
     <!--#endregion-->
-
-
-    <Style TargetType="local:ColorGrid">
-
-        <Setter Property="ColorButtonStyle" Value="{StaticResource ColorButton}" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:ColorGrid">
-                    <ContentPresenter Content="{TemplateBinding Content}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
+  
     <Style TargetType="local:ColorPickerControl">
 
         <Setter Property="NumericUpDownStyle" Value="{StaticResource NumericUpDownStyle}" />
@@ -61,14 +46,14 @@
                             <StackPanel Orientation="Horizontal"
                                         Margin="0 4">
 
-                                <Button x:Name="PART_LoadPaletteButton" 
+                                <Button x:Name="PART_LoadPaletteButton"
                                         Width="24" Height="24"
                                         Style="{TemplateBinding ToolBarButtonStyle}"
                                         Margin="0 2 2 2"
                                         ToolTip="Load Palette"
                                         Content="{TemplateBinding LoadPaletteIcon}" />
 
-                                <Button x:Name="PART_SavePaletteButton" 
+                                <Button x:Name="PART_SavePaletteButton"
                                         Width="24" Height="24"
                                         Margin="0 2"
                                         Style="{TemplateBinding ToolBarButtonStyle}"
@@ -79,6 +64,8 @@
 
                             <local:ColorGrid x:Name="PART_ColorGrid"
                                              Width="240"
+                                             Orientation="Horizontal"
+                                             ColorButtonStyle="{StaticResource ColorButton}"
                                              Palette="Paint" />
 
                         </StackPanel>

@@ -6,12 +6,19 @@ using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker
 {
-    public partial class ColorGrid : IColorEditor
+    public class ColorGrid : WrapPanel, IColorEditor
     {
         #region Dependency Properties
 
         public static readonly DependencyProperty ColorButtonStyleProperty = DependencyProperty.Register(
-            nameof(ColorButtonStyle), typeof(Style), typeof(ColorGrid), new PropertyMetadata(default(Style)));
+            nameof(ColorButtonStyle), typeof(Style), typeof(ColorGrid),
+            new PropertyMetadata(default(Style), ColorButtonStyleChanged));
+
+        private static void ColorButtonStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorGrid colorGrid)
+                colorGrid.ColorButtonStyleChanged();
+        }
 
         public static readonly DependencyProperty PaletteProperty = DependencyProperty.Register(
             nameof(Palette), typeof(ColorPalette), typeof(ColorGrid),
@@ -66,30 +73,11 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
-        #region Static Constructor
-
-        static ColorGrid()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorGrid),
-                new FrameworkPropertyMetadata(typeof(ColorGrid)));
-        }
-
-        #endregion
-
-        #region Constructor
-
-        public ColorGrid()
-        {
-            InitializeComponent();
-        }
-
-        #endregion
-
         #region Private Methods
 
         private void CreateColors()
         {
-            foreach (var uiElement in WrapPanel.Children)
+            foreach (var uiElement in Children)
             {
                 if (uiElement is Button button)
                 {
@@ -98,7 +86,7 @@ namespace Egorozh.ColorPicker
                 }
             }
 
-            WrapPanel.Children.Clear();
+            Children.Clear();
 
             for (var i = 0; i < Colors.Count; i++)
             {
@@ -115,7 +103,16 @@ namespace Egorozh.ColorPicker
                 button.Click += Button_Click;
                 button.MouseDoubleClick += Button_MouseDoubleClick;
 
-                WrapPanel.Children.Add(button);
+                Children.Add(button);
+            }
+        }
+
+        private void ColorButtonStyleChanged()
+        {
+            foreach (var uiElement in Children)
+            {
+                if (uiElement is Button button)
+                    button.Style = ColorButtonStyle;
             }
         }
 
