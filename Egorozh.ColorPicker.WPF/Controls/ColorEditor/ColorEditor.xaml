@@ -118,12 +118,7 @@
 
         <TextBlock Grid.Row="6" Grid.Column="0"
                    Text="H: " />
-
-        <!--<WindowsFormsHost Grid.Row="6" Grid.Column="1">
-            <forms:HueColorSlider x:Name="hColorBar"
-                                  ValueChanged="ColorBar_OnValueChanged" />
-        </WindowsFormsHost>-->
-
+   
         <local:HueColorSliderNew Grid.Row="6" Grid.Column="1"
                                  x:Name="hColorBar"
                                  ValueChanged="HColorBar_OnValueChanged" />
