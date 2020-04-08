@@ -4,7 +4,22 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
+    <Authors>egorozh</Authors>
+    <Version>0.1.3</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</RepositoryUrl>
+    <PackageTags>Color, ColorPicker, WPF</PackageTags>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Description>ColorPicker Dialog</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md" Link="LICENSE.md">
+      <PackagePath></PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj" />

@@ -1,32 +1,9 @@
-﻿/*
-﻿The MIT License (MIT)
-
-Copyright © 2013-2017 Cyotek Ltd.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
@@ -34,10 +11,10 @@ namespace Egorozh.ColorPicker
     /// Represents a collection of colors
     /// </summary>
     /// <remarks>
-    /// 	<para>ColorCollection allows duplicate elements.</para>
+    /// 	<para>ColorCollectionNew allows duplicate elements.</para>
     /// 	<para>Elements in this collection can be accessed using an integer index. Indexes in this collection are zero-based.</para>
     /// </remarks>
-    public class ColorCollection : Collection<Color>, ICloneable, IEquatable<ColorCollection>
+    public class ColorCollectionNew : Collection<Color>, ICloneable, IEquatable<ColorCollectionNew>
     {
         #region Instance Fields
 
@@ -50,9 +27,9 @@ namespace Egorozh.ColorPicker
         #region Public Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class.
+        /// Initializes a new instance of the <see cref="ColorCollectionNew"/> class.
         /// </summary>
-        public ColorCollection()
+        public ColorCollectionNew()
         {
 #if USENAMEHACK
       this.SwatchNames = new List<string>();
@@ -60,20 +37,20 @@ namespace Egorozh.ColorPicker
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class that contains elements copied from the specified collection.
+        /// Initializes a new instance of the <see cref="ColorCollectionNew"/> class that contains elements copied from the specified collection.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new collection.</param>
-        public ColorCollection(IEnumerable<Color> collection)
+        public ColorCollectionNew(IEnumerable<Color> collection)
             : this()
         {
             this.AddRange(collection);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class that contains elements copied from the specified collection.
+        /// Initializes a new instance of the <see cref="ColorCollectionNew"/> class that contains elements copied from the specified collection.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new collection.</param>
-        public ColorCollection(ColorCollection collection)
+        public ColorCollectionNew(ColorCollectionNew collection)
             : this()
         {
             for (int i = 0; i < collection.Count; i++)
@@ -86,23 +63,23 @@ namespace Egorozh.ColorPicker
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class that contains elements copied from the specified collection.
+        /// Initializes a new instance of the <see cref="ColorCollectionNew"/> class that contains elements copied from the specified collection.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new collection.</param>
-        public ColorCollection(IEnumerable<int> collection)
+        public ColorCollectionNew(IEnumerable<int> collection)
             : this()
         {
-            this.AddRange(collection.Select(Color.FromArgb));
+            this.AddRange(collection.Select(ColorsExtensions.FromArgb));
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorCollection"/> class that contains elements copied from the specified collection.
+        /// Initializes a new instance of the <see cref="ColorCollectionNew"/> class that contains elements copied from the specified collection.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new collection.</param>
-        public ColorCollection(System.Drawing.Imaging.ColorPalette collection)
+        public ColorCollectionNew(System.Drawing.Imaging.ColorPalette collection)
             : this()
         {
-            this.AddRange(collection.Entries);
+            //this.AddRange(collection.Entries);
         }
 
         #endregion
@@ -112,31 +89,29 @@ namespace Egorozh.ColorPicker
         /// <summary>
         /// Occurs when elements in the collection are added, removed or modified.
         /// </summary>
-        public event EventHandler<ColorCollectionEventArgs> CollectionChanged;
+        public event EventHandler<ColorCollectionEventArgsNew> CollectionChanged;
 
-        public event EventHandler<ColorCollectionEventArgs> ItemInserted;
+        public event EventHandler<ColorCollectionEventArgsNew> ItemInserted;
 
-        public event EventHandler<ColorCollectionEventArgs> ItemRemoved;
+        public event EventHandler<ColorCollectionEventArgsNew> ItemRemoved;
 
-        public event EventHandler<ColorCollectionEventArgs> ItemReplaced;
+        public event EventHandler<ColorCollectionEventArgsNew> ItemReplaced;
 
-        public event EventHandler<ColorCollectionEventArgs> ItemsCleared;
+        public event EventHandler<ColorCollectionEventArgsNew> ItemsCleared;
 
         #endregion
 
         #region Class Members
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ColorCollection" /> class that contains elements loaded from the specified file.
+        /// Creates a new instance of the <see cref="ColorCollectionNew" /> class that contains elements loaded from the specified file.
         /// </summary>
         /// <param name="fileName">Name of the file to load.</param>
         /// <exception cref="System.ArgumentNullException">Thrown if the <c>fileName</c> argument is not specified.</exception>
         /// <exception cref="System.IO.FileNotFoundException">Thrown if the file specified by <c>fileName</c> cannot be found.</exception>
         /// <exception cref="System.ArgumentException">Thrown if no <see cref="IPaletteSerializer"/> is available for the file specified by <c>fileName</c>.</exception>
-        public static ColorCollection LoadPalette(string fileName)
+        public static ColorCollectionNew LoadPalette(string fileName)
         {
-            IPaletteSerializer serializer;
-
             if (string.IsNullOrEmpty(fileName))
             {
                 throw new ArgumentNullException(nameof(fileName));
@@ -144,20 +119,20 @@ namespace Egorozh.ColorPicker
 
             if (!File.Exists(fileName))
             {
-                throw new FileNotFoundException(string.Format("Cannot find file '{0}'", fileName), fileName);
+                throw new FileNotFoundException($"Cannot find file '{fileName}'", fileName);
             }
 
-            serializer = PaletteSerializer.GetSerializer(fileName);
+            var serializer = PaletteSerializer.GetSerializer(fileName);
+
             if (serializer == null)
             {
-                throw new ArgumentException(string.Format("Cannot find a palette serializer for '{0}'", fileName),
+                throw new ArgumentException($"Cannot find a palette serializer for '{fileName}'",
                     nameof(fileName));
             }
 
-            using (FileStream file = File.OpenRead(fileName))
-            {
-                return serializer.Deserialize(file);
-            }
+            using var file = File.OpenRead(fileName);
+
+            return serializer.DeserializeNew(file);
         }
 
         #endregion
@@ -169,7 +144,7 @@ namespace Egorozh.ColorPicker
         /// </summary>
         protected override void ClearItems()
         {
-            ColorCollectionEventArgs e;
+            ColorCollectionEventArgsNew e;
 
             base.ClearItems();
 
@@ -179,7 +154,7 @@ namespace Egorozh.ColorPicker
       this.SwatchNames.Clear();
 #endif
 
-            e = new ColorCollectionEventArgs(-1, Color.Empty);
+            e = new ColorCollectionEventArgsNew(-1, new Color());
             this.OnItemInserted(e);
             this.OnCollectionChanged(e);
         }
@@ -191,7 +166,6 @@ namespace Egorozh.ColorPicker
         /// <param name="item">The object to insert.</param>
         protected override void InsertItem(int index, Color item)
         {
-            ColorCollectionEventArgs e;
             int key;
 
             base.InsertItem(index, item);
@@ -216,7 +190,7 @@ namespace Egorozh.ColorPicker
                 _indexedLookup = null;
             }
 
-            e = new ColorCollectionEventArgs(index, item);
+            var e = new ColorCollectionEventArgsNew(index, item);
             this.OnItemInserted(e);
             this.OnCollectionChanged(e);
         }
@@ -228,7 +202,6 @@ namespace Egorozh.ColorPicker
         protected override void RemoveItem(int index)
         {
             Color item;
-            ColorCollectionEventArgs e;
             int key;
 
 #if USENAMEHACK
@@ -248,7 +221,7 @@ namespace Egorozh.ColorPicker
 
             base.RemoveItem(index);
 
-            e = new ColorCollectionEventArgs(index, item);
+            var e = new ColorCollectionEventArgsNew(index, item);
             this.OnItemRemoved(e);
             this.OnCollectionChanged(e);
         }
@@ -266,7 +239,7 @@ namespace Egorozh.ColorPicker
 
             if (oldItem != item)
             {
-                ColorCollectionEventArgs e;
+                ColorCollectionEventArgsNew e;
 
                 if (_indexedLookup != null)
                 {
@@ -292,7 +265,7 @@ namespace Egorozh.ColorPicker
 
                 base.SetItem(index, item);
 
-                e = new ColorCollectionEventArgs(index, item);
+                e = new ColorCollectionEventArgsNew(index, item);
                 this.OnItemReplaced(e);
                 this.OnCollectionChanged(e);
             }
@@ -302,8 +275,8 @@ namespace Egorozh.ColorPicker
 
         #region Public Members
 
-        /// <summary>Adds the elements of the specified collection to the end of the <see cref="ColorCollection"/>.</summary>
-        /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollection"/>.</param>
+        /// <summary>Adds the elements of the specified collection to the end of the <see cref="ColorCollectionNew"/>.</summary>
+        /// <param name="colors">The collection whose elements should be added to the end of the <see cref="ColorCollectionNew"/>.</param>
         public void AddRange(IEnumerable<Color> colors)
         {
             foreach (Color color in colors)
@@ -316,27 +289,27 @@ namespace Egorozh.ColorPicker
         /// Creates a new object that is a copy of the current instance.
         /// </summary>
         /// <returns>A new object that is a copy of this instance.</returns>
-        public virtual ColorCollection Clone()
+        public virtual ColorCollectionNew Clone()
         {
-            return new ColorCollection(this);
+            return new ColorCollectionNew(this);
         }
 
         /// <summary>
-        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire <see cref="ColorCollection"/>.
+        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire <see cref="ColorCollectionNew"/>.
         /// </summary>
-        /// <param name="item">The <see cref="Color"/> to locate in the <see cref="ColorCollection"/>.</param>
-        /// <returns>The zero-based index of the first occurrence of <c>item</c> within the entire <see cref="ColorCollection"/>, if found; otherwise, –1.</returns>
+        /// <param name="item">The <see cref="Color"/> to locate in the <see cref="ColorCollectionNew"/>.</param>
+        /// <returns>The zero-based index of the first occurrence of <c>item</c> within the entire <see cref="ColorCollectionNew"/>, if found; otherwise, –1.</returns>
         public int Find(Color item)
         {
             return this.Find(item.ToArgb());
         }
 
         /// <summary>
-        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire <see cref="ColorCollection" />.
+        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire <see cref="ColorCollectionNew" />.
         /// </summary>
-        /// <param name="item">The <see cref="Color"/> to locate in the <see cref="ColorCollection" />.</param>
-        /// <param name="ignoreAlphaChannel">If set to <c>true</c> only the red, green and blue channels of items in the <see cref="ColorCollection"/> will be compared.</param>
-        /// <returns>The zero-based index of the first occurrence of <c>item</c> within the entire <see cref="ColorCollection" />, if found; otherwise, –1.</returns>
+        /// <param name="item">The <see cref="Color"/> to locate in the <see cref="ColorCollectionNew" />.</param>
+        /// <param name="ignoreAlphaChannel">If set to <c>true</c> only the red, green and blue channels of items in the <see cref="ColorCollectionNew"/> will be compared.</param>
+        /// <returns>The zero-based index of the first occurrence of <c>item</c> within the entire <see cref="ColorCollectionNew" />, if found; otherwise, –1.</returns>
         public int Find(Color item, bool ignoreAlphaChannel)
         {
             int result;
@@ -368,10 +341,10 @@ namespace Egorozh.ColorPicker
         }
 
         /// <summary>
-        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire <see cref="ColorCollection"/>.
+        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire <see cref="ColorCollectionNew"/>.
         /// </summary>
-        /// <param name="item">The ARGB color to locate in the <see cref="ColorCollection"/>.</param>
-        /// <returns>The zero-based index of the first occurrence of <c>item</c> within the entire <see cref="ColorCollection"/>, if found; otherwise, –1.</returns>
+        /// <param name="item">The ARGB color to locate in the <see cref="ColorCollectionNew"/>.</param>
+        /// <returns>The zero-based index of the first occurrence of <c>item</c> within the entire <see cref="ColorCollectionNew"/>, if found; otherwise, –1.</returns>
         public int Find(int item)
         {
             int result;
@@ -390,7 +363,7 @@ namespace Egorozh.ColorPicker
         }
 
         /// <summary>
-        /// Populates this <see cref="ColorCollection"/> with items loaded from the specified file.
+        /// Populates this <see cref="ColorCollectionNew"/> with items loaded from the specified file.
         /// </summary>
         /// <param name="fileName">Name of the file to load.</param>
         /// <exception cref="System.ArgumentNullException">Thrown if the <c>fileName</c> argument is not specified.</exception>
@@ -398,7 +371,7 @@ namespace Egorozh.ColorPicker
         /// <exception cref="System.ArgumentException">Thrown if no <see cref="IPaletteSerializer"/> is available for the file specified by <c>fileName</c>.</exception>
         public void Load(string fileName)
         {
-            ColorCollection palette;
+            ColorCollectionNew palette;
 
             palette = LoadPalette(fileName);
 
@@ -407,30 +380,27 @@ namespace Egorozh.ColorPicker
         }
 
         /// <summary>
-        /// Saves the contents of this <see cref="ColorCollection"/> into the specified file.
+        /// Saves the contents of this <see cref="ColorCollectionNew"/> into the specified file.
         /// </summary>
         /// <param name="fileName">Name of the file to save.</param>
         /// <exception cref="System.ArgumentNullException">Thrown if the <c>fileName</c> argument is not specified.</exception>
         /// <exception cref="System.ArgumentException">Thrown if no <see cref="IPaletteSerializer"/> is available for the file specified by <c>fileName</c>.</exception>
         public void Save<T>(string fileName) where T : IPaletteSerializer, new()
         {
-            IPaletteSerializer serializer;
-
             if (string.IsNullOrEmpty(fileName))
             {
                 throw new ArgumentNullException(nameof(fileName));
             }
 
-            serializer = Activator.CreateInstance<T>();
+            IPaletteSerializer serializer = Activator.CreateInstance<T>();
 
-            using (FileStream file = File.OpenWrite(fileName))
-            {
-                serializer.Serialize(file, this);
-            }
+            using var file = File.OpenWrite(fileName);
+
+            serializer.Serialize(file, this);
         }
 
         /// <summary>
-        /// Sorts the elements in the entire %ColorCollection% using the specified order.
+        /// Sorts the elements in the entire %ColorCollectionNew% using the specified order.
         /// </summary>
         /// <param name="sortOrder">The sort order.</param>
         /// <exception cref="System.ArgumentException">Thrown when an invalid sort order is specified</exception>
@@ -445,13 +415,13 @@ namespace Egorozh.ColorPicker
                 switch (sortOrder)
                 {
                     case ColorCollectionSortOrder.Brightness:
-                        sortDelegate = ColorComparer.Brightness;
+                        sortDelegate = ColorComparerNew.Brightness;
                         break;
                     case ColorCollectionSortOrder.Hue:
-                        sortDelegate = ColorComparer.Hue;
+                        sortDelegate = ColorComparerNew.Hue;
                         break;
                     case ColorCollectionSortOrder.Value:
-                        sortDelegate = ColorComparer.Value;
+                        sortDelegate = ColorComparerNew.Value;
                         break;
                     default:
                         throw new ArgumentException("Invalid sort order", nameof(sortOrder));
@@ -478,9 +448,9 @@ namespace Egorozh.ColorPicker
         /// Raises the <see cref="CollectionChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnCollectionChanged(ColorCollectionEventArgs e)
+        protected virtual void OnCollectionChanged(ColorCollectionEventArgsNew e)
         {
-            EventHandler<ColorCollectionEventArgs> handler;
+            EventHandler<ColorCollectionEventArgsNew> handler;
 
             handler = this.CollectionChanged;
 
@@ -493,10 +463,10 @@ namespace Egorozh.ColorPicker
         /// <summary>
         /// Raises the <see cref="ItemInserted" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="ColorCollectionEventArgs" /> instance containing the event data.</param>
-        protected virtual void OnItemInserted(ColorCollectionEventArgs e)
+        /// <param name="e">The <see cref="ColorCollectionEventArgsNew" /> instance containing the event data.</param>
+        protected virtual void OnItemInserted(ColorCollectionEventArgsNew e)
         {
-            EventHandler<ColorCollectionEventArgs> handler;
+            EventHandler<ColorCollectionEventArgsNew> handler;
 
             handler = this.ItemInserted;
 
@@ -509,10 +479,10 @@ namespace Egorozh.ColorPicker
         /// <summary>
         /// Raises the <see cref="ItemRemoved" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="ColorCollectionEventArgs" /> instance containing the event data.</param>
-        protected virtual void OnItemRemoved(ColorCollectionEventArgs e)
+        /// <param name="e">The <see cref="ColorCollectionEventArgsNew" /> instance containing the event data.</param>
+        protected virtual void OnItemRemoved(ColorCollectionEventArgsNew e)
         {
-            EventHandler<ColorCollectionEventArgs> handler;
+            EventHandler<ColorCollectionEventArgsNew> handler;
 
             handler = this.ItemRemoved;
 
@@ -525,10 +495,10 @@ namespace Egorozh.ColorPicker
         /// <summary>
         /// Raises the <see cref="ItemReplaced" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="ColorCollectionEventArgs" /> instance containing the event data.</param>
-        protected virtual void OnItemReplaced(ColorCollectionEventArgs e)
+        /// <param name="e">The <see cref="ColorCollectionEventArgsNew" /> instance containing the event data.</param>
+        protected virtual void OnItemReplaced(ColorCollectionEventArgsNew e)
         {
-            EventHandler<ColorCollectionEventArgs> handler;
+            EventHandler<ColorCollectionEventArgsNew> handler;
 
             handler = this.ItemReplaced;
 
@@ -542,9 +512,9 @@ namespace Egorozh.ColorPicker
         /// Raises the <see cref="ItemsCleared" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnItemsCleared(ColorCollectionEventArgs e)
+        protected virtual void OnItemsCleared(ColorCollectionEventArgsNew e)
         {
-            EventHandler<ColorCollectionEventArgs> handler;
+            EventHandler<ColorCollectionEventArgsNew> handler;
 
             handler = this.ItemsCleared;
 
@@ -611,7 +581,7 @@ namespace Egorozh.ColorPicker
       if (!string.Equals(this.SwatchNames[index], name))
       {
         this.SwatchNames[index] = name;
-        this.OnCollectionChanged(new ColorCollectionEventArgs(index, this[index]));
+        this.OnCollectionChanged(new ColorCollectionNewEventArgs(index, this[index]));
       }
     }
 
@@ -690,36 +660,36 @@ namespace Egorozh.ColorPicker
 #endif
 
         /// <summary>
-        /// Compares two <see cref="ColorCollection"/> objects. The result specifies whether the values of the two <see cref="ColorCollection"/> objects are equal.
+        /// Compares two <see cref="ColorCollectionNew"/> objects. The result specifies whether the values of the two <see cref="ColorCollectionNew"/> objects are equal.
         /// </summary>
-        /// <param name="left">A <see cref="ColorCollection"/> to compare.</param>
-        /// <param name="right">A <see cref="ColorCollection"/> to compare.</param>
+        /// <param name="left">A <see cref="ColorCollectionNew"/> to compare.</param>
+        /// <param name="right">A <see cref="ColorCollectionNew"/> to compare.</param>
         /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(ColorCollection left, ColorCollection right)
+        public static bool operator ==(ColorCollectionNew left, ColorCollectionNew right)
         {
             return ReferenceEquals(left, right) ||
                    !((object) left == null || (object) right == null) && left.Equals(right);
         }
 
         /// <summary>
-        /// Compares two <see cref="ColorCollection"/> objects. The result specifies whether the values of the two <see cref="ColorCollection"/> objects are unequal.
+        /// Compares two <see cref="ColorCollectionNew"/> objects. The result specifies whether the values of the two <see cref="ColorCollectionNew"/> objects are unequal.
         /// </summary>
-        /// <param name="left">A <see cref="ColorCollection"/> to compare.</param>
-        /// <param name="right">A <see cref="ColorCollection"/> to compare.</param>
+        /// <param name="left">A <see cref="ColorCollectionNew"/> to compare.</param>
+        /// <param name="right">A <see cref="ColorCollectionNew"/> to compare.</param>
         /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/> differ; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(ColorCollection left, ColorCollection right)
+        public static bool operator !=(ColorCollectionNew left, ColorCollectionNew right)
         {
             return !(left == right);
         }
 
         /// <summary>
-        /// Specifies whether this <see cref="ColorCollection"/> contains the same coordinates as the specified <see cref="T:System.Object"/>.
+        /// Specifies whether this <see cref="ColorCollectionNew"/> contains the same coordinates as the specified <see cref="T:System.Object"/>.
         /// </summary>
         /// <param name="obj">The <see cref="T:System.Object" /> to test.</param>
-        /// <returns><c>true</c> if <paramref name="obj"/> is a <see cref="ColorCollection"/> and has the same values as this <see cref="ColorCollection"/>.</returns>
+        /// <returns><c>true</c> if <paramref name="obj"/> is a <see cref="ColorCollectionNew"/> and has the same values as this <see cref="ColorCollectionNew"/>.</returns>
         public override bool Equals(object obj)
         {
-            return obj is ColorCollection && this.Equals((ColorCollection) obj);
+            return obj is ColorCollectionNew && this.Equals((ColorCollectionNew) obj);
         }
 
         /// <summary>
@@ -729,7 +699,7 @@ namespace Egorozh.ColorPicker
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
         /// <param name="other">An object to compare with this object.</param>
-        public bool Equals(ColorCollection other)
+        public bool Equals(ColorCollectionNew other)
         {
             bool result;
 

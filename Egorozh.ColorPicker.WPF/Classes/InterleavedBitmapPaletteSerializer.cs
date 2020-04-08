@@ -1,4 +1,27 @@
-﻿using System;
+﻿/*
+﻿The MIT License (MIT)
+
+Copyright © 2013-2017 Cyotek Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -175,6 +198,83 @@ namespace Egorozh.ColorPicker
             return results;
         }
 
+        public override ColorCollectionNew DeserializeNew(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            var results = new ColorCollectionNew();
+
+            // read the FORM header that identifies the document as an IFF file
+            var buffer = new byte[4];
+            stream.Read(buffer, 0, buffer.Length);
+
+            if (Encoding.ASCII.GetString(buffer) != "FORM")
+                throw new InvalidDataException("Form header not found.");
+
+            // the next value is the size of all the data in the FORM chunk
+            // We don't actually need this value, but we have to read it
+            // regardless to advance the stream
+            this.ReadInt32(stream);
+
+            // read either the PBM or ILBM header that identifies this document as an image file
+            stream.Read(buffer, 0, buffer.Length);
+            var header = Encoding.ASCII.GetString(buffer);
+            if (header != "PBM " && header != "ILBM")
+            {
+                throw new InvalidDataException("Bitmap header not found.");
+            }
+
+            while (stream.Read(buffer, 0, buffer.Length) == buffer.Length)
+            {
+                var chunkLength = this.ReadInt32(stream);
+
+                if (Encoding.ASCII.GetString(buffer) != "CMAP")
+                {
+                    // some other LBM chunk, skip it
+                    if (stream.CanSeek)
+                    {
+                        stream.Seek(chunkLength, SeekOrigin.Current);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < chunkLength; i++)
+                        {
+                            stream.ReadByte();
+                        }
+                    }
+                }
+                else
+                {
+                    // color map chunk!
+                    for (int i = 0; i < chunkLength / 3; i++)
+                    {
+                        int r;
+                        int g;
+                        int b;
+
+                        r = stream.ReadByte();
+                        g = stream.ReadByte();
+                        b = stream.ReadByte();
+
+                        results.Add(System.Windows.Media.Color.FromRgb((byte) r, (byte) g, (byte) b));
+                    }
+
+                    // all done so stop reading the rest of the file
+                    break;
+                }
+
+                // chunks always contain an even number of bytes even if the recorded length is odd
+                // if the length is odd, then there's a padding byte in the file - just read and discard
+                if (chunkLength % 2 != 0)
+                {
+                    stream.ReadByte();
+                }
+            }
+
+            return results;
+        }
+
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream" />.
         /// </summary>
@@ -191,6 +291,17 @@ namespace Egorozh.ColorPicker
             {
                 throw new ArgumentNullException(nameof(palette));
             }
+
+            throw new NotSupportedException();
+        }
+
+        public override void Serialize(Stream stream, ColorCollectionNew palette)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            if (palette == null)
+                throw new ArgumentNullException(nameof(palette));
 
             throw new NotSupportedException();
         }

@@ -1,4 +1,27 @@
-﻿using System;
+﻿/*
+﻿The MIT License (MIT)
+
+Copyright © 2013-2017 Cyotek Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -133,6 +156,48 @@ namespace Egorozh.ColorPicker
             return results;
         }
 
+        public override ColorCollectionNew DeserializeNew(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            var results = new ColorCollectionNew();
+
+            using (var reader = new StreamReader(stream))
+            {
+                // check signature
+                var header = reader.ReadLine();
+                var version = reader.ReadLine();
+
+                if (header != "JASC-PAL" || version != "0100")
+                    throw new InvalidDataException("Invalid palette file");
+
+                var colorCount = Convert.ToInt32(reader.ReadLine());
+
+                for (var i = 0; i < colorCount; i++)
+                {
+                    var data = reader.ReadLine();
+                    var parts = !string.IsNullOrEmpty(data)
+                        ? data.Split(new[]
+                        {
+                            ' ',
+                            '\t'
+                        }, StringSplitOptions.RemoveEmptyEntries)
+                        : new string[0];
+
+                    if (!int.TryParse(parts[0], out var r) || !int.TryParse(parts[1], out var g) ||
+                        !int.TryParse(parts[2], out var b))
+                    {
+                        throw new InvalidDataException($"Invalid palette contents found with data '{data}'");
+                    }
+
+                    results.Add(System.Windows.Media.Color.FromRgb((byte) r, (byte) g, (byte) b));
+                }
+            }
+
+            return results;
+        }
+
         /// <summary>
         /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified <see cref="Stream" />.
         /// </summary>
@@ -162,6 +227,29 @@ namespace Egorozh.ColorPicker
                     writer.Write("{0} ", color.B);
                     writer.WriteLine();
                 }
+            }
+        }
+
+        public override void Serialize(Stream stream, ColorCollectionNew palette)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            if (palette == null)
+                throw new ArgumentNullException(nameof(palette));
+
+            using var writer = new StreamWriter(stream, Encoding.UTF8);
+
+            writer.WriteLine("JASC-PAL");
+            writer.WriteLine("0100");
+            writer.WriteLine(palette.Count);
+
+            foreach (var color in palette)
+            {
+                writer.Write("{0} ", color.R);
+                writer.Write("{0} ", color.G);
+                writer.Write("{0} ", color.B);
+                writer.WriteLine();
             }
         }
 

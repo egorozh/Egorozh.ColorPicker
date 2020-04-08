@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using Color = System.Drawing.Color;
-using Point = System.Drawing.Point;
 using SystemColors = System.Drawing.SystemColors;
 
 namespace Egorozh.ColorPicker
@@ -54,20 +51,20 @@ namespace Egorozh.ColorPicker
             get => _hslColor;
             set
             {
-                if (this.HslColor != value)
+                if (HslColor != value)
                 {
                     _hslColor = value;
 
-                    if (!this.LockUpdates)
+                    if (!LockUpdates)
                     {
-                        this.LockUpdates = true;
-                        this.Color = value.ToRgbColor();
-                        this.LockUpdates = false;
-                        this.UpdateFields(false);
+                        LockUpdates = true;
+                        Color = value.ToRgbColor();
+                        LockUpdates = false;
+                        UpdateFields(false);
                     }
                     else
                     {
-                        this.OnColorChanged(EventArgs.Empty);
+                        OnColorChanged(EventArgs.Empty);
                     }
                 }
             }
@@ -103,10 +100,9 @@ namespace Egorozh.ColorPicker
         {
             InitializeComponent();
 
-            rColorBar.Channel = RgbaChannel.Red;
-            gColorBar.Channel = RgbaChannel.Green;
-            bColorBar.Channel = RgbaChannel.Blue;
-            aColorBar.Channel = RgbaChannel.Alpha;
+            Color = Color.Black;
+
+            FillNamedColors();
         }
 
         #endregion
@@ -119,84 +115,84 @@ namespace Egorozh.ColorPicker
         /// <param name="userAction">if set to <c>true</c> the update is due to user interaction.</param>
         private void UpdateFields(bool userAction)
         {
-            if (!this.LockUpdates)
+            if (!LockUpdates)
             {
                 try
                 {
-                    this.LockUpdates = true;
+                    LockUpdates = true;
 
                     // RGB
                     if (!(userAction && rNumericUpDown.IsFocused))
                     {
-                        rNumericUpDown.Value = this.Color.R;
+                        rNumericUpDown.Value = Color.R;
                     }
 
                     if (!(userAction && gNumericUpDown.IsFocused))
                     {
-                        gNumericUpDown.Value = this.Color.G;
+                        gNumericUpDown.Value = Color.G;
                     }
 
                     if (!(userAction && bNumericUpDown.IsFocused))
                     {
-                        bNumericUpDown.Value = this.Color.B;
+                        bNumericUpDown.Value = Color.B;
                     }
 
-                    rColorBar.Value = this.Color.R;
-                    rColorBar.Color = this.Color;
-                    gColorBar.Value = this.Color.G;
-                    gColorBar.Color = this.Color;
-                    bColorBar.Value = this.Color.B;
-                    bColorBar.Color = this.Color;
+                    rColorBar.Value = Color.R;
+                    rColorBar.Color = Color.ToColor();
+                    gColorBar.Value = Color.G;
+                    gColorBar.Color = Color.ToColor();
+                    bColorBar.Value = Color.B;
+                    bColorBar.Color = Color.ToColor();
 
                     // HTML
-                    if (!(userAction && hexTextBox.Focused))
+                    if (!(userAction && hexTextBox.IsFocused))
                     {
-                        hexTextBox.Text = this.Color.IsNamedColor
-                            ? this.Color.Name
-                            : string.Format("{0:X2}{1:X2}{2:X2}", this.Color.R, this.Color.G, this.Color.B);
+                        hexTextBox.Text = Color.IsNamedColor
+                            ? Color.Name
+                            : string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
                     }
 
                     // HSL
                     if (!(userAction && hNumericUpDown.IsFocused))
                     {
-                        hNumericUpDown.Value = (int) this.HslColor.H;
+                        hNumericUpDown.Value = (int) HslColor.H;
                     }
 
                     if (!(userAction && sNumericUpDown.IsFocused))
                     {
-                        sNumericUpDown.Value = (int) (this.HslColor.S * 100);
+                        sNumericUpDown.Value = (int) (HslColor.S * 100);
                     }
 
                     if (!(userAction && lNumericUpDown.IsFocused))
                     {
-                        lNumericUpDown.Value = (int) (this.HslColor.L * 100);
+                        lNumericUpDown.Value = (int) (HslColor.L * 100);
                     }
 
-                    hColorBar.Value = (int) this.HslColor.H;
-                    sColorBar.Color = this.Color;
-                    sColorBar.Value = (int) (this.HslColor.S * 100);
-                    lColorBar.Color = this.Color;
-                    lColorBar.Value = (int) (this.HslColor.L * 100);
+                    hColorBar.Value = (int) HslColor.H;
+                    sColorBar.Color = Color.ToColor();
+                    sColorBar.Value = (int) (HslColor.S * 100);
+                    lColorBar.Color = Color.ToColor();
+                    lColorBar.Value = (int) (HslColor.L * 100);
 
                     // Alpha
                     if (!(userAction && aNumericUpDown.IsFocused))
                     {
-                        aNumericUpDown.Value = this.Color.A;
+                        aNumericUpDown.Value = Color.A;
                     }
 
-                    aColorBar.Color = this.Color;
-                    aColorBar.Value = this.Color.A;
+                    aColorBar.Color = Color.ToColor();
+                    aColorBar.Value = Color.A;
                 }
                 finally
                 {
-                    this.LockUpdates = false;
+                    LockUpdates = false;
                 }
             }
         }
 
         private void OnColorChanged(EventArgs e)
         {
-            this.UpdateFields(false);
+            UpdateFields(false);
 
             ColorChanged?.Invoke(this, e);
         }
@@ -215,27 +211,24 @@ namespace Egorozh.ColorPicker
 
             if (oldColor != newColor)
             {
-                if (!this.LockUpdates)
+                if (!LockUpdates)
                 {
-                    this.LockUpdates = true;
-                    this.HslColor = new HslColor(newColor);
-                    this.LockUpdates = false;
-                    this.UpdateFields(false);
+                    LockUpdates = true;
+                    HslColor = new HslColor(newColor);
+                    LockUpdates = false;
+                    UpdateFields(false);
                 }
                 else
                 {
-                    this.OnColorChanged(EventArgs.Empty);
+                    OnColorChanged(EventArgs.Empty);
                 }
             }
         }
 
         private void AddColorProperties<T>()
         {
-            Type type;
-            Type colorType;
-
-            type = typeof(T);
-            colorType = typeof(Color);
+            var type = typeof(T);
+            var colorType = typeof(Color);
 
             // ReSharper disable once LoopCanBePartlyConvertedToQuery
             foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Static))
@@ -253,19 +246,8 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        private void SetDropDownWidth()
-        {
-            if (hexTextBox.Items.Count != 0)
-            {
-                hexTextBox.DropDownWidth = hexTextBox.ItemHeight * 2 + hexTextBox.Items.Cast<string>()
-                                               .Max(s => TextRenderer.MeasureText(s, hexTextBox.Font).Width);
-            }
-        }
-
         private void FillNamedColors()
         {
-            //this.AddColorProperties<SystemColors>();
-
             var type = typeof(SystemColors);
             var colorType = typeof(Color);
 
@@ -282,23 +264,17 @@ namespace Egorozh.ColorPicker
                 }
             }
 
-            this.AddColorProperties<Color>();
-            this.SetDropDownWidth();
+            AddColorProperties<Color>();
         }
 
         private void NumericUpDown_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (!this.LockUpdates)
+            if (!LockUpdates)
             {
-                bool useHsl;
-                bool useRgb;
-                bool useNamed;
+                var useHsl = false;
+                var useRgb = false;
 
-                useHsl = false;
-                useRgb = false;
-                useNamed = false;
-
-                this.LockUpdates = true;
+                LockUpdates = true;
 
                 if (sender == aNumericUpDown || sender == rNumericUpDown || sender == gNumericUpDown ||
                     sender == bNumericUpDown)
@@ -310,17 +286,15 @@ namespace Egorozh.ColorPicker
                     useHsl = true;
                 }
 
-                if (useRgb || useNamed)
+                if (useRgb)
                 {
                     Color color;
 
-                    color = useNamed
-                        ? Color.FromName(hexTextBox.Text)
-                        : Color.FromArgb((int) aNumericUpDown.Value, (int) rNumericUpDown.Value,
-                            (int) gNumericUpDown.Value, (int) bNumericUpDown.Value);
+                    color = Color.FromArgb((int) aNumericUpDown.Value, (int) rNumericUpDown.Value,
+                        (int) gNumericUpDown.Value, (int) bNumericUpDown.Value);
 
-                    this.Color = color;
-                    this.HslColor = new HslColor(color);
+                    Color = color;
+                    HslColor = new HslColor(color);
                 }
                 else if (useHsl)
                 {
@@ -328,137 +302,46 @@ namespace Egorozh.ColorPicker
 
                     color = new HslColor((int) aNumericUpDown.Value, (double) hNumericUpDown.Value,
                         (double) sNumericUpDown.Value / 100, (double) lNumericUpDown.Value / 100);
-                    this.HslColor = color;
-                    this.Color = color.ToRgbColor();
+                    HslColor = color;
+                    Color = color.ToRgbColor();
                 }
 
-                this.LockUpdates = false;
-                this.UpdateFields(true);
+                LockUpdates = false;
+                UpdateFields(true);
             }
         }
 
-        private string AddSpaces(string text)
-        {
-            string result;
-
-            //http://stackoverflow.com/a/272929/148962
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                StringBuilder newText;
-
-                newText = new StringBuilder(text.Length * 2);
-                newText.Append(text[0]);
-                for (int i = 1; i < text.Length; i++)
-                {
-                    if (char.IsUpper(text[i]) && text[i - 1] != ' ')
-                    {
-                        newText.Append(' ');
-                    }
-
-                    newText.Append(text[i]);
-                }
-
-                result = newText.ToString();
-            }
-            else
-            {
-                result = null;
-            }
-
-            return result;
-        }
-
-        private void HexTextBox_OnDrawItem(object sender, DrawItemEventArgs e)
-        {
-            // TODO: Really, this should be another control - ColorComboBox or ColorListBox etc.
-
-            if (e.Index != -1)
-            {
-                Rectangle colorBox;
-                string name;
-                Color color;
-
-                e.DrawBackground();
-
-                name = (string) hexTextBox.Items[e.Index];
-                color = Color.FromName(name);
-                colorBox = new Rectangle(e.Bounds.Left + 1, e.Bounds.Top + 1, e.Bounds.Height - 3, e.Bounds.Height - 3);
-
-                using (Brush brush = new SolidBrush(color))
-                {
-                    e.Graphics.FillRectangle(brush, colorBox);
-                }
-
-                e.Graphics.DrawRectangle(SystemPens.ControlText, colorBox);
-
-                TextRenderer.DrawText(e.Graphics, this.AddSpaces(name), hexTextBox.Font,
-                    new Point(colorBox.Right + 3, colorBox.Top), e.ForeColor);
-
-                //if (color == Color.Transparent && (e.State & DrawItemState.Selected) != DrawItemState.Selected)
-                //  e.Graphics.DrawLine(SystemPens.ControlText, e.Bounds.Left, e.Bounds.Top, e.Bounds.Right, e.Bounds.Top);
-
-                e.DrawFocusRectangle();
-            }
-        }
-
-        private void HexTextBox_OnDropDown(object? sender, EventArgs e)
-        {
-            if (hexTextBox.Items.Count == 0)
-            {
-                this.FillNamedColors();
-            }
-        }
-
-        private void HexTextBox_OnSelectedIndexChanged(object? sender, EventArgs e)
+        private void HexTextBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (hexTextBox.SelectedIndex != -1)
             {
-                this.LockUpdates = true;
-                this.Color = Color.FromName((string) hexTextBox.SelectedItem);
-                this.LockUpdates = false;
+                LockUpdates = true;
+                Color = Color.FromName((string) hexTextBox.SelectedItem);
+                LockUpdates = false;
             }
         }
 
-        private void HexTextBox_OnTextChanged(object sender, EventArgs e)
+        private void HexTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!this.LockUpdates)
+            if (!LockUpdates)
             {
-                bool useHsl;
-                bool useRgb;
-                bool useNamed;
+                var useRgb = false;
+                var useNamed = false;
 
-                useHsl = false;
-                useRgb = false;
-                useNamed = false;
+                LockUpdates = true;
 
-                this.LockUpdates = true;
-
-                if (sender == hexTextBox)
+                if (true)
                 {
-                    string text;
-                    int namedIndex;
+                    var text = hexTextBox.Text;
 
-                    text = hexTextBox.Text;
                     if (text.StartsWith("#"))
-                    {
                         text = text.Substring(1);
-                    }
 
-                    if (hexTextBox.Items.Count == 0)
-                    {
-                        this.FillNamedColors();
-                    }
-
-                    namedIndex = hexTextBox.FindStringExact(text);
-
-                    if (namedIndex != -1 || text.Length == 6 || text.Length == 8)
+                    if (text.Length == 6 || text.Length == 8)
                     {
                         try
                         {
-                            Color color;
-
-                            color = namedIndex != -1 ? Color.FromName(text) : ColorTranslator.FromHtml("#" + text);
+                            var color = ColorTranslator.FromHtml("#" + text);
                             aNumericUpDown.Value = color.A;
                             rNumericUpDown.Value = color.R;
                             bNumericUpDown.Value = color.B;
@@ -480,52 +363,28 @@ namespace Egorozh.ColorPicker
 
                 if (useRgb || useNamed)
                 {
-                    Color color;
-
-                    color = useNamed
+                    var color = useNamed
                         ? Color.FromName(hexTextBox.Text)
                         : Color.FromArgb((int) aNumericUpDown.Value, (int) rNumericUpDown.Value,
                             (int) gNumericUpDown.Value, (int) bNumericUpDown.Value);
 
-                    this.Color = color;
-                    this.HslColor = new HslColor(color);
+                    Color = color;
+                    HslColor = new HslColor(color);
                 }
 
-                this.LockUpdates = false;
-                this.UpdateFields(true);
+                LockUpdates = false;
+                UpdateFields(true);
             }
         }
 
-        private void HexTextBox_OnKeyDown(object sender, KeyEventArgs e)
+        private void ColorBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            switch (e.KeyCode)
+            if (!LockUpdates)
             {
-                case Keys.Up:
-                case Keys.Down:
-                case Keys.PageUp:
-                case Keys.PageDown:
-                    if (hexTextBox.Items.Count == 0)
-                    {
-                        this.FillNamedColors();
-                    }
+                var useHsl = false;
+                var useRgb = false;
 
-                    break;
-            }
-        }
-
-        private void ColorBar_OnValueChanged(object? sender, EventArgs e)
-        {
-            if (!this.LockUpdates)
-            {
-                bool useHsl;
-                bool useRgb;
-                bool useNamed;
-
-                useHsl = false;
-                useRgb = false;
-                useNamed = false;
-
-                this.LockUpdates = true;
+                LockUpdates = true;
 
                 if (sender == aColorBar || sender == rColorBar || sender == gColorBar || sender == bColorBar)
                 {
@@ -546,30 +405,24 @@ namespace Egorozh.ColorPicker
                 }
 
 
-                if (useRgb || useNamed)
+                if (useRgb)
                 {
-                    Color color;
+                    var color = Color.FromArgb((int) aNumericUpDown.Value, (int) rNumericUpDown.Value,
+                        (int) gNumericUpDown.Value, (int) bNumericUpDown.Value);
 
-                    color = useNamed
-                        ? Color.FromName(hexTextBox.Text)
-                        : Color.FromArgb((int) aNumericUpDown.Value, (int) rNumericUpDown.Value,
-                            (int) gNumericUpDown.Value, (int) bNumericUpDown.Value);
-
-                    this.Color = color;
-                    this.HslColor = new HslColor(color);
+                    Color = color;
+                    HslColor = new HslColor(color);
                 }
                 else if (useHsl)
                 {
-                    HslColor color;
-
-                    color = new HslColor((int) aNumericUpDown.Value, (double) hNumericUpDown.Value,
+                    var color = new HslColor((int) aNumericUpDown.Value, (double) hNumericUpDown.Value,
                         (double) sNumericUpDown.Value / 100, (double) lNumericUpDown.Value / 100);
-                    this.HslColor = color;
-                    this.Color = color.ToRgbColor();
+                    HslColor = color;
+                    Color = color.ToRgbColor();
                 }
 
-                this.LockUpdates = false;
-                this.UpdateFields(true);
+                LockUpdates = false;
+                UpdateFields(true);
             }
         }
 

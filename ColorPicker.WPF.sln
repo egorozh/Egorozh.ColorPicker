@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egorozh.ColorPicker.WPF", "Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj", "{299478F0-9647-47FC-89F1-C1CBD25BB66E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF", "Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj", "{299478F0-9647-47FC-89F1-C1CBD25BB66E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egorozh.ColorPicker.WPF.Dialog", "Egorozh.ColorPicker.WPF.Dialog\Egorozh.ColorPicker.WPF.Dialog.csproj", "{768748DD-C16B-4E50-9FA2-F49EE869B82B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF.Dialog", "Egorozh.ColorPicker.WPF.Dialog\Egorozh.ColorPicker.WPF.Dialog.csproj", "{768748DD-C16B-4E50-9FA2-F49EE869B82B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egorozh.ColorPicker.WPF.Client", "Egorozh.ColorPicker.WPF.Client\Egorozh.ColorPicker.WPF.Client.csproj", "{91B6DBBF-0722-4AB9-A4C9-0F9BC7C84E3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF.Client", "Egorozh.ColorPicker.WPF.Client\Egorozh.ColorPicker.WPF.Client.csproj", "{91B6DBBF-0722-4AB9-A4C9-0F9BC7C84E3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

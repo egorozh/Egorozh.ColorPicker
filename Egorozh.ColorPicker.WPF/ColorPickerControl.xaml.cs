@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Color = System.Windows.Media.Color;
+using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
@@ -19,17 +19,26 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
+        public static DrawingGroup TransparentTile;
+
         #region Dependency Properties
+
+        public static readonly DependencyProperty TransparentBrushProperty = DependencyProperty.Register(
+            nameof(TransparentBrush), typeof(Brush), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Brush), TransparentBrushChanged));
+
+        private static void TransparentBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorPickerControl control)
+            {
+                ColorPickerControl.TransparentTile = ((DrawingBrush) control.TransparentBrush).Drawing as DrawingGroup;
+            }
+        }
 
         public static readonly DependencyProperty NumericUpDownStyleProperty = DependencyProperty.Register(
             nameof(NumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
             new PropertyMetadata(default(Style)));
 
-        public Style NumericUpDownStyle
-        {
-            get => (Style) GetValue(NumericUpDownStyleProperty);
-            set => SetValue(NumericUpDownStyleProperty, value);
-        }
 
         public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
             nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerControl),
@@ -49,6 +58,34 @@ namespace Egorozh.ColorPicker
         public static readonly DependencyProperty ShowAlphaChannelProperty = DependencyProperty.Register(
             nameof(ShowAlphaChannel), typeof(bool), typeof(ColorPickerControl), new PropertyMetadata(true));
 
+        #endregion
+
+        #region Public Properties
+
+        public Brush TransparentBrush
+        {
+            get => (Brush) GetValue(TransparentBrushProperty);
+            set => SetValue(TransparentBrushProperty, value);
+        }
+
+        public Style NumericUpDownStyle
+        {
+            get => (Style) GetValue(NumericUpDownStyleProperty);
+            set => SetValue(NumericUpDownStyleProperty, value);
+        }
+
+        public Color Color
+        {
+            get => (Color) GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
+        }
+
+        public GetColorHandler GetColorForPaletteAction
+        {
+            get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
+            set => SetValue(GetColorForPaletteActionProperty, value);
+        }
+
         public bool ShowAlphaChannel
         {
             get => (bool) GetValue(ShowAlphaChannelProperty);
@@ -57,24 +94,12 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
-        #region Public Properties
+        #region Static Constructor
 
-        public static System.Windows.Input.Cursor EyedropperCursor;
-
-        public static DrawingGroup TransparentTile;
-
-        public Color Color
+        static ColorPickerControl()
         {
-            get => (Color) GetValue(ColorProperty);
-            set => SetValue(ColorProperty, value);
-        }
-
-        public static Uri BaseUri { get; private set; }
-
-        public GetColorHandler GetColorForPaletteAction
-        {
-            get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
-            set => SetValue(GetColorForPaletteActionProperty, value);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPickerControl),
+                new FrameworkPropertyMetadata(typeof(ColorPickerControl)));
         }
 
         #endregion
@@ -85,36 +110,6 @@ namespace Egorozh.ColorPicker
         {
             InitializeComponent();
 
-            NumericUpDownStyle = (Style) this.FindResource("NumericUpDownStyle");
-
-            BaseUri = BaseUriHelper.GetBaseUri(this);
-
-            TransparentTile = (DrawingGroup) this.FindResource("TransparencyTile");
-            EyedropperCursor = ((System.Windows.Input.Cursor) this.FindResource("EyedropperCursor"));
-
-            InitWinFormsComponents();
-        }
-
-        #endregion
-
-        #region Private Fields
-
-        private void InitWinFormsComponents()
-        {
-            ScreenColorPicker.Color = System.Drawing.Color.Black;
-
-            ScreenColorPicker.Zoom = 6;
-
-            ColorEditor.Color = System.Drawing.Color.FromArgb(0, 0, 0);
-
-            ColorGrid.AutoAddColors = false;
-            ColorGrid.Size = new System.Drawing.Size(192, 92);
-            ColorGrid.CellBorderStyle = ColorCellBorderStyle.None;
-            ColorGrid.EditMode = ColorEditingMode.Both;
-            ColorGrid.Palette = ColorPalette.Paint;
-            ColorGrid.SelectedCellStyle = ColorGridSelectedCellStyle.Standard;
-            ColorGrid.ShowCustomColors = false;
-
             ColorGrid.EditingColor += ColorGrid_EditingColor;
 
             _colorEditorManager = new ColorEditorManager
@@ -122,12 +117,15 @@ namespace Egorozh.ColorPicker
                 ColorEditor = ColorEditor,
                 ColorGrid = ColorGrid,
                 ColorWheel = ColorWheel,
-
                 ScreenColorPicker = ScreenColorPicker
             };
 
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
         }
+
+        #endregion
+
+        #region Private Fields
 
         private void ColorChanged()
         {
@@ -167,16 +165,16 @@ namespace Egorozh.ColorPicker
                     var serializer = PaletteSerializer.GetSerializer(dialog.FileName);
                     if (serializer != null)
                     {
-                        ColorCollection palette;
-
                         if (!serializer.CanRead)
                         {
                             throw new InvalidOperationException("Serializer does not support reading palettes.");
                         }
 
-                        using (FileStream file = File.OpenRead(dialog.FileName))
+                        ColorCollectionNew palette;
+
+                        using (var file = File.OpenRead(dialog.FileName))
                         {
-                            palette = serializer.Deserialize(file);
+                            palette = serializer.DeserializeNew(file);
                         }
 
                         if (palette != null)
@@ -190,24 +188,24 @@ namespace Egorozh.ColorPicker
                             // or if we have less, fill in the blanks
                             while (palette.Count < 96)
                             {
-                                palette.Add(System.Drawing.Color.White);
+                                palette.Add(Colors.White);
                             }
 
-                            //ColorGrid.Colors = palette;
+                            ColorGrid.Colors = palette;
                         }
                     }
                     else
                     {
-                        //System.Windows.Forms.MessageBox.Show(
-                        //    "Sorry, unable to open palette, the file format is not supported or is not recognized.",
-                        //    "Load Palette", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(
+                            "Sorry, unable to open palette, the file format is not supported or is not recognized.",
+                            "Load Palette", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
                 catch (Exception ex)
                 {
-                    //System.Windows.Forms.MessageBox.Show(
-                    //    string.Format("Sorry, unable to open palette. {0}", ex.GetBaseException().Message),
-                    //    "Load Palette", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        $"Sorry, unable to open palette. {ex.GetBaseException().Message}",
+                        "Load Palette", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -223,9 +221,7 @@ namespace Egorozh.ColorPicker
 
             if (dialog.ShowDialog() == true)
             {
-                IPaletteSerializer serializer;
-
-                serializer = PaletteSerializer.AllSerializers.Where(s => s.CanWrite)
+                var serializer = PaletteSerializer.AllSerializers.Where(s => s.CanWrite)
                     .ElementAt(dialog.FilterIndex - 1);
                 if (serializer != null)
                 {
@@ -236,37 +232,35 @@ namespace Egorozh.ColorPicker
 
                     try
                     {
-                        using (FileStream file = File.OpenWrite(dialog.FileName))
-                        {
-                            //serializer.Serialize(file, ColorGrid.Colors);
-                        }
+                        using var file = File.OpenWrite(dialog.FileName);
+                        serializer.Serialize(file, ColorGrid.Colors);
                     }
                     catch (Exception ex)
                     {
-                        //System.Windows.Forms.MessageBox.Show(
-                        //    string.Format("Sorry, unable to save palette. {0}", ex.GetBaseException().Message),
-                        //    "Save Palette", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                            $"Sorry, unable to save palette. {ex.GetBaseException().Message}",
+                            "Save Palette", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    //System.Windows.Forms.MessageBox.Show(
-                    //    "Sorry, unable to save palette, the file format is not supported or is not recognized.",
-                    //    "Save Palette", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        "Sorry, unable to save palette, the file format is not supported or is not recognized.",
+                        "Save Palette", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
         }
 
-        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgs e)
+        private void ColorGrid_EditingColor(object sender, EditColorCancelEventArgsNew e)
         {
             e.Cancel = true;
 
-            var color = e.Color.ToColor();
+            var color = e.Color;
 
             var res = GetColorForPaletteAction?.Invoke(ref color);
 
-            //if (res.HasValue && res.Value)
-            //    ColorGrid.Colors[e.ColorIndex] = color.ToColor();
+            if (res.HasValue && res.Value)
+                ColorGrid.Colors[e.ColorIndex] = color;
         }
 
         private static bool GetColorForPalette(ref Color color)
@@ -288,6 +282,4 @@ namespace Egorozh.ColorPicker
 
         #endregion
     }
-
-    public delegate bool GetColorHandler(ref Color color);
 }
