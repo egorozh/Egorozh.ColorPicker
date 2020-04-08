@@ -17,8 +17,6 @@
 
   <ItemGroup>
     <None Remove="FodyWeavers.xml" />
-    <None Remove="Resources\eyedropper.cur" />
-    <None Remove="Resources\eyedropper.png" />
     <None Remove="Resources\HsvWheelEffect.ps" />
     <None Include="..\LICENSE.md">
       <Pack>True</Pack>
@@ -33,12 +31,7 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
     <Resource Include="Resources\eyedropper.cur" />
-    <Resource Include="Resources\eyedropper.png" />
     <Resource Include="Resources\HsvWheelEffect.ps" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="WinFormsClasses\Controls\ColorGrid.cs" />
   </ItemGroup>
 
 </Project>

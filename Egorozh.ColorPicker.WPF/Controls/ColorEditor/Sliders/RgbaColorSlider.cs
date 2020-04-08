@@ -3,27 +3,27 @@ using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
-    internal class RgbaColorSliderNew : ColorSliderNew
+    internal class RgbaColorSlider : ColorSlider
     {
         #region Dependency Properties
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            nameof(Color), typeof(Color), typeof(RgbaColorSliderNew),
+            nameof(Color), typeof(Color), typeof(RgbaColorSlider),
             new PropertyMetadata(default(Color), OnColorChanged));
 
         private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is RgbaColorSliderNew slider)
+            if (d is RgbaColorSlider slider)
                 slider.OnColorChanged();
         }
 
         public static readonly DependencyProperty ChannelProperty = DependencyProperty.Register(
-            nameof(Channel), typeof(RgbaChannel), typeof(RgbaColorSliderNew),
+            nameof(Channel), typeof(RgbaChannel), typeof(RgbaColorSlider),
             new PropertyMetadata(default(RgbaChannel), OnChannelChanged));
 
         private static void OnChannelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is RgbaColorSliderNew slider)
+            if (d is RgbaColorSlider slider)
                 slider.CreateBarColors();
         }
 
@@ -47,7 +47,7 @@ namespace Egorozh.ColorPicker
 
         #region Constructor
 
-        public RgbaColorSliderNew()
+        public RgbaColorSlider()
         {
             Maximum = 255;
             BarStyle = ColorBarStyle.Custom;

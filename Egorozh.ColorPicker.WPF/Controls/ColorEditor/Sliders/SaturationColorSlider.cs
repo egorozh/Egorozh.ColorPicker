@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
-    internal class SaturationColorSlider : ColorSliderNew
+    internal class SaturationColorSlider : ColorSlider
     {
         #region Dependency Properties
 

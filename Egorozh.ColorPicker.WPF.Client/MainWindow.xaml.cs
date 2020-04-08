@@ -1,9 +1,10 @@
 ﻿using Egorozh.ColorPicker.Dialog;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Egorozh.ColorPicker.WPF.Client
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -18,6 +19,9 @@ namespace Egorozh.ColorPicker.WPF.Client
             };
 
             var res = dialog.ShowDialog();
+
+            if (res == true)
+                Button.Background = new SolidColorBrush(dialog.Color);
         }
     }
 }

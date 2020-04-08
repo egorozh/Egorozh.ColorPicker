@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
-    internal class LightnessColorSlider : ColorSliderNew
+    internal class LightnessColorSlider : ColorSlider
     {
         #region Private Fields
 

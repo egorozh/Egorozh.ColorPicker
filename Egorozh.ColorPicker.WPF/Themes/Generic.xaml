@@ -2,163 +2,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Egorozh.ColorPicker">
 
-    <!--#region Transparency Brush-->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Brushes.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Buttons.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Slider.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Icons.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/NumericUpDown.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
-    <DrawingGroup x:Key="TransparencyTile">
-        <GeometryDrawing Brush="White">
-            <GeometryDrawing.Geometry>
-                <RectangleGeometry Rect="0,0,100,100" />
-            </GeometryDrawing.Geometry>
-        </GeometryDrawing>
+    <!--#region Screen Picker Resources-->
 
-        <GeometryDrawing Brush="#d7d7d7">
-            <GeometryDrawing.Geometry>
-                <GeometryGroup>
-                    <RectangleGeometry Rect="0,0,50,50" />
-                    <RectangleGeometry Rect="50,50,50,50" />
-                </GeometryGroup>
-            </GeometryDrawing.Geometry>
-        </GeometryDrawing>
-    </DrawingGroup>
-
-    <DrawingBrush x:Key="TransparencyBrush"
-                  TileMode="Tile"
-                  Viewport="0 0 10 10"
-                  ViewportUnits="Absolute"
-                  Drawing="{StaticResource TransparencyTile}" />
+    <Cursor x:Key="EyedropperCursor">/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur</Cursor>
 
     <!--#endregion-->
 
-    <Style TargetType="{x:Type Button}" x:Key="ColorButton">
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Margin" Value="1.5" />
-        <Setter Property="Width" Value="12" />
-        <Setter Property="Height" Value="12" />
-        <Setter Property="BorderBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-
-                    <Grid Background="{StaticResource TransparencyBrush}">
-
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                SnapsToDevicePixels="true">
-                            <Border x:Name="innerBorder"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="1" />
-                        </Border>
-
-                    </Grid>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush"
-                                    Value="Black" />
-                            <Setter Property="BorderBrush" TargetName="innerBorder"
-                                    Value="White" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!--#region Slider-->
-
-    <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Focusable" Value="false" />
-        <Setter Property="IsTabStop" Value="false" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Rectangle Fill="{TemplateBinding Background}"
-                               Height="{TemplateBinding Height}"
-                               Width="{TemplateBinding Width}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <ControlTemplate x:Key="SliderThumbHorizontalDefault"
-                     TargetType="{x:Type Thumb}">
-        <Grid HorizontalAlignment="Center"
-              UseLayoutRounding="True"
-              VerticalAlignment="Center">
-            <Path x:Name="grip"
-                  Data="M 0,0 L 5 0 L 2.5 -2.5 z"
-                  Fill="{TemplateBinding Foreground}"
-                  Stroke="{TemplateBinding Foreground}"
-                  SnapsToDevicePixels="True"
-                  StrokeThickness="1"
-                  Stretch="Fill"
-                  UseLayoutRounding="True"
-                  VerticalAlignment="Center" />
-        </Grid>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="true" />
-            <Trigger Property="IsDragging" Value="true" />
-            <Trigger Property="IsEnabled" Value="false" />
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <ControlTemplate x:Key="SliderTemplate" TargetType="{x:Type local:ColorSliderNew}">
-        <Border x:Name="border"
-                Background="Transparent"
-                BorderThickness="0"
-                SnapsToDevicePixels="True">
-            <Grid>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" MinHeight="{TemplateBinding MinHeight}" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0"
-                      Margin="4,3,4,1"
-                      Background="{StaticResource TransparencyBrush}">
-                    <Border x:Name="TrackBackground"
-                            Background="{TemplateBinding BarBrush}"
-                            BorderThickness="0" />
-                </Grid>
-
-                <Track x:Name="PART_Track"
-                       Grid.Row="1">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
-                                      Style="{StaticResource RepeatButtonTransparent}" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}"
-                                      Style="{StaticResource RepeatButtonTransparent}" />
-                    </Track.IncreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb x:Name="Thumb"
-                               Focusable="False"
-                               Height="7"
-                               Width="7"
-                               OverridesDefaultStyle="True"
-                               Template="{StaticResource SliderThumbHorizontalDefault}"
-                               VerticalAlignment="Center" />
-                    </Track.Thumb>
-                </Track>
-            </Grid>
-        </Border>
-    </ControlTemplate>
-
-    <Style TargetType="local:ColorSliderNew">
-        <Setter Property="Template" Value="{StaticResource SliderTemplate}" />
-        <Setter Property="IsMoveToPointEnabled" Value="True" />
-    </Style>
-
-    <!--#endregion-->
 
     <Style TargetType="local:ColorGrid">
 
@@ -173,217 +30,98 @@
         </Setter>
     </Style>
 
-    <Style x:Key="NumericUpDownStyle"
-           TargetType="{x:Type local:NumericUpDown}">
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-
-
-        <Setter Property="HorizontalContentAlignment" Value="Right" />
-        <Setter Property="MinHeight" Value="26" />
-        <Setter Property="MinWidth" Value="62" />
-        <Setter Property="Padding" Value="4" />
-        <Setter Property="Margin" Value="2" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:NumericUpDown}">
-                    <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Border x:Name="Base"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="PART_LeftColumn" Width="*" />
-                                <ColumnDefinition x:Name="PART_MiddleColumn" Width="Auto" />
-                                <ColumnDefinition x:Name="PART_RightColumn" Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="PART_TextBox"
-                                     Grid.Column="0"
-                                     MinWidth="20"
-                                     MinHeight="0"
-                                     Margin="0"
-                                     Padding="{TemplateBinding Padding}"
-                                     HorizontalAlignment="Stretch"
-                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                     Background="{x:Null}"
-                                     BorderThickness="0"
-                                     ContextMenu="{TemplateBinding ContextMenu}"
-                                     FocusVisualStyle="{x:Null}"
-                                     Focusable="{TemplateBinding Focusable}"
-                                     FontFamily="{TemplateBinding FontFamily}"
-                                     FontSize="{TemplateBinding FontSize}"
-                                     Foreground="{TemplateBinding Foreground}"
-                                     IsReadOnly="{TemplateBinding IsReadOnly}"
-                                     IsTabStop="{TemplateBinding IsTabStop}"
-                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     TabIndex="{TemplateBinding TabIndex}" />
-
-                            <RepeatButton x:Name="PART_NumericUp"
-                                          Grid.Column="1"
-                                          Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="0"
-                                          Delay="{TemplateBinding Delay}"
-                                          Focusable="{TemplateBinding UpDownButtonsFocusable}"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          IsTabStop="False">
-                                <Path x:Name="PolygonUp"
-                                      Width="14"
-                                      Height="14"
-                                      Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "
-                                      Fill="{TemplateBinding Foreground}"
-                                      Stretch="Fill" />
-                            </RepeatButton>
-                            <RepeatButton x:Name="PART_NumericDown"
-                                          Grid.Column="2"
-                                          Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="0"
-                                          VerticalContentAlignment="Center"
-                                          Delay="{TemplateBinding Delay}"
-                                          Focusable="{TemplateBinding UpDownButtonsFocusable}"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          IsTabStop="False">
-                                <Path x:Name="PolygonDown"
-                                      Width="14"
-                                      Height="3"
-                                      Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "
-                                      Fill="{TemplateBinding Foreground}"
-                                      Stretch="Fill" />
-                            </RepeatButton>
-                        </Grid>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="Left" />
-                                <Condition Property="SwitchUpDownButtons" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_RightColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="Left" />
-                                <Condition Property="SwitchUpDownButtons" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_RightColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
-                        </MultiTrigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="Opposite" />
-                                <Condition Property="SwitchUpDownButtons" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="Opposite" />
-                                <Condition Property="SwitchUpDownButtons" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
-                        </MultiTrigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="Right" />
-                                <Condition Property="SwitchUpDownButtons" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="0" />
-                        </MultiTrigger>
-
-                        <Trigger Property="IsEnabled" Value="False" />
-                        <Trigger Property="IsReadOnly" Value="True">
-                            <Setter Property="InterceptArrowKeys" Value="False" />
-                            <Setter Property="InterceptManualEnter" Value="False" />
-                            <Setter Property="InterceptMouseWheel" Value="False" />
-                            <Setter TargetName="PART_NumericDown" Property="IsEnabled" Value="False" />
-                            <Setter TargetName="PART_NumericUp" Property="IsEnabled" Value="False" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsReadOnly" Value="False" />
-                                <Condition Property="InterceptManualEnter" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
-                        </MultiTrigger>
-                        <Trigger SourceName="PART_NumericUp" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_NumericUp" Property="Background"
-                                    Value="DimGray" />
-                            <Setter TargetName="PolygonUp" Property="Fill"
-                                    Value="DeepSkyBlue" />
-                        </Trigger>
-                        <Trigger SourceName="PART_NumericUp" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_NumericUp" Property="Background"
-                                    Value="White" />
-                            <Setter TargetName="PolygonUp" Property="Fill"
-                                    Value="White" />
-                        </Trigger>
-                        <Trigger SourceName="PART_NumericDown" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_NumericDown" Property="Background"
-                                    Value="DimGray" />
-                            <Setter TargetName="PolygonDown" Property="Fill"
-                                    Value="DeepSkyBlue" />
-                        </Trigger>
-                        <Trigger SourceName="PART_NumericDown" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_NumericDown" Property="Background"
-                                    Value="White" />
-                            <Setter TargetName="PolygonDown" Property="Fill"
-                                    Value="Black" />
-                        </Trigger>
-                        <Trigger Property="HideUpDownButtons" Value="True">
-                            <Setter TargetName="PART_NumericDown" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_NumericUp" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="TextAlignment" Value="Right" />
-        <Setter Property="UpDownButtonsWidth" Value="22" />
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
-    </Style>
 
     <Style TargetType="local:ColorPickerControl">
+
         <Setter Property="NumericUpDownStyle" Value="{StaticResource NumericUpDownStyle}" />
         <Setter Property="TransparentBrush" Value="{StaticResource TransparencyBrush}" />
+        <Setter Property="EyedropperCursor" Value="{StaticResource EyedropperCursor}" />
+        <Setter Property="DropperImage" Value="{StaticResource DropperImage}" />
+        <Setter Property="ToolBarButtonStyle" Value="{StaticResource PalleteToolBarButton}" />
+        <Setter Property="LoadPaletteIcon" Value="{StaticResource LoadPaletteIcon}" />
+        <Setter Property="SavePaletteIcon" Value="{StaticResource SavePaletteIcon}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ColorPickerControl">
-                    <ContentPresenter Content="{TemplateBinding Content}" />
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="6">
+
+                            <local:ColorWheel x:Name="PART_ColorWheel"
+                                              Margin="20 0"
+                                              Width="150" />
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0 4">
+
+                                <Button x:Name="PART_LoadPaletteButton" 
+                                        Width="24" Height="24"
+                                        Style="{TemplateBinding ToolBarButtonStyle}"
+                                        Margin="0 2 2 2"
+                                        ToolTip="Load Palette"
+                                        Content="{TemplateBinding LoadPaletteIcon}" />
+
+                                <Button x:Name="PART_SavePaletteButton" 
+                                        Width="24" Height="24"
+                                        Margin="0 2"
+                                        Style="{TemplateBinding ToolBarButtonStyle}"
+                                        ToolTip="Save Palette"
+                                        Content="{TemplateBinding SavePaletteIcon}" />
+
+                            </StackPanel>
+
+                            <local:ColorGrid x:Name="PART_ColorGrid"
+                                             Width="240"
+                                             Palette="Paint" />
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                                    Margin="0 6 6 6">
+
+                            <local:ColorEditor x:Name="PART_ColorEditor"
+                                               NumericUpDownStyle="{TemplateBinding NumericUpDownStyle}" />
+
+                        </StackPanel>
+
+                        <Grid Grid.Column="2"
+                              Margin="0 6">
+
+                            <Grid VerticalAlignment="Center"
+                                  Width="85"
+                                  Height="85">
+
+                                <local:ScreenColorPicker x:Name="PART_ScreenColorPicker"
+                                                         EyedropperCursor="{TemplateBinding EyedropperCursor}"
+                                                         ToolTip="Click and drag to select screen color"
+                                                         InitImage="{TemplateBinding DropperImage}" />
+
+                            </Grid>
+
+                            <Border VerticalAlignment="Bottom"
+                                    Height="30"
+                                    Margin="0 50"
+                                    BorderThickness="1"
+                                    BorderBrush="{TemplateBinding Foreground}">
+
+                                <Grid Background="{TemplateBinding TransparentBrush}">
+                                    <Border x:Name="PART_PreviewPanel" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
     </Style>
 
 

@@ -8,64 +8,64 @@ using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
-    internal class ColorSliderNew : Slider
+    internal class ColorSlider : Slider
     {
         #region Private Fields
 
         private Thumb _thumb = null;
         private bool _isDownOnSlider = false;
 
-        #endregion
+        #endregion  
 
         #region Dependency Properties
 
         public static readonly DependencyProperty BarStyleProperty = DependencyProperty.Register(
-            nameof(BarStyle), typeof(ColorBarStyle), typeof(ColorSliderNew),
+            nameof(BarStyle), typeof(ColorBarStyle), typeof(ColorSlider),
             new PropertyMetadata(default(ColorBarStyle), BarStyleChanged));
 
         private static void BarStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorSliderNew slider)
+            if (d is ColorSlider slider)
                 slider.PaintBar();
         }
 
         public static readonly DependencyProperty CustomColorsProperty = DependencyProperty.Register(
-            nameof(CustomColors), typeof(ColorCollection), typeof(ColorSliderNew),
+            nameof(CustomColors), typeof(ColorCollection), typeof(ColorSlider),
             new PropertyMetadata(default(ColorCollection), CustomColorsChanged));
 
         private static void CustomColorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorSliderNew slider)
+            if (d is ColorSlider slider)
                 slider.PaintBar();
         }
 
         public static readonly DependencyProperty BarBrushProperty = DependencyProperty.Register(
-            nameof(BarBrush), typeof(Brush), typeof(ColorSliderNew), new PropertyMetadata(default(Brush)));
+            nameof(BarBrush), typeof(Brush), typeof(ColorSlider), new PropertyMetadata(default(Brush)));
 
         public static readonly DependencyProperty Color1Property = DependencyProperty.Register(
-            nameof(Color1), typeof(Color), typeof(ColorSliderNew), new PropertyMetadata(default(Color), Color1Changed));
+            nameof(Color1), typeof(Color), typeof(ColorSlider), new PropertyMetadata(default(Color), Color1Changed));
 
         private static void Color1Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorSliderNew slider)
+            if (d is ColorSlider slider)
                 slider.PaintBar();
         }
 
         public static readonly DependencyProperty Color2Property = DependencyProperty.Register(
-            nameof(Color2), typeof(Color), typeof(ColorSliderNew), new PropertyMetadata(default(Color), Color2Changed));
+            nameof(Color2), typeof(Color), typeof(ColorSlider), new PropertyMetadata(default(Color), Color2Changed));
 
         private static void Color2Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorSliderNew slider)
+            if (d is ColorSlider slider)
                 slider.PaintBar();
         }
 
         public static readonly DependencyProperty Color3Property = DependencyProperty.Register(
-            nameof(Color3), typeof(Color), typeof(ColorSliderNew), new PropertyMetadata(default(Color), Color3Changed));
+            nameof(Color3), typeof(Color), typeof(ColorSlider), new PropertyMetadata(default(Color), Color3Changed));
 
         private static void Color3Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorSliderNew slider)
+            if (d is ColorSlider slider)
                 slider.PaintBar();
         }
 
@@ -113,10 +113,10 @@ namespace Egorozh.ColorPicker
 
         #region Static Constructor
 
-        static ColorSliderNew()
+        static ColorSlider()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorSliderNew),
-                new FrameworkPropertyMetadata(typeof(ColorSliderNew)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorSlider),
+                new FrameworkPropertyMetadata(typeof(ColorSlider)));
         }
 
         #endregion

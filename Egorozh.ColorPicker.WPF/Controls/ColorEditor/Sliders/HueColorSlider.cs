@@ -2,7 +2,7 @@
 
 namespace Egorozh.ColorPicker
 {
-    internal class HueColorSlider : ColorSliderNew
+    internal class HueColorSlider : ColorSlider
     {
         public HueColorSlider()
         {
