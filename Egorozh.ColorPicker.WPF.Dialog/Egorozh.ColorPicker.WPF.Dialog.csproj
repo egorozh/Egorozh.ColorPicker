@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
     <Authors>egorozh</Authors>
-    <Version>0.1.4</Version>
+    <Version>0.1.7</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker.WPF</RepositoryUrl>

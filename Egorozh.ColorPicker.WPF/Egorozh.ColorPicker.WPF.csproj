@@ -16,7 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="FodyWeavers.xml" />
     <None Remove="Resources\HsvWheelEffect.ps" />
     <None Include="..\LICENSE.md">
       <Pack>True</Pack>
@@ -25,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
     <Resource Include="Resources\eyedropper.cur" />
     <Resource Include="Resources\HsvWheelEffect.ps" />
   </ItemGroup>

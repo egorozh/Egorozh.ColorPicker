@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:colorPicker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.WPF"
+        xmlns:picker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.WPF"
         mc:Ignorable="d"
 
         Title="Select Color"
@@ -25,8 +25,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <colorPicker:ColorPickerControl Color="{Binding Color, ElementName=Dialog, Mode=TwoWay}"
-                                        GetColorForPaletteAction="{Binding GetColorForPaletteAction, ElementName=AkimDialogWindow, Mode=TwoWay}" />
+        <picker:ColorPickerControl Color="{Binding Color, ElementName=Dialog, Mode=TwoWay}"
+                                   GetColorForPaletteAction="{Binding GetColorForPaletteAction, ElementName=Dialog, Mode=TwoWay}" />
 
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal"
@@ -39,11 +39,12 @@
                     Name="btOk"
                     Click="btOk_Click" />
 
-            <Button Content="Отмена"
+            <Button Content="Cancel"
                     Width="85"
                     Name="btCancel"
                     Click="btCancel_Click" />
         </StackPanel>
+
     </Grid>
 
 </Window>
