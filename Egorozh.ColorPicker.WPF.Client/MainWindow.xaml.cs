@@ -15,7 +15,8 @@ namespace Egorozh.ColorPicker.WPF.Client
         {
             var dialog = new ColorPickerDialog
             {
-                Owner = this
+                Owner = this,
+                Color = ((SolidColorBrush) Button.Background).Color
             };
 
             var res = dialog.ShowDialog();
