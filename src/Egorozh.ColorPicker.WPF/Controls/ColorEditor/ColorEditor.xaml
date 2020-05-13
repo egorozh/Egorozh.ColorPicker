@@ -50,9 +50,9 @@
                    Text="R: " />
 
         <local:RgbaColorSlider Grid.Row="1" Grid.Column="1"
-                                  x:Name="rColorBar"
-                                  Channel="Red"
-                                  ValueChanged="ColorBar_OnValueChanged" />
+                               x:Name="rColorBar"
+                               Channel="Red"
+                               ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="rNumericUpDown"
                              Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
@@ -67,9 +67,9 @@
                    Text="G: " />
 
         <local:RgbaColorSlider Grid.Row="2" Grid.Column="1"
-                                  x:Name="gColorBar"
-                                  Channel="Green"
-                                  ValueChanged="ColorBar_OnValueChanged" />
+                               x:Name="gColorBar"
+                               Channel="Green"
+                               ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="gNumericUpDown"
                              Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
@@ -84,9 +84,9 @@
                    Text="B: " />
 
         <local:RgbaColorSlider Grid.Row="3" Grid.Column="1"
-                                  x:Name="bColorBar"
-                                  Channel="Blue"
-                                  ValueChanged="ColorBar_OnValueChanged" />
+                               x:Name="bColorBar"
+                               Channel="Blue"
+                               ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="bNumericUpDown"
                              Grid.Row="3" Grid.Column="2"
@@ -96,22 +96,38 @@
                              ValueChanged="NumericUpDown_OnValueChanged" />
         <!--#endregion-->
 
-        <!--Hex-->
+        <!--#region Hex-->
 
         <TextBlock Grid.Row="4" Grid.Column="0"
                    Text="Hex: " />
 
-        <ComboBox Grid.Row="4" Grid.Column="1"
+        <ComboBox x:Name="hexTextBox"
+                  Grid.Row="4" Grid.Column="1"
                   Margin="2"
                   IsEditable="True"
-                  x:Name="hexTextBox"
+                  TextSearch.TextPath="Name"
                   SelectionChanged="HexTextBox_OnSelectionChanged"
-                  TextBoxBase.TextChanged="HexTextBox_OnTextChanged" />
+                  TextBoxBase.TextChanged="HexTextBox_OnTextChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
+                                 Margin="0 1 1 1"
+                                 Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                        <TextBlock Text="{Binding Name}"
+                                   Margin="1 0 0 0" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+
+        <!--#endregion-->
+
+        <!--#region HSL -->
 
         <TextBlock Grid.Row="5" Grid.Column="0"
                    Text="HSL: " />
-
-        <!--#region HSL -->
 
         <!-- H -->
 
@@ -163,15 +179,15 @@
 
         <!--#endregion-->
 
-        <!-- Alpha -->
+        <!--#region Alpha -->
 
         <TextBlock Grid.Row="9" Grid.Column="0"
                    Text="Alpha: " />
 
         <local:RgbaColorSlider Grid.Row="9" Grid.Column="1"
-                                  x:Name="aColorBar"
-                                  Channel="Alpha"
-                                  ValueChanged="ColorBar_OnValueChanged" />
+                               x:Name="aColorBar"
+                               Channel="Alpha"
+                               ValueChanged="ColorBar_OnValueChanged" />
 
         <local:NumericUpDown x:Name="aNumericUpDown"
                              Grid.Row="9" Grid.Column="2"
@@ -179,6 +195,8 @@
                              Minimum="0"
                              Maximum="255"
                              ValueChanged="NumericUpDown_OnValueChanged" />
+
+        <!--#endregion-->
 
     </Grid>
 

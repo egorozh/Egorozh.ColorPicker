@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using Color = System.Drawing.Color;
-using SystemColors = System.Drawing.SystemColors;
 
 namespace Egorozh.ColorPicker
 {
@@ -101,8 +98,8 @@ namespace Egorozh.ColorPicker
             InitializeComponent();
 
             Color = Color.Black;
-
-            FillNamedColors();
+            
+            hexTextBox.ItemsSource = Extensions.GetNamedColors();
         }
 
         #endregion
@@ -225,48 +222,6 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        private void AddColorProperties<T>()
-        {
-            var type = typeof(T);
-            var colorType = typeof(Color);
-
-            // ReSharper disable once LoopCanBePartlyConvertedToQuery
-            foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Static))
-            {
-                if (property.PropertyType == colorType)
-                {
-                    Color color;
-
-                    color = (Color) property.GetValue(type, null);
-                    if (!color.IsEmpty)
-                    {
-                        hexTextBox.Items.Add(color.Name);
-                    }
-                }
-            }
-        }
-
-        private void FillNamedColors()
-        {
-            var type = typeof(SystemColors);
-            var colorType = typeof(Color);
-
-            // ReSharper disable once LoopCanBePartlyConvertedToQuery
-            foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Static))
-            {
-                if (property.PropertyType == colorType)
-                {
-                    var color = (Color) property.GetValue(type, null);
-                    if (!color.IsEmpty)
-                    {
-                        hexTextBox.Items.Add(color.Name);
-                    }
-                }
-            }
-
-            AddColorProperties<Color>();
-        }
-
         private void NumericUpDown_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
             if (!LockUpdates)
@@ -316,7 +271,9 @@ namespace Egorozh.ColorPicker
             if (hexTextBox.SelectedIndex != -1)
             {
                 LockUpdates = true;
-                Color = Color.FromName((string) hexTextBox.SelectedItem);
+
+                Color = ((NamedColor) hexTextBox.SelectedItem).Color;
+
                 LockUpdates = false;
             }
         }
