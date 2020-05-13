@@ -9,13 +9,9 @@
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Icons.xaml" />
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/NumericUpDown.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <!--#region Screen Picker Resources-->
-
+   
     <Cursor x:Key="EyedropperCursor">/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur</Cursor>
-
-    <!--#endregion-->
-  
+   
     <Style TargetType="local:ColorPickerControl">
 
         <Setter Property="NumericUpDownStyle" Value="{StaticResource NumericUpDownStyle}" />
@@ -70,27 +66,21 @@
 
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1"
-                                    Margin="0 6 6 6">
-
-                            <local:ColorEditor x:Name="PART_ColorEditor"
-                                               NumericUpDownStyle="{TemplateBinding NumericUpDownStyle}" />
-
-                        </StackPanel>
+                        <local:ColorEditor x:Name="PART_ColorEditor"
+                                           Grid.Column="1"
+                                           Margin="0 6 6 6"
+                                           NumericUpDownStyle="{TemplateBinding NumericUpDownStyle}" />
 
                         <Grid Grid.Column="2"
                               Margin="0 6">
 
-                            <Grid VerticalAlignment="Center"
-                                  Width="85"
-                                  Height="85">
-
-                                <local:ScreenColorPicker x:Name="PART_ScreenColorPicker"
-                                                         EyedropperCursor="{TemplateBinding EyedropperCursor}"
-                                                         ToolTip="Click and drag to select screen color"
-                                                         InitImage="{TemplateBinding DropperImage}" />
-
-                            </Grid>
+                            <local:ScreenColorPicker x:Name="PART_ScreenColorPicker"
+                                                     VerticalAlignment="Center"
+                                                     Width="85"
+                                                     Height="85"
+                                                     EyedropperCursor="{TemplateBinding EyedropperCursor}"
+                                                     ToolTip="Click and drag to select screen color"
+                                                     InitImage="{TemplateBinding DropperImage}" />
 
                             <Border VerticalAlignment="Bottom"
                                     Height="30"
@@ -110,6 +100,5 @@
         </Setter>
 
     </Style>
-
 
 </ResourceDictionary>

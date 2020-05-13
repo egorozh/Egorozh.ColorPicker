@@ -219,9 +219,7 @@ namespace Egorozh.ColorPicker
         {
             // Color setted before calling OnApplyTemplate()
             if (_colorEditorManager == null)
-            {
                 return;
-            }
 
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;
 

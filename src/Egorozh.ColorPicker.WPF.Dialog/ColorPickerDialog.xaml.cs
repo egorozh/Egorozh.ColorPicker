@@ -5,8 +5,18 @@ namespace Egorozh.ColorPicker.Dialog
 {
     public partial class ColorPickerDialog
     {
+        #region Dependency Properties
+
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color", typeof(Color), typeof(ColorPickerDialog), new PropertyMetadata(default(Color)));
+            nameof(Color), typeof(Color), typeof(ColorPickerDialog), new PropertyMetadata(default(Color)));
+
+        public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
+            nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerDialog),
+            new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
+
+        #endregion
+
+        #region Public Properties
 
         public Color Color
         {
@@ -14,15 +24,13 @@ namespace Egorozh.ColorPicker.Dialog
             set => SetValue(ColorProperty, value);
         }
 
-        public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
-            nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerDialog),
-            new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
-
         public GetColorHandler GetColorForPaletteAction
         {
             get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
             set => SetValue(GetColorForPaletteActionProperty, value);
         }
+
+        #endregion
 
         #region Constructor
 
@@ -32,7 +40,7 @@ namespace Egorozh.ColorPicker.Dialog
         }
 
         #endregion
-        
+
         #region Private Methods
 
         private void btOk_Click(object sender, RoutedEventArgs e) => this.DialogResult = true;
