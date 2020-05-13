@@ -207,14 +207,22 @@ namespace Egorozh.ColorPicker
             }
 
             _colorEditorManager.ColorChanged += ColorEditorManager_ColorChanged;
+
+            ColorChanged();
         }
 
         #endregion
 
-        #region Private Fields
+        #region Private Methods
 
         private void ColorChanged()
         {
+            // Color setted before calling OnApplyTemplate()
+            if (_colorEditorManager == null)
+            {
+                return;
+            }
+
             _colorEditorManager.ColorChanged -= ColorEditorManager_ColorChanged;
 
             _colorEditorManager.Color = Color.ToColor();
