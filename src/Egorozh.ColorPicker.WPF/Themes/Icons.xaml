@@ -119,6 +119,6 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <Image x:Key="DropperImage" Source="{StaticResource DropperDrawingImage}" />
+    <Image x:Key="DropperImage" Source="{StaticResource DropperDrawingImage}"  x:Shared="False"/>
 
 </ResourceDictionary>
