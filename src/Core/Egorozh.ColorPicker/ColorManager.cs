@@ -8,12 +8,21 @@ namespace Egorozh.ColorPicker
         #region Private Fields
 
         private readonly List<IColorClient> _colorClients = new List<IColorClient>();
+        private Color _currentColor;
 
         #endregion
 
         #region Public Properties
 
-        public Color CurrentColor { get; set; }
+        public Color CurrentColor
+        {
+            get => _currentColor;
+            set
+            {
+                _currentColor = value;
+                Client_ColorChanged(_currentColor);
+            }
+        }
 
         #endregion
 
@@ -32,7 +41,7 @@ namespace Egorozh.ColorPicker
 
         private void Client_ColorChanged(Color color)
         {
-            CurrentColor = color;
+            _currentColor = color;
 
             UpdateClients(color);
         }

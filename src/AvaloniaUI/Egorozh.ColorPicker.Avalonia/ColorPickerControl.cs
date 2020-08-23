@@ -8,6 +8,12 @@ namespace Egorozh.ColorPicker.Avalonia
 {
     public class ColorPickerControl : UserControl, IStyleable
     {
+        #region Private Fields
+
+        private readonly ColorManager _manager = new ColorManager();
+
+        #endregion
+
         #region IStyleable
 
         Type IStyleable.StyleKey => typeof(ColorPickerControl);
@@ -16,12 +22,14 @@ namespace Egorozh.ColorPicker.Avalonia
 
         #region Dependency Properties
 
-        public static readonly AvaloniaProperty<Color> ColorProperty =
-            AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color));
+        public static readonly StyledProperty<Color> ColorProperty =
+            AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color), notifying: ColorChanged);
 
-        //public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
-        //    nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerDialog),
-        //    new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
+        private static void ColorChanged(IAvaloniaObject obj, bool isAfter)
+        {
+            if (obj is ColorPickerControl colorPickerControl)
+                colorPickerControl.ColorChanged(colorPickerControl.Color);
+        }
 
         #endregion
 
@@ -29,15 +37,18 @@ namespace Egorozh.ColorPicker.Avalonia
 
         public Color Color
         {
-            get => (Color) GetValue(ColorProperty);
+            get => GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
 
-        //public GetColorHandler GetColorForPaletteAction
-        //{
-        //    get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
-        //    set => SetValue(GetColorForPaletteActionProperty, value);
-        //}
+        #endregion
+        
+        #region Private Methods
+
+        private void ColorChanged(Color color)
+        {
+            _manager.CurrentColor = color.ToColor();
+        }
 
         #endregion
     }

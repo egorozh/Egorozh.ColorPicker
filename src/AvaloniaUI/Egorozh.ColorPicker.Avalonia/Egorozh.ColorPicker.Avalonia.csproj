@@ -9,4 +9,8 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Egorozh.ColorPicker\Egorozh.ColorPicker.csproj" />
+  </ItemGroup>
+
 </Project>
