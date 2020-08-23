@@ -1,0 +1,40 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Egorozh.ColorPicker.Avalonia.Client.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+
+        Title="Color Picker Dialog - Demo"
+
+        Height="450" Width="800"
+
+        WindowStartupLocation="CenterScreen">
+
+  <Button Name="Button"
+          Click="ButtonBase_OnClick"
+          Cursor="Hand"
+          Background="Transparent">
+    <Button.Styles>
+      <Style Selector="Button">
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate>
+              <Border Background="{TemplateBinding Background}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      BorderBrush="{TemplateBinding BorderBrush}">
+
+                <TextBlock Text="Click me"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="36" />
+              </Border>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </Button.Styles>
+  </Button>
+
+</Window>

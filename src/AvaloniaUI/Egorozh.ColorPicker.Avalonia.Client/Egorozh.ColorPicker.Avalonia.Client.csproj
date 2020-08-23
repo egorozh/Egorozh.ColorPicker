@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.0-preview3" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Egorozh.ColorPicker.Avalonia.Dialog\Egorozh.ColorPicker.Avalonia.Dialog.csproj" />
+  </ItemGroup>
+
+</Project>
