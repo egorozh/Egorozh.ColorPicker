@@ -13,7 +13,7 @@ namespace Egorozh.ColorPicker
 
         private HslColor _hslColor;
 
-        private bool _showAlphaChannel;
+        private bool _showAlphaChannel = true;
 
         private bool _showColorSpaceLabels;
 
@@ -98,13 +98,15 @@ namespace Egorozh.ColorPicker
             InitializeComponent();
 
             Color = Color.Black;
-            
+
             hexTextBox.ItemsSource = Extensions.GetNamedColors();
+
+            SubscribeOnButtons();
         }
 
         #endregion
 
-        #region Private Fields
+        #region Private Methods
 
         /// <summary>
         /// Updates the editing field values.
@@ -146,7 +148,7 @@ namespace Egorozh.ColorPicker
                     {
                         hexTextBox.Text = Color.IsNamedColor
                             ? Color.Name
-                            : string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
+                            : $"{Color.A:X2}{Color.R:X2}{Color.G:X2}{Color.B:X2}";
                     }
 
                     // HSL
@@ -382,6 +384,68 @@ namespace Egorozh.ColorPicker
                 UpdateFields(true);
             }
         }
+
+        #region RgbAndHslOnButtons
+
+        private void RgbOnButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UnsubscribeOnButtons();
+
+            RgbOnButton.IsChecked = true;
+            HslOnButton.IsChecked = false;
+
+            SubscribeOnButtons();
+        }
+        
+        private void RgbOnButton_Checked(object sender, RoutedEventArgs e)
+        {
+            UnsubscribeOnButtons();
+
+            RgbOnButton.IsChecked = true;
+            HslOnButton.IsChecked = false;
+
+            SubscribeOnButtons();
+        }
+
+        private void HslOnButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UnsubscribeOnButtons();
+
+            RgbOnButton.IsChecked = false;
+            HslOnButton.IsChecked = true;
+
+            SubscribeOnButtons();
+        }
+
+        private void HslOnButton_Checked(object sender, RoutedEventArgs e)
+        {
+            UnsubscribeOnButtons();
+
+            RgbOnButton.IsChecked = false;
+            HslOnButton.IsChecked = true;
+
+            SubscribeOnButtons();
+        }
+
+        private void SubscribeOnButtons()
+        {
+            RgbOnButton.Checked += RgbOnButton_Checked;
+            RgbOnButton.Unchecked += RgbOnButton_Unchecked;
+
+            HslOnButton.Checked += HslOnButton_Checked;
+            HslOnButton.Unchecked += HslOnButton_Unchecked;
+        }
+
+        private void UnsubscribeOnButtons()
+        {
+            RgbOnButton.Checked -= RgbOnButton_Checked;
+            RgbOnButton.Unchecked -= RgbOnButton_Unchecked;
+
+            HslOnButton.Checked -= HslOnButton_Checked;
+            HslOnButton.Unchecked -= HslOnButton_Unchecked;
+        }
+
+        #endregion
 
         #endregion
     }

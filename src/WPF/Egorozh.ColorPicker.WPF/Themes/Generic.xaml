@@ -43,7 +43,8 @@
                                 </TabItem.Header>
                                 <local:ColorWheel x:Name="PART_ColorWheel"
                                                   Margin="20 0"
-                                                  Width="150" />
+                                                  Width="150" 
+                                                  Height="150"/>
                             </TabItem>
                             <TabItem>
                                 <TabItem.Header>
@@ -108,21 +109,26 @@
                                                          InitImage="{TemplateBinding DropperImage}" />
                             </TabItem>
                         </TabControl>
-                        <StackPanel Orientation="Horizontal"
-                                    Grid.Row="1">
+
+                        <Grid Grid.Row="1">
 
                             <Border VerticalAlignment="Bottom"
-                                    Height="30"
-                                    Width="70"
+                                    HorizontalAlignment="Center"
+                                    Height="50"
+                                    Width="120"
                                     Margin="10"
-                                    BorderThickness="1"
-                                    BorderBrush="{TemplateBinding Foreground}">
+                                    BorderThickness="0">
 
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10"
+                                                      Opacity="0.5"
+                                                      Direction="-90"/>
+                                </Border.Effect>
                                 <Grid Background="{TemplateBinding TransparentBrush}">
                                     <Border x:Name="PART_PreviewPanel" />
                                 </Grid>
                             </Border>
-                        </StackPanel>
+                        </Grid>
                     </Grid>
 
                 </ControlTemplate>

@@ -23,180 +23,222 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+        <Grid>
 
-        <!--#region RGB -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock>RGB:</TextBlock>
+            <ToggleButton Content="RGB" 
+                          x:Name="RgbOnButton"
+                          IsChecked="True"/>
+            <ToggleButton Content="HSL" 
+                          x:Name="HslOnButton"
+                          Grid.Column="1"/>
 
-        <!-- R -->
+            <TextBlock Grid.Column="2"
+                       Text="#" 
+                       Margin="20 0 0 0"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0"
-                   Text="R: " />
+            <ComboBox x:Name="hexTextBox"
+                      Grid.Column="3"
+                      Margin="2"
+                      IsEditable="True"
+                      TextSearch.TextPath="Name"
+                      SelectionChanged="HexTextBox_OnSelectionChanged"
+                      TextBoxBase.TextChanged="HexTextBox_OnTextChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
+                                     Margin="0 1 1 1"
+                                     Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                            <TextBlock Text="{Binding Name}"
+                                       Margin="1 0 0 0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
 
-        <local:RgbaColorSlider Grid.Row="1" Grid.Column="1"
-                               x:Name="rColorBar"
-                               Channel="Red"
-                               ValueChanged="ColorBar_OnValueChanged" />
+            </ComboBox>
+        </Grid>
 
-        <local:NumericUpDown x:Name="rNumericUpDown"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Grid.Row="1" Grid.Column="2"
-                             Minimum="0"
-                             Maximum="255"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
+        <Grid Grid.Row="1">
 
-        <!-- G -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="2" Grid.Column="0"
-                   Text="G: " />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <local:RgbaColorSlider Grid.Row="2" Grid.Column="1"
-                               x:Name="gColorBar"
-                               Channel="Green"
-                               ValueChanged="ColorBar_OnValueChanged" />
+            <!--#region RGB -->
+         
+            <!-- R -->
 
-        <local:NumericUpDown x:Name="gNumericUpDown"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Grid.Row="2" Grid.Column="2"
-                             Minimum="0"
-                             Maximum="255"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
+                       Text="R: " />
 
-        <!-- B -->
+            <local:NumericUpDown x:Name="rNumericUpDown"
+                                 Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Grid.Row="0" Grid.Column="1"
+                                 Minimum="0"
+                                 Maximum="255"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
 
-        <TextBlock Grid.Row="3" Grid.Column="0"
-                   Text="B: " />
+            <local:RgbaColorSlider Grid.Row="0" Grid.Column="2"
+                                   Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
+                                   x:Name="rColorBar"
+                                   Channel="Red"
+                                   ValueChanged="ColorBar_OnValueChanged" />
+        
 
-        <local:RgbaColorSlider Grid.Row="3" Grid.Column="1"
-                               x:Name="bColorBar"
-                               Channel="Blue"
-                               ValueChanged="ColorBar_OnValueChanged" />
+            <!-- G -->
 
-        <local:NumericUpDown x:Name="bNumericUpDown"
-                             Grid.Row="3" Grid.Column="2"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Minimum="0"
-                             Maximum="255"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
-        <!--#endregion-->
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <!--#region Hex-->
+                       Text="G: " />
 
-        <TextBlock Grid.Row="4" Grid.Column="0"
-                   Text="Hex: " />
+            <local:RgbaColorSlider Grid.Row="1" Grid.Column="2"
+                                   Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <ComboBox x:Name="hexTextBox"
-                  Grid.Row="4" Grid.Column="1"
-                  Margin="2"
-                  IsEditable="True"
-                  TextSearch.TextPath="Name"
-                  SelectionChanged="HexTextBox_OnSelectionChanged"
-                  TextBoxBase.TextChanged="HexTextBox_OnTextChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Ellipse Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
-                                 Margin="0 1 1 1"
-                                 Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
-                        <TextBlock Text="{Binding Name}"
-                                   Margin="1 0 0 0" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
+                                   x:Name="gColorBar"
+                                   Channel="Green"
+                                   ValueChanged="ColorBar_OnValueChanged" />
 
-        </ComboBox>
+            <local:NumericUpDown x:Name="gNumericUpDown"
+                                 Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <!--#endregion-->
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Grid.Row="1" Grid.Column="1"
+                                 Minimum="0"
+                                 Maximum="255"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
 
-        <!--#region HSL -->
+            <!-- B -->
 
-        <TextBlock Grid.Row="5" Grid.Column="0"
-                   Text="HSL: " />
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <!-- H -->
+                       Text="B: " />
 
-        <TextBlock Grid.Row="6" Grid.Column="0"
-                   Text="H: " />
+            <local:RgbaColorSlider Grid.Row="2" Grid.Column="2"
+                                   Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <local:HueColorSlider Grid.Row="6" Grid.Column="1"
-                              x:Name="hColorBar"
-                              ValueChanged="ColorBar_OnValueChanged" />
+                                   x:Name="bColorBar"
+                                   Channel="Blue"
+                                   ValueChanged="ColorBar_OnValueChanged" />
 
-        <local:NumericUpDown x:Name="hNumericUpDown"
-                             Grid.Row="6" Grid.Column="2"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Minimum="0"
-                             Maximum="359"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
+            <local:NumericUpDown x:Name="bNumericUpDown"
+                                 Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <!-- S -->
+                                 Grid.Row="2" Grid.Column="1"
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Minimum="0"
+                                 Maximum="255"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
+            <!--#endregion-->
 
-        <TextBlock Grid.Row="7" Grid.Column="0"
-                   Text="S: " />
+            <!--#region HSL -->
+          
+            <!-- H -->
 
-        <local:SaturationColorSlider Grid.Row="7" Grid.Column="1"
-                                     x:Name="sColorBar"
-                                     ValueChanged="ColorBar_OnValueChanged" />
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <local:NumericUpDown x:Name="sNumericUpDown"
-                             Grid.Row="7" Grid.Column="2"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Minimum="0"
-                             Maximum="100"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
+                       Text="H: " />
 
-        <!-- L -->
+            <local:HueColorSlider Grid.Row="0" Grid.Column="2"
+                                  Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <TextBlock Grid.Row="8" Grid.Column="0"
-                   Text="L: " />
+                                  x:Name="hColorBar"
+                                  ValueChanged="ColorBar_OnValueChanged" />
 
-        <local:LightnessColorSlider Grid.Row="8" Grid.Column="1"
-                                    x:Name="lColorBar"
-                                    ValueChanged="ColorBar_OnValueChanged" />
+            <local:NumericUpDown x:Name="hNumericUpDown"
+                                 Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <local:NumericUpDown x:Name="lNumericUpDown"
-                             Grid.Row="8" Grid.Column="2"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Minimum="0"
-                             Maximum="100"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
+                                 Grid.Row="0" Grid.Column="1"
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Minimum="0"
+                                 Maximum="359"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
 
-        <!--#endregion-->
+            <!-- S -->
 
-        <!--#region Alpha -->
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <TextBlock Grid.Row="9" Grid.Column="0"
-                   Text="Alpha: " />
+                       Text="S: " />
 
-        <local:RgbaColorSlider Grid.Row="9" Grid.Column="1"
-                               x:Name="aColorBar"
-                               Channel="Alpha"
-                               ValueChanged="ColorBar_OnValueChanged" />
+            <local:SaturationColorSlider Grid.Row="1" Grid.Column="2"
+                                         x:Name="sColorBar"
+                                         Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
 
-        <local:NumericUpDown x:Name="aNumericUpDown"
-                             Grid.Row="9" Grid.Column="2"
-                             Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
-                             Minimum="0"
-                             Maximum="255"
-                             ValueChanged="NumericUpDown_OnValueChanged" />
+                                         ValueChanged="ColorBar_OnValueChanged" />
 
-        <!--#endregion-->
+            <local:NumericUpDown x:Name="sNumericUpDown"
+                                 Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
+
+                                 Grid.Row="1" Grid.Column="1"
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
+
+            <!-- L -->
+
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
+
+                       Text="L: " />
+
+            <local:LightnessColorSlider Grid.Row="2" Grid.Column="2"
+                                        Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
+
+                                        x:Name="lColorBar"
+                                        ValueChanged="ColorBar_OnValueChanged" />
+
+            <local:NumericUpDown x:Name="lNumericUpDown"
+                                 Grid.Row="2" Grid.Column="1"
+                                 Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
+
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
+
+            <!--#endregion-->
+
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="A" />
+
+            <local:NumericUpDown x:Name="aNumericUpDown"
+                                 Grid.Row="3" Grid.Column="1"
+                                 Style="{Binding ElementName=UserControl, Path=NumericUpDownStyle}"
+                                 Minimum="0"
+                                 Maximum="255"
+                                 ValueChanged="NumericUpDown_OnValueChanged" />
+
+            <local:RgbaColorSlider Grid.Row="3" Grid.Column="2"
+                                   x:Name="aColorBar"
+                                   Channel="Alpha"
+                                   ValueChanged="ColorBar_OnValueChanged" />
+
+        </Grid>
 
     </Grid>
 
