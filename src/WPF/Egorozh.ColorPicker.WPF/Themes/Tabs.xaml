@@ -77,6 +77,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -91,16 +92,7 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto" />
                             <RowDefinition x:Name="RowDefinition1" Height="*" />
                         </Grid.RowDefinitions>
-
-                        <!--<TabPanel x:Name="headerPanel"
-                                  Background="Transparent"
-                                  HorizontalAlignment="Stretch"
-                                  Grid.Column="0"
-                                  IsItemsHost="true"
-                                  Margin="2,2,2,0"
-                                  Grid.Row="0"
-                                  KeyboardNavigation.TabIndex="1"
-                                  Panel.ZIndex="1" />-->
+                  
                         <UniformGrid x:Name="headerPanel"
                                      IsItemsHost="True"
                                      Margin="0">
