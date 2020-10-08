@@ -26,7 +26,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid Margin="5">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -35,16 +35,106 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ToggleButton Content="RGB" 
+            <ToggleButton Content="RGB"
                           x:Name="RgbOnButton"
-                          IsChecked="True"/>
-            <ToggleButton Content="HSL" 
+                          IsChecked="True">
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="Background" Value="#3750D1"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Width" Value="80"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderBrush" Value="#3750D1"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="1"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border x:Name="border" 
+                                            CornerRadius="3 0 0 3"
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            SnapsToDevicePixels="true">
+                                        <ContentPresenter x:Name="contentPresenter"
+                                                          Focusable="False" 
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          Margin="{TemplateBinding Padding}" 
+                                                          RecognizesAccessKey="True" 
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="Background" TargetName="border" Value="#7777dd"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" TargetName="border" Value="#5550DD"/>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Background" TargetName="border" Value="Gray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                </ToggleButton.Style>
+            </ToggleButton>
+            <ToggleButton Content="HSL"
                           x:Name="HslOnButton"
-                          Grid.Column="1"/>
+                          Grid.Column="1" >
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="Background" Value="#3750D1"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Width" Value="80"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderBrush" Value="#3750D1"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="1"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border x:Name="border" 
+                                            CornerRadius="0 3 3 0"
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            SnapsToDevicePixels="true">
+                                        <ContentPresenter x:Name="contentPresenter"
+                                                          Focusable="False" 
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          Margin="{TemplateBinding Padding}" 
+                                                          RecognizesAccessKey="True" 
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="Background" TargetName="border" Value="#7777dd"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" TargetName="border" Value="#5550DD"/>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Background" TargetName="border" Value="Gray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                </ToggleButton.Style>
+            </ToggleButton>
 
             <TextBlock Grid.Column="2"
-                       Text="#" 
-                       Margin="20 0 0 0"/>
+                       Text="#"
+                       Margin="20 0 0 0" />
 
             <ComboBox x:Name="hexTextBox"
                       Grid.Column="3"
@@ -68,23 +158,24 @@
             </ComboBox>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"
+              Margin="5">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <!--#region RGB -->
-         
+
             <!-- R -->
 
             <TextBlock Grid.Row="0" Grid.Column="0"
@@ -104,7 +195,7 @@
                                    x:Name="rColorBar"
                                    Channel="Red"
                                    ValueChanged="ColorBar_OnValueChanged" />
-        
+
 
             <!-- G -->
 
@@ -154,7 +245,7 @@
             <!--#endregion-->
 
             <!--#region HSL -->
-          
+
             <!-- H -->
 
             <TextBlock Grid.Row="0" Grid.Column="0"
