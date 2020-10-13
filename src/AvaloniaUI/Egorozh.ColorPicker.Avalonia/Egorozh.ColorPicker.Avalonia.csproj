@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0-preview3" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview3" />
+    <PackageReference Include="Avalonia" Version="0.10.0-preview5" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview5" />
   </ItemGroup>
 
   <ItemGroup>

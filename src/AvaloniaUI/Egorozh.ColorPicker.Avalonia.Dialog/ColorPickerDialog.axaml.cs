@@ -13,10 +13,6 @@ namespace Egorozh.ColorPicker.Avalonia.Dialog
         public static readonly AvaloniaProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPickerDialog, Color>(nameof(Color));
 
-        //public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
-        //    nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerDialog),
-        //    new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
-
         #endregion
 
         #region Public Properties
@@ -26,13 +22,7 @@ namespace Egorozh.ColorPicker.Avalonia.Dialog
             get => (Color) GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
-
-        //public GetColorHandler GetColorForPaletteAction
-        //{
-        //    get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
-        //    set => SetValue(GetColorForPaletteActionProperty, value);
-        //}
-
+        
         #endregion
 
         #region Constructor
@@ -53,30 +43,11 @@ namespace Egorozh.ColorPicker.Avalonia.Dialog
 
         private void btOk_Click(object sender, RoutedEventArgs e)
         {
-            Color = Colors.Red;
-
             Close(true);
         }
 
         private void btCancel_Click(object sender, RoutedEventArgs e) => Close(false);
-
-        //private static bool GetColorForPalette(ref Color color)
-        //{
-        //var colorPicker = new ColorPickerDialog
-        //{
-        //    Color = color,
-        //};
-
-        //var res = colorPicker.ShowDialog();
-
-        //if (res != true)
-        //    return false;
-
-        //color = colorPicker.Color;
-
-        //return true;
-        //}
-
+        
         #endregion
     }
 }

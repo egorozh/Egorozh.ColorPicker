@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Egorozh.ColorPicker
 {
-    public class ColorManager
+    public class ColorManager : IColorManager
     {
         #region Private Fields
 
@@ -12,44 +13,54 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
+        #region Events
+
+        public event Action<Color> ColorChanged;
+
+        #endregion
+
         #region Public Properties
 
         public Color CurrentColor
         {
             get => _currentColor;
-            set
-            {
-                _currentColor = value;
-                Client_ColorChanged(_currentColor);
-            }
+            set => UpdateClients(value);
         }
 
         #endregion
 
         #region Public Methods
 
-        public void AddClient(IColorClient client)
+        public void AddClient(params IColorClient[] clients)
         {
-            client.ColorChanged += Client_ColorChanged;
+            foreach (var client in clients)
+            {
+                _colorClients.Add(client);
+                client.Init(this);
+            }
+        }
 
-            _colorClients.Add(client);
+        public void SetColorFromHsl(double hue, double saturation, double lightness)
+        {
+            var alpha = CurrentColor.A;
+
+            var hsl = new HslColor(alpha, hue, saturation, lightness);
+            
+            CurrentColor = hsl.ToRgbColor();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void Client_ColorChanged(Color color)
+        private void UpdateClients(Color color)
         {
             _currentColor = color;
 
-            UpdateClients(color);
-        }
-
-        private void UpdateClients(Color color)
-        {
             foreach (var colorClient in _colorClients)
                 colorClient.ColorUpdated(color, colorClient);
+
+            ColorChanged?.Invoke(color);
         }
 
         #endregion

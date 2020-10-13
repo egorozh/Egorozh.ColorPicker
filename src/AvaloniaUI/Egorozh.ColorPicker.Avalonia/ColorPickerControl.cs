@@ -1,16 +1,17 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia.Styling;
 
 namespace Egorozh.ColorPicker.Avalonia
 {
-    public class ColorPickerControl : UserControl, IStyleable
+    public class ColorPickerControl : TemplatedControl, IStyleable
     {
         #region Private Fields
 
-        private readonly ColorManager _manager = new ColorManager();
+        private readonly IColorManager _manager = new ColorManager();
 
         #endregion
 
@@ -42,8 +43,32 @@ namespace Egorozh.ColorPicker.Avalonia
         }
 
         #endregion
-        
+
+        #region Protected Methods
+
+        protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+        {
+            base.OnApplyTemplate(e);
+
+            _manager.ColorChanged += Manager_ColorChanged;
+
+            var colorWheel = e.NameScope.Find<ColorWheel>("PART_ColorWheel");
+            
+            _manager.AddClient(colorWheel);
+        }
+
+        #endregion
+
         #region Private Methods
+
+        private void Manager_ColorChanged(System.Drawing.Color color)
+        {
+            _manager.ColorChanged -= Manager_ColorChanged;
+
+            Color = color.ToColor();
+
+            _manager.ColorChanged += Manager_ColorChanged;
+        }
 
         private void ColorChanged(Color color)
         {

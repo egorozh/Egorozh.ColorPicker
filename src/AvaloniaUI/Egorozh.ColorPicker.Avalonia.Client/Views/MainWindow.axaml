@@ -15,7 +15,7 @@
   <Button Name="Button"
           Click="ButtonBase_OnClick"
           Cursor="Hand"
-          Background="Transparent">
+          Background="Green">
     <Button.Styles>
       <Style Selector="Button">
         <Setter Property="Template">

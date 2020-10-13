@@ -1,0 +1,56 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        xmlns:local="clr-namespace:Egorozh.ColorPicker.Avalonia;assembly=Egorozh.ColorPicker.Avalonia">
+
+  <Style Selector="local|ColorPickerControl">
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid>
+            <TabControl>
+              <TabItem>
+                <TabItem.Header>
+                  <Canvas Width="24" Height="24">
+                    <Path Stroke="Black"
+                          StrokeThickness="0.5"
+                          Data="M15.54,3.5L20.5,8.47L19.07,9.88L14.12,4.93L15.54,3.5M3.5,19.78L10,13.31C9.9,13 9.97,12.61 10.23,12.35C10.62,11.96 11.26,11.96 11.65,12.35C12.04,12.75 12.04,13.38 11.65,13.77C11.39,14.03 11,14.1 10.69,14L4.22,20.5L14.83,16.95L18.36,10.59L13.42,5.64L7.05,9.17L3.5,19.78Z" />
+                  </Canvas>
+                </TabItem.Header>
+
+                <local:ColorWheel Name="PART_ColorWheel"
+                                  Margin="20 0"
+                                  Width="150"
+                                  Height="150" />
+
+              </TabItem>
+              <TabItem>
+                <TabItem.Header>
+                  <Canvas Width="24" Height="24">
+                    <Path Stroke="Black"
+                          StrokeThickness="0.5"
+                          Data="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z" />
+                  </Canvas>
+                </TabItem.Header>
+              </TabItem>
+              <TabItem>
+                <TabItem.Header>
+                  <Canvas Width="24" Height="24">
+                    <Path Stroke="Black"
+                          StrokeThickness="0.5"
+                          Data="M3,17V19H9V17H3M3,5V7H13V5H3M13,21V19H21V17H13V15H11V21H13M7,9V11H3V13H7V15H9V9H7M21,13V11H11V13H21M15,9H17V7H21V5H17V3H15V9Z" />
+                  </Canvas>
+                </TabItem.Header>
+              </TabItem>
+              <TabItem>
+              </TabItem>
+            </TabControl>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+  </Style>
+
+</Styles>
