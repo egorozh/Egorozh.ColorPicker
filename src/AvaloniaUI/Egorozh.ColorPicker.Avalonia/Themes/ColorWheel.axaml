@@ -13,8 +13,8 @@
                   Margin="5">
               <Ellipse Name="PART_SpectrumEllipse"
                        StrokeThickness="0"
-                       Width="140"
-                       Height="140" />
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"/>
             </Grid>
 
             <Canvas>

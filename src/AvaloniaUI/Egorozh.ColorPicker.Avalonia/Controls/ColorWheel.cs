@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
@@ -11,6 +7,8 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Styling;
+using System;
+using System.Runtime.InteropServices;
 using Color = System.Drawing.Color;
 using Point = Avalonia.Point;
 
@@ -61,19 +59,28 @@ namespace Egorozh.ColorPicker.Avalonia
             PointerReleased += ColorWheel_PointerReleased;
 
             SetCursor(_colorManager.CurrentColor);
-            FillHsvSpectrum();
         }
 
         #endregion
 
         #region Private Methods
 
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            var size = base.ArrangeOverride(finalSize);
+            FillHsvSpectrum();
+            return size;
+        }
+
         private void FillHsvSpectrum()
         {
-            var bitmap = new WriteableBitmap(new PixelSize((int) _spectrumEllipse.Width, (int) _spectrumEllipse.Height),
+            int width = (int) _spectrumEllipse.Bounds.Width;
+            int height = (int) _spectrumEllipse.Bounds.Height;
+
+            var bitmap = new WriteableBitmap(new PixelSize(width, height),
                 new Vector(96, 96), PixelFormat.Bgra8888, AlphaFormat.Premul);
 
-            var bgraMinPixelData = GetHsvData(_spectrumEllipse.Width, _spectrumEllipse.Height);
+            var bgraMinPixelData = ColorWheelHelpers.GetHsvData(width, height);
 
             using (var fb = bitmap.Lock())
                 Marshal.Copy(bgraMinPixelData.ToArray(), 0, fb.Address, bgraMinPixelData.Count);
@@ -81,83 +88,6 @@ namespace Egorozh.ColorPicker.Avalonia
             _spectrumEllipse.Fill = new ImageBrush(bitmap);
         }
 
-        private static List<byte> GetHsvData(double width, double height)
-        {
-            var data = new List<byte>();
-
-            var pixelCount = (int) (Math.Round(width) * Math.Round(height));
-
-            var pixelDataSize = pixelCount * 4;
-            data.Capacity = pixelDataSize;
-
-            for (var y = 0; y < Math.Round(height); ++y)
-            {
-                for (var x = 0; x < Math.Round(width); ++x)
-                {
-                    FillPixelForRing(
-                        x, y,
-                        Math.Round(width) / 2.0,
-                        new HsvColor(0,0.8,1),
-                        0, 359,
-                        0, 100,
-                        data);
-                }
-            }
-
-            return data;
-        }
-
-        private static void FillPixelForRing(int x, int y,
-            double radius,
-            HsvColor baseHsv,
-            int minHue, int maxHue,
-            int minSaturation, int maxSaturation,
-            List<byte> bgraMaxPixelData)
-        {   
-            var hMin = minHue;
-            var hMax = maxHue;
-            var sMin = minSaturation / 100.0;
-            var sMax = maxSaturation / 100.0;
-           
-            var distanceFromRadius = Math.Sqrt(Math.Pow(x - radius, 2) + Math.Pow(y - radius, 2));
-
-            double xToUse = x;
-            double yToUse = y;
-
-            if (distanceFromRadius > radius)
-            {
-                xToUse = (radius / distanceFromRadius * (x - radius)) + radius;
-                yToUse = (radius / distanceFromRadius * (y - radius)) + radius;
-                distanceFromRadius = radius;
-            }
-
-            var hsvMax = baseHsv;
-
-            var r = 1 - (distanceFromRadius / radius);
-
-            var theta = Math.Atan2(radius - yToUse, radius - xToUse) * 180.0 / Math.PI;
-            theta += 180.0;
-            theta = Math.Floor(theta);
-
-            while (theta > 360)
-                theta -= 360;
-
-            var thetaPercent = theta / 360;
-            
-            hsvMax.H = hMin + (thetaPercent * (hMax - hMin));
-            hsvMax.S = sMin + (r * (sMax - sMin));
-            hsvMax.V = 1;
-
-            hsvMax.S = sMax - hsvMax.S + sMin;
-
-            var rgbMax = hsvMax.ToRgbColor();
-
-            bgraMaxPixelData.Add((byte) (rgbMax.B * 255)); // b
-            bgraMaxPixelData.Add((byte) (rgbMax.G * 255)); // g
-            bgraMaxPixelData.Add((byte) (rgbMax.R * 255)); // r
-            bgraMaxPixelData.Add(255);
-        }
-        
         private void SetCursor(Color color)
         {
             var location = GetColorLocation(color);
