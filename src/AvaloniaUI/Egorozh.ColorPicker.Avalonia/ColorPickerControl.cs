@@ -53,8 +53,9 @@ namespace Egorozh.ColorPicker.Avalonia
             _manager.ColorChanged += Manager_ColorChanged;
 
             var colorWheel = e.NameScope.Find<ColorWheel>("PART_ColorWheel");
+            var colorPreview = e.NameScope.Find<ColorPreview>("PART_ColorPreview");
             
-            _manager.AddClient(colorWheel);
+            _manager.AddClient(colorWheel, colorPreview);
         }
 
         #endregion

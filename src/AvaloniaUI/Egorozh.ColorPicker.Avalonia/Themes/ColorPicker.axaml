@@ -8,7 +8,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <Grid>
+          <Grid RowDefinitions="* auto">
             <TabControl>
               <TabItem>
                 <TabItem.Header>
@@ -46,6 +46,11 @@
               <TabItem>
               </TabItem>
             </TabControl>
+
+            <local:ColorPreview Name="PART_ColorPreview"
+                                Grid.Row="1"
+                                Height="48"
+                                Margin="12"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>

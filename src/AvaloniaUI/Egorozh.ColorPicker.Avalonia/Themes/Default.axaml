@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:Egorozh.ColorPicker.Avalonia;assembly=Egorozh.ColorPicker.Avalonia">
 
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorWheel.axaml" />
+  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorPreview.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorPicker.axaml" />
 
 </Styles>
