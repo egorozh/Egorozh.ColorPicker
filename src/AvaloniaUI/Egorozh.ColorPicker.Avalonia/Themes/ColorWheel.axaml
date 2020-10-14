@@ -11,9 +11,10 @@
           <Grid >
             <Grid Background="White"
                   Margin="5">
-              <Canvas Name="PART_HsvCanvas" 
-                      Width="140"
-                      Height="140" />
+              <Ellipse Name="PART_SpectrumEllipse"
+                       StrokeThickness="0"
+                       Width="140"
+                       Height="140" />
             </Grid>
 
             <Canvas>
