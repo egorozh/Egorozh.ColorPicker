@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF.Cli
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0400CE3F-5E95-4257-89E4-DD733A13A2CA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker", "Core\Egorozh.ColorPicker\Egorozh.ColorPicker.csproj", "{79234F0A-046A-4E9A-A290-FE2447B82AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.Core", "Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj", "{79234F0A-046A-4E9A-A290-FE2447B82AA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AvaloniaUI", "AvaloniaUI", "{CE8B8882-8A9F-47A0-8BDC-4676FBBDEDB0}"
 EndProject

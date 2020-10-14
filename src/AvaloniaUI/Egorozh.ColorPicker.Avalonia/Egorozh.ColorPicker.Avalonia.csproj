@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Egorozh.ColorPicker\Egorozh.ColorPicker.csproj" />
+    <ProjectReference Include="..\..\Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj" />
   </ItemGroup>
 
 </Project>
