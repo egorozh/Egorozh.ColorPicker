@@ -9,7 +9,13 @@
       <Setter.Value>
         <ControlTemplate>
           <Grid ColumnDefinitions="auto auto * auto auto">
-
+            <Border  Grid.Column="0"
+                     Width="50"
+                     Height="36"
+                     CornerRadius="4,0,0,4"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_PreviewBorder1"
                     Grid.Column="0"
                     Width="50"
@@ -18,10 +24,17 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center">
               <Border.Background>
-                <SolidColorBrush Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='-2'}" />
+                <SolidColorBrush
+                  Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='-2'}" />
               </Border.Background>
             </Border>
 
+            <Border Grid.Column="1"
+                    Width="50"
+                    Height="36"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_PreviewBorder2"
                     Grid.Column="1"
                     Width="50"
@@ -29,10 +42,16 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center">
               <Border.Background>
-                <SolidColorBrush Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='-1'}" />
+                <SolidColorBrush
+                  Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='-1'}" />
               </Border.Background>
             </Border>
 
+            <Border Grid.Column="2"
+                    CornerRadius="4"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_MainBorder"
                     Grid.Column="2"
                     CornerRadius="4"
@@ -43,6 +62,12 @@
               </Border.Background>
             </Border>
 
+            <Border Grid.Column="3"
+                    Width="50"
+                    Height="36"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_PreviewBorder3"
                     Grid.Column="3"
                     Width="50"
@@ -50,10 +75,18 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center">
               <Border.Background>
-                <SolidColorBrush Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='1'}" />
+                <SolidColorBrush
+                  Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='1'}" />
               </Border.Background>
             </Border>
 
+            <Border  Grid.Column="4"
+                     Width="50"
+                     Height="36"
+                     CornerRadius="0,4,4,0"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_PreviewBorder4"
                     Grid.Column="4"
                     Width="50"
@@ -62,7 +95,8 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center">
               <Border.Background>
-                <SolidColorBrush Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='2'}" />
+                <SolidColorBrush
+                  Color="{Binding $parent[local:ColorPreview].Color, Converter={local:AccentColorShadeConverter}, ConverterParameter='2'}" />
               </Border.Background>
             </Border>
 

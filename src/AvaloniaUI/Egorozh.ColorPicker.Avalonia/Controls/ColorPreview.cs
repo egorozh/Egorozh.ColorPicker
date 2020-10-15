@@ -5,6 +5,7 @@ using Avalonia.Styling;
 using System;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker.Avalonia

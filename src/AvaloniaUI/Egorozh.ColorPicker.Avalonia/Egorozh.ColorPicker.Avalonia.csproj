@@ -17,4 +17,10 @@
     <Folder Include="Controls\Sliders\Hsl\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AvaloniaXaml Update="Themes\Brushes.axaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+  </ItemGroup>
+
 </Project>
