@@ -19,10 +19,23 @@
                   </Canvas>
                 </TabItem.Header>
 
-                <local:ColorWheel Name="PART_ColorWheel"
-                                  Margin="20 0"
-                                  Width="180"
-                                  Height="180" />
+                <Grid ColumnDefinitions="auto * auto">
+
+                  <local:ValueColorSlider Name="PART_ValueSlider"
+                                          Grid.Column="0"
+                                          Orientation="Vertical" />
+
+                  <local:ColorWheel Name="PART_ColorWheel"
+                                    Grid.Column="1"
+                                    Margin="20 0"
+                                    Width="180"
+                                    Height="180" />
+
+                  <local:RgbaColorSlider Name="PART_AlphaSlider"
+                                         Grid.Column="2"
+                                         Orientation="Vertical"
+                                         Channel="Alpha" />
+                </Grid>
 
               </TabItem>
               <TabItem>
@@ -50,7 +63,7 @@
             <local:ColorPreview Name="PART_ColorPreview"
                                 Grid.Row="1"
                                 Height="48"
-                                Margin="12"/>
+                                Margin="12" />
           </Grid>
         </ControlTemplate>
       </Setter.Value>

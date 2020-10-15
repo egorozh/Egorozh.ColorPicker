@@ -97,9 +97,14 @@ namespace Egorozh.ColorPicker
         public HsvColor(Color color)
         {
             _alpha = color.A;
+
+            int max = Math.Max(color.R, Math.Max(color.G, color.B));
+            int min = Math.Min(color.R, Math.Min(color.G, color.B));
+
             _hue = color.GetHue();
-            _saturation = color.GetSaturation();
-            _brightness = color.GetBrightness();
+            _saturation = (max == 0) ? 0 : 1d - (1d * min / max);
+            _brightness = max / 255d;
+            
             IsEmpty = false;
         }
 

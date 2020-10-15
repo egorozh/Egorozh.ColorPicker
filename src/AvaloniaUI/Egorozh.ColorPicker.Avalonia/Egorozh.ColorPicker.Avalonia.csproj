@@ -13,4 +13,8 @@
     <ProjectReference Include="..\..\Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\Sliders\Hsl\" />
+  </ItemGroup>
+
 </Project>

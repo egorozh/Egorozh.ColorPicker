@@ -121,6 +121,7 @@ namespace Egorozh.ColorPicker.Avalonia
         private Point GetColorLocation(in Color color)
         {
             var angle = color.GetHue() * Math.PI / 180;
+            
             var radius = (Height - _cursorEllipse.Height) / 2 * color.GetSaturation();
 
             var centerPoint = new Point(Width / 2, Height / 2);
