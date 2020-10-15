@@ -13,6 +13,7 @@
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorWheel.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorPreview.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorSlider.axaml" />
+
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ColorPicker.axaml" />
 
 </Styles>

@@ -9,8 +9,7 @@
       <Setter.Value>
         <ControlTemplate>
           <Grid >
-            <Grid Background="White"
-                  Margin="5">
+            <Grid Margin="5">
               <Ellipse Name="PART_SpectrumEllipse"
                        StrokeThickness="0"
                        HorizontalAlignment="Stretch"

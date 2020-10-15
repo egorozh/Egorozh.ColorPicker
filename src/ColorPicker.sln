@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF.Dialog", "WPF\Egorozh.ColorPicker.WPF.Dialog\Egorozh.ColorPicker.WPF.Dialog.csproj", "{768748DD-C16B-4E50-9FA2-F49EE869B82B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF.Client", "WPF\Egorozh.ColorPicker.WPF.Client\Egorozh.ColorPicker.WPF.Client.csproj", "{91B6DBBF-0722-4AB9-A4C9-0F9BC7C84E3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.WPF.Client", "Samples\Egorozh.ColorPicker.WPF.Client\Egorozh.ColorPicker.WPF.Client.csproj", "{91B6DBBF-0722-4AB9-A4C9-0F9BC7C84E3E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0400CE3F-5E95-4257-89E4-DD733A13A2CA}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.Core", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AvaloniaUI", "AvaloniaUI", "{CE8B8882-8A9F-47A0-8BDC-4676FBBDEDB0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.Avalonia.Client", "AvaloniaUI\Egorozh.ColorPicker.Avalonia.Client\Egorozh.ColorPicker.Avalonia.Client.csproj", "{F4EB56CA-9202-4CF0-BA20-B0032EC909AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.Avalonia.Client", "Samples\Egorozh.ColorPicker.Avalonia.Client\Egorozh.ColorPicker.Avalonia.Client.csproj", "{F4EB56CA-9202-4CF0-BA20-B0032EC909AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.Avalonia.Dialog", "AvaloniaUI\Egorozh.ColorPicker.Avalonia.Dialog\Egorozh.ColorPicker.Avalonia.Dialog.csproj", "{C254B2F5-5A97-4749-9D9E-45298465BCB0}"
 EndProject

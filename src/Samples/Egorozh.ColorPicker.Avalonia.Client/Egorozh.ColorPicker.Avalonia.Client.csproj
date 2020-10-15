@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Egorozh.ColorPicker.Avalonia.Dialog\Egorozh.ColorPicker.Avalonia.Dialog.csproj" />
+    <ProjectReference Include="..\..\AvaloniaUI\Egorozh.ColorPicker.Avalonia.Dialog\Egorozh.ColorPicker.Avalonia.Dialog.csproj" />
   </ItemGroup>
 
 </Project>

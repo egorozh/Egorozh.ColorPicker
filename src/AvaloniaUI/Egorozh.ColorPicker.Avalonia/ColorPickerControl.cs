@@ -1,9 +1,12 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Media;
 using Avalonia.Styling;
+using Avalonia.Themes.Fluent;
 
 namespace Egorozh.ColorPicker.Avalonia
 {
@@ -58,6 +61,8 @@ namespace Egorozh.ColorPicker.Avalonia
             var valuesSlider = e.NameScope.Find<ValueColorSlider>("PART_ValueSlider");
 
             _manager.AddClient(colorWheel, colorPreview, alphaSlider, valuesSlider);
+            
+
         }
 
         #endregion
