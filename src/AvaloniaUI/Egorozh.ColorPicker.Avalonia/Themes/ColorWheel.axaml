@@ -18,11 +18,11 @@
 
             <Canvas>
               <Ellipse Name="PART_CursorEllipse"
-                       Stroke="Black"
-                       Fill="#AAFFFFFF"
-                       Width="10"
-                       Height="10"
-                       StrokeThickness="1" />
+                       Width="12" Height="12"
+                       Stroke="{Binding $parent[Window].Foreground}"
+                       Fill="{DynamicResource ThemeAccentBrush}"
+                       StrokeThickness="1" 
+                       Opacity="0.8"/>
             </Canvas>
           </Grid>
         </ControlTemplate>

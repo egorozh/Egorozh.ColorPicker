@@ -1,8 +1,12 @@
-﻿using System;
-using System.Drawing;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Styling;
+using System;
+using System.Collections.Generic;
+using Avalonia;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker.Avalonia
 {
@@ -28,14 +32,16 @@ namespace Egorozh.ColorPicker.Avalonia
         }
 
         #endregion
-        
+
         #region Public Methods
-        
+
         public virtual void ColorUpdated(Color color, IColorClient client)
         {
             PropertyChanged -= ColorSlider_PropertyChanged;
 
             UpdateColor(color);
+
+            Background = CreateBackgroundBrush(color);
 
             PropertyChanged += ColorSlider_PropertyChanged;
         }
@@ -54,6 +60,7 @@ namespace Egorozh.ColorPicker.Avalonia
             base.OnApplyTemplate(e);
 
             UpdateColor(ColorManager.CurrentColor);
+            Background = CreateBackgroundBrush(ColorManager.CurrentColor);
 
             PropertyChanged += ColorSlider_PropertyChanged;
         }
@@ -66,9 +73,49 @@ namespace Egorozh.ColorPicker.Avalonia
         {
         }
 
+        protected virtual List<Color> CreateBackgroundColors(in Color color)
+        {
+            return new List<Color>()
+            {
+                Color.Transparent
+            };
+        }
+
         #endregion
 
         #region Private Methods
+
+        private IBrush CreateBackgroundBrush(in Color color)
+        {
+            var colors = CreateBackgroundColors(color);
+            var count = colors?.Count ?? 0;
+
+            IBrush brush;
+
+            double angle = Orientation == Orientation.Horizontal ? 0 : 90;
+
+            if (colors != null && count > 0)
+            {
+                var gradStops = new GradientStops();
+
+                for (var i = 0; i < colors.Count; i++)
+                {
+                    var offset = i == 0 ? 0 : i == count - 1 ? 1 : 1.0D / count * i;
+                    gradStops.Add(new GradientStop(colors[i].ToColor(), offset));
+                }
+
+                brush = new LinearGradientBrush()
+                {
+                    GradientStops = gradStops,
+                    StartPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
+                    EndPoint = new RelativePoint(0, 0, RelativeUnit.Relative)
+                };
+            }
+            else
+                brush = Brushes.Transparent;
+
+            return brush;
+        }
 
         private void ColorSlider_PropertyChanged(object sender, global::Avalonia.AvaloniaPropertyChangedEventArgs e)
         {

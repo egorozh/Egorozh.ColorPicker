@@ -120,9 +120,11 @@ namespace Egorozh.ColorPicker
             byte g = 0;
             byte b = 0;
 
-            _hue /= 60;
-            var i = (int) Math.Floor(_hue);
-            var f = _hue - i;
+            var hue = _hue;
+
+            hue /= 60;
+            var i = (int) Math.Floor(hue);
+            var f = hue - i;
             var p = _brightness * (1 - _saturation);
             var q = _brightness * (1 - _saturation * f);
             var t = _brightness * (1 - _saturation * (1 - f));

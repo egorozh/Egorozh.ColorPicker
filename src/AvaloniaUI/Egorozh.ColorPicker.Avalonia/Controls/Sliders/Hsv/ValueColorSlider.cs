@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using Avalonia.Media;
+using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker.Avalonia
 {
@@ -21,7 +23,7 @@ namespace Egorozh.ColorPicker.Avalonia
             base.UpdateColor(in color);
 
             var hsv = new HsvColor(color);
-                        
+
             Value = hsv.V * 100;
         }
 
@@ -35,6 +37,23 @@ namespace Egorozh.ColorPicker.Avalonia
             };
 
             ColorManager.CurrentColor = hsv.ToRgbColor();
+        }
+
+        protected override List<Color> CreateBackgroundColors(in Color color)
+        {
+            var colors = new List<Color>();
+
+            var hsv = new HsvColor(color)
+            {
+                V = 0
+            };
+            colors.Add(hsv.ToRgbColor());
+
+            hsv.V = 1;
+
+            colors.Add(hsv.ToRgbColor());
+
+            return colors;
         }
 
         #endregion

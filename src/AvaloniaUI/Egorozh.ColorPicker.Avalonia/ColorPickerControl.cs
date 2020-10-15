@@ -61,8 +61,6 @@ namespace Egorozh.ColorPicker.Avalonia
             var valuesSlider = e.NameScope.Find<ValueColorSlider>("PART_ValueSlider");
 
             _manager.AddClient(colorWheel, colorPreview, alphaSlider, valuesSlider);
-            
-
         }
 
         #endregion

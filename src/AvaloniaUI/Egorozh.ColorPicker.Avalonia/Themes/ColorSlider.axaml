@@ -40,17 +40,25 @@
   </Style>
   <Style Selector="local|ColorSlider:vertical">
     <Setter Property="MinWidth" Value="20"/>
+    <Setter Property="Width" Value="20"/>
     <Setter Property="MinHeight" Value="40"/>
     <Setter Property="Template">
       <ControlTemplate>
         <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto" MinWidth="26"/>
-            <ColumnDefinition Width="Auto"/>
-          </Grid.ColumnDefinitions>
-          <Border Name="TrackBackground" Grid.Column="1" Width="4" Margin="0,6" HorizontalAlignment="Center"/>
-          <Track Name="PART_Track" Grid.Column="1" Orientation="Vertical">
+          <Border Grid.Column="1"
+                  CornerRadius="{Binding $self.Bounds.Width, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                  Background="{StaticResource TransparencyBrush}"
+                  HorizontalAlignment="Stretch"
+                  BorderThickness="0">
+            <Border Name="TrackBackground"
+                    CornerRadius="{Binding $self.Bounds.Width, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                    Background="{TemplateBinding Background}"
+                    BorderThickness="0" />
+          </Border>
+         
+          <Track Name="PART_Track" 
+                 Grid.Column="1" 
+                 Orientation="Vertical">
             <Track.DecreaseButton>
               <RepeatButton Name="PART_DecreaseButton"
                             Classes="repeattrack" />
@@ -63,7 +71,12 @@
               <Thumb.Template>
                 <ControlTemplate>
                   <Grid>
-                    <Ellipse Width="12" Height="12" Fill="{DynamicResource ThemeAccentBrush}"/>
+                    <Ellipse Width="{Binding $parent.Bounds.Width}"
+                             Height="{Binding $self.Bounds.Width}" 
+                             Stroke="{Binding $parent[Window].Foreground}"
+                             StrokeThickness="1" 
+                             Opacity="0.8"
+                             Fill="{DynamicResource ThemeAccentBrush}"/>
                   </Grid>
                 </ControlTemplate>
               </Thumb.Template>

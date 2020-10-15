@@ -1,5 +1,9 @@
-﻿using Avalonia;
-using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Avalonia;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker.Avalonia
 {
@@ -37,8 +41,41 @@ namespace Egorozh.ColorPicker.Avalonia
         }
 
         #endregion
-        
+
         #region Protected Methods
+
+        protected override List<Color> CreateBackgroundColors(in Color color)
+        {
+            var colors = new List<Color>();
+
+            for (byte i = 0; i < 254; i++)
+            {
+                var a = color.A;
+                var r = color.R;
+                var g = color.G;
+                var b = color.B;
+
+                switch (Channel)
+                {
+                    case RgbaChannel.Red:
+                        r = i;
+                        break;
+                    case RgbaChannel.Green:
+                        g = i;
+                        break;
+                    case RgbaChannel.Blue:
+                        b = i;
+                        break;
+                    case RgbaChannel.Alpha:
+                        a = i;
+                        break;
+                }
+
+                colors.Add(Color.FromArgb(a, r, g, b));
+            }
+
+            return colors;
+        }
 
         protected override void UpdateColor(in Color color)
         {
