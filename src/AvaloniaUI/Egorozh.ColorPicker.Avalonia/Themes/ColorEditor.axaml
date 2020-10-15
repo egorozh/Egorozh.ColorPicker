@@ -1,0 +1,24 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        xmlns:local="clr-namespace:Egorozh.ColorPicker.Avalonia;assembly=Egorozh.ColorPicker.Avalonia">
+
+  <Style Selector="local|ColorEditor">
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid RowDefinitions="* auto">
+
+            <local:RgbaColorSlider Name="PART_AlphaSlider"
+                                   Grid.Row="1"
+                                   Orientation="Horizontal"
+                                   Channel="Alpha" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+  </Style>
+
+</Styles>

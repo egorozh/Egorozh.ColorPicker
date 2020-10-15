@@ -59,8 +59,9 @@ namespace Egorozh.ColorPicker.Avalonia
             var colorPreview = e.NameScope.Find<ColorPreview>("PART_ColorPreview");
             var alphaSlider = e.NameScope.Find<RgbaColorSlider>("PART_AlphaSlider");
             var valuesSlider = e.NameScope.Find<ValueColorSlider>("PART_ValueSlider");
+            var colorEditor = e.NameScope.Find<ColorEditor>("PART_ColorEditor");
 
-            _manager.AddClient(colorWheel, colorPreview, alphaSlider, valuesSlider);
+            _manager.AddClient(colorWheel, colorPreview, alphaSlider, valuesSlider, colorEditor);
         }
 
         #endregion

@@ -92,7 +92,13 @@ namespace Egorozh.ColorPicker.Avalonia
 
             IBrush brush;
 
-            double angle = Orientation == Orientation.Horizontal ? 0 : 90;
+            var start = Orientation == Orientation.Vertical
+                ? new RelativePoint(0, 1, RelativeUnit.Relative)
+                : new RelativePoint(0, 0, RelativeUnit.Relative);
+
+            var end = Orientation == Orientation.Vertical
+                ? new RelativePoint(0, 0, RelativeUnit.Relative)
+                : new RelativePoint(1, 0, RelativeUnit.Relative);
 
             if (colors != null && count > 0)
             {
@@ -107,8 +113,8 @@ namespace Egorozh.ColorPicker.Avalonia
                 brush = new LinearGradientBrush()
                 {
                     GradientStops = gradStops,
-                    StartPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
-                    EndPoint = new RelativePoint(0, 0, RelativeUnit.Relative)
+                    StartPoint = start,
+                    EndPoint = end
                 };
             }
             else

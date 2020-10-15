@@ -5,17 +5,23 @@
  
   <Style Selector="local|ColorSlider:horizontal">
     <Setter Property="MinWidth" Value="40"/>
-    <Setter Property="MinHeight" Value="20"/>
+    <Setter Property="MinHeight" Value="18"/>
+    <Setter Property="Height" Value="18"/>
     <Setter Property="Template">
       <ControlTemplate>
-        <Grid Name="grid">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto" MinHeight="20"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
-          <Border Name="TrackBackground" Grid.Row="1" Height="4" Margin="6,0" VerticalAlignment="Center"/>
-          <Track Name="PART_Track" Grid.Row="1" Orientation="Horizontal">
+        <Grid>
+          <Border CornerRadius="{Binding $self.Bounds.Height, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                  Background="{StaticResource TransparencyBrush}"
+                  VerticalAlignment="Stretch"
+                  BorderThickness="0">
+            <Border Name="TrackBackground"
+                    CornerRadius="{Binding $self.Bounds.Height, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                    Background="{TemplateBinding Background}"
+                    BorderThickness="0" />
+          </Border>
+
+          <Track Name="PART_Track"
+                 Orientation="Horizontal">
             <Track.DecreaseButton>
               <RepeatButton Name="PART_DecreaseButton"
                             Classes="repeattrack" />
@@ -24,11 +30,16 @@
               <RepeatButton Name="PART_IncreaseButton"
                             Classes="repeattrack" />
             </Track.IncreaseButton>
-            <Thumb Name="thumb" MinWidth="20" MinHeight="20">
+            <Thumb Name="thumb" MinWidth="18" MinHeight="18">
               <Thumb.Template>
                 <ControlTemplate>
                   <Grid>
-                    <Ellipse Width="12" Height="12" Fill="{DynamicResource ThemeAccentBrush}"/>
+                    <Ellipse Width="{Binding $self.Bounds.Height}"
+                             Height="{Binding $parent.Bounds.Height}"
+                             Stroke="{Binding $parent[Window].Foreground}"
+                             StrokeThickness="1"
+                             Opacity="0.8"
+                             Fill="{DynamicResource ThemeAccentBrush}"/>
                   </Grid>
                 </ControlTemplate>
               </Thumb.Template>
@@ -39,14 +50,13 @@
     </Setter>
   </Style>
   <Style Selector="local|ColorSlider:vertical">
-    <Setter Property="MinWidth" Value="20"/>
-    <Setter Property="Width" Value="20"/>
+    <Setter Property="MinWidth" Value="18"/>
+    <Setter Property="Width" Value="18"/>
     <Setter Property="MinHeight" Value="40"/>
     <Setter Property="Template">
       <ControlTemplate>
         <Grid>
-          <Border Grid.Column="1"
-                  CornerRadius="{Binding $self.Bounds.Width, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+          <Border CornerRadius="{Binding $self.Bounds.Width, Converter={local:DivideDoubleToCornerRadiusConverter}}"
                   Background="{StaticResource TransparencyBrush}"
                   HorizontalAlignment="Stretch"
                   BorderThickness="0">
@@ -57,7 +67,6 @@
           </Border>
          
           <Track Name="PART_Track" 
-                 Grid.Column="1" 
                  Orientation="Vertical">
             <Track.DecreaseButton>
               <RepeatButton Name="PART_DecreaseButton"
@@ -67,7 +76,7 @@
               <RepeatButton Name="PART_IncreaseButton"
                             Classes="repeattrack" />
             </Track.IncreaseButton>
-            <Thumb Name="thumb" MinWidth="20" MinHeight="20">
+            <Thumb Name="thumb" MinWidth="18" MinHeight="18">
               <Thumb.Template>
                 <ControlTemplate>
                   <Grid>
