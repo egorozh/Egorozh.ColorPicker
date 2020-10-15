@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Avalonia.Media;
 using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker.Avalonia

@@ -8,10 +8,34 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <Grid RowDefinitions="* auto">
+          <Grid RowDefinitions="auto * auto">
+
+            <Grid ColumnDefinitions="auto *">
+
+              <ComboBox Name="PART_HexComboBox"
+                        Grid.Column="1"
+                        Margin="10 2 2 2">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                      <Ellipse Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
+                               Margin="0 1 1 1"
+                               Width="{Binding $self.Bounds.Height}" />
+                      <TextBlock Text="{Binding Name}"
+                                 Margin="1 0 0 0" />
+                    </StackPanel>
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+            </Grid>
 
             <local:RgbaColorSlider Name="PART_AlphaSlider"
-                                   Grid.Row="1"
+                                   Grid.Row="2"
                                    Orientation="Horizontal"
                                    Channel="Alpha" />
           </Grid>
