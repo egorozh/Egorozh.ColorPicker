@@ -6,7 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Styling;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public class ColorEditor : TemplatedControl, IStyleable, IColorClient
     {

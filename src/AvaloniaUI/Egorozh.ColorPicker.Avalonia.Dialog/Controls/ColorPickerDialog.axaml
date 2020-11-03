@@ -4,9 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         
-        x:Class="Egorozh.ColorPicker.Avalonia.Dialog.ColorPickerDialog"
+        x:Class="Egorozh.ColorPicker.Dialog.ColorPickerDialog"
         
-        xmlns:picker="clr-namespace:Egorozh.ColorPicker.Avalonia;assembly=Egorozh.ColorPicker.Avalonia"
+        xmlns:picker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia"
         
         Title="Select Color"
 

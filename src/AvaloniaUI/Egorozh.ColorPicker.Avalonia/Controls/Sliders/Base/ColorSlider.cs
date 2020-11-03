@@ -1,14 +1,14 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Styling;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Styling;
 using Color = System.Drawing.Color;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public abstract class ColorSlider : Slider, IStyleable, IColorClient
     {

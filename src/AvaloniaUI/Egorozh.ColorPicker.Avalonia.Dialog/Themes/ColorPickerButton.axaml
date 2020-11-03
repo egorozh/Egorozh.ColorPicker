@@ -1,0 +1,36 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        xmlns:local="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog">
+
+  <Style Selector="local|ColorPickerButton">
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  BorderBrush="{TemplateBinding BorderBrush}">
+
+            <Grid>
+
+              <Rectangle Fill="{StaticResource TransparencyBrush}" />
+
+              <Rectangle>
+                <Rectangle.Fill>
+                  <SolidColorBrush Color="{Binding $parent[local:ColorPickerButton].Color}" />
+                </Rectangle.Fill>
+              </Rectangle>
+
+              <ContentPresenter Content="{TemplateBinding Content}"/>
+            </Grid>
+           
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+  </Style>
+
+
+</Styles>

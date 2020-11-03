@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Avalonia;
-using Avalonia.Layout;
-using Avalonia.Media;
 using Color = System.Drawing.Color;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public class RgbaColorSlider : ColorSlider
     {

@@ -10,31 +10,16 @@
 
         Height="450" Width="800"
 
+        xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog"
+
         WindowStartupLocation="CenterScreen">
 
-  <Button Name="Button"
-          Click="ButtonBase_OnClick"
-          Cursor="Hand"
-          Background="Green">
-    <Button.Styles>
-      <Style Selector="Button">
-        <Setter Property="Template">
-          <Setter.Value>
-            <ControlTemplate>
-              <Border Background="{TemplateBinding Background}"
-                      BorderThickness="{TemplateBinding BorderThickness}"
-                      BorderBrush="{TemplateBinding BorderBrush}">
-
-                <TextBlock Text="Click me"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontSize="36" />
-              </Border>
-            </ControlTemplate>
-          </Setter.Value>
-        </Setter>
-      </Style>
-    </Button.Styles>
-  </Button>
-
+  <dialog:ColorPickerButton Color="#99029344"
+                            Cursor="Hand">
+    <TextBlock Text="Click me"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               FontSize="36" />
+  </dialog:ColorPickerButton>
+  
 </Window>

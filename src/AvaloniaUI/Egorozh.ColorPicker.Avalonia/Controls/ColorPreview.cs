@@ -1,14 +1,13 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Styling;
-using System;
 using Avalonia.Input;
 using Avalonia.Media;
-using Avalonia.VisualTree;
+using Avalonia.Styling;
 using Color = System.Drawing.Color;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public class ColorPreview : TemplatedControl, IStyleable, IColorClient
     {

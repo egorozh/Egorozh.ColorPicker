@@ -1,12 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace Egorozh.ColorPicker.Dialog
 {
-    [ContentProperty(nameof(Content))]
-    public class ColorPickerButton : Control
+    public class ColorPickerButton : ContentControl
     {
         #region Dependency Properties
 
@@ -16,21 +14,11 @@ namespace Egorozh.ColorPicker.Dialog
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             "Color", typeof(Color), typeof(ColorPickerButton), new PropertyMetadata(default(Color)));
-
-
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
-            "Content", typeof(object), typeof(ColorPickerButton), new PropertyMetadata(default(object)));
-
+        
         #endregion
 
         #region Public Properties
-
-        public object Content
-        {
-            get => (object) GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
-        }
-
+        
         public Color Color
         {
             get => (Color) GetValue(ColorProperty);

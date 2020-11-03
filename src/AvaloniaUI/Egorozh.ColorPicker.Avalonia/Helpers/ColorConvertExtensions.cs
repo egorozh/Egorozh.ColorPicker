@@ -1,6 +1,6 @@
 ﻿using Avalonia.Media;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     internal static class ColorConvertExtensions
     {

@@ -4,7 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 
-namespace Egorozh.ColorPicker.Avalonia.Dialog
+namespace Egorozh.ColorPicker.Dialog
 {
     public class ColorPickerDialog : Window
     {

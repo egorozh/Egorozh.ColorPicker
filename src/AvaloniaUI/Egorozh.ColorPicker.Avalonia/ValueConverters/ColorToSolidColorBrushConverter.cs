@@ -4,7 +4,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public class ColorToSolidColorBrushConverter : MarkupExtension, IValueConverter
     {

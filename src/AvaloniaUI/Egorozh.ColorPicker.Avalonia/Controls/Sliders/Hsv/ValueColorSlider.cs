@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Color = System.Drawing.Color;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public class ValueColorSlider : ColorSlider
     {

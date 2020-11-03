@@ -2,25 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Egorozh.ColorPicker</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0-preview5" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview5" />
+    <PackageReference Include="Avalonia" Version="0.10.0-preview6" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\Sliders\Hsl\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AvaloniaXaml Update="Themes\Brushes.axaml">
-      <Generator>MSBuild:Compile</Generator>
-    </AvaloniaXaml>
   </ItemGroup>
 
 </Project>

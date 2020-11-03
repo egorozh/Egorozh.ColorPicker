@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using System.Runtime.InteropServices;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
@@ -7,12 +9,10 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Styling;
-using System;
-using System.Runtime.InteropServices;
 using Color = System.Drawing.Color;
 using Point = Avalonia.Point;
 
-namespace Egorozh.ColorPicker.Avalonia
+namespace Egorozh.ColorPicker
 {
     public class ColorWheel : TemplatedControl, IStyleable, IColorClient
     {
