@@ -12,6 +12,11 @@
 
             <Grid ColumnDefinitions="auto *">
 
+              <ComboBox Name="PART_ModeComboBox">
+                <ComboBoxItem Content="RGB"/>
+                <ComboBoxItem Content="HSV"/>
+              </ComboBox>
+
               <ComboBox Name="PART_HexComboBox"
                         Grid.Column="1"
                         Margin="10 2 2 2">
@@ -34,7 +39,47 @@
                   RowDefinitions="auto auto auto auto"
                   ColumnDefinitions="auto *">
 
+              <!--#region RGB-->
 
+              <local:RgbaColorNumericUpDown Name="PART_RNumUpDown"
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Label="R"
+                                            Channel="Red"/>
+
+              <local:RgbaColorSlider Name="PART_RSlider"
+                                     Grid.Row="0"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Red" />
+
+
+              <local:RgbaColorNumericUpDown Name="PART_GNumUpDown"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Label="G"
+                                            Channel="Green"/>
+
+              <local:RgbaColorSlider Name="PART_GSlider"
+                                     Grid.Row="1"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Green" />
+
+
+              <local:RgbaColorNumericUpDown Name="PART_BNumUpDown"
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Label="B"
+                                            Channel="Blue"/>
+
+              <local:RgbaColorSlider Name="PART_BSlider"
+                                     Grid.Row="2"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Blue" />
+
+              <!--#endregion-->
 
               <local:RgbaColorNumericUpDown Name="PART_AlphaNumUpDown" 
                                             Grid.Row="3"

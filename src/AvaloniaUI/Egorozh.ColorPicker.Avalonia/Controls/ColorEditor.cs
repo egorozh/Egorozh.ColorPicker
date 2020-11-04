@@ -14,6 +14,13 @@ namespace Egorozh.ColorPicker
 
         private IColorManager _manager;
         private ComboBox _hex;
+        private ComboBox _modeComboBox;
+        private RgbaColorSlider _rSlider;
+        private RgbaColorNumericUpDown _rNumUpDown;
+        private RgbaColorSlider _gSlider;
+        private RgbaColorNumericUpDown _gNumUpDown;
+        private RgbaColorSlider _bSlider;
+        private RgbaColorNumericUpDown _bNumUpDown;
 
         #endregion
 
@@ -44,14 +51,30 @@ namespace Egorozh.ColorPicker
             base.OnApplyTemplate(e);
 
             _hex = e.NameScope.Find<ComboBox>("PART_HexComboBox");
+            _modeComboBox = e.NameScope.Find<ComboBox>("PART_ModeComboBox");
 
             var alphaSlider = e.NameScope.Find<RgbaColorSlider>("PART_AlphaSlider");
             var alphaNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_AlphaNumUpDown");
 
-            _manager.AddClient(alphaSlider, alphaNumUpDown);
+            _rSlider = e.NameScope.Find<RgbaColorSlider>("PART_RSlider");
+            _rNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_RNumUpDown");
 
+            _gSlider = e.NameScope.Find<RgbaColorSlider>("PART_GSlider");
+            _gNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_GNumUpDown");
+
+            _bSlider = e.NameScope.Find<RgbaColorSlider>("PART_BSlider");
+            _bNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_BNumUpDown");
+
+            _manager.AddClient(alphaSlider, alphaNumUpDown,
+                _rSlider, _rNumUpDown,
+                _gSlider, _gNumUpDown,
+                _bSlider, _bNumUpDown);
+            
             _hex.Items = HexComboBoxHelpers.GetNamedColors();
             _hex.SelectionChanged += Hex_SelectionChanged;
+
+            _modeComboBox.SelectionChanged += ModeChanged;
+            _modeComboBox.SelectedIndex = 0;
 
             SetSelectedItemInHex(_manager.CurrentColor);
         }
@@ -90,6 +113,45 @@ namespace Egorozh.ColorPicker
                     _hex.PlaceholderText = $"{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
                 }
             }
+        }
+
+        private void ModeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count < 1)
+                return;
+
+            if (e.AddedItems[0] is ComboBoxItem item)
+            {
+                CollapseClients();
+
+                var mode = item.Content as string;
+
+                switch (mode)
+                {
+                    case "RGB":
+
+                        SetRgbVisible(true);
+
+                        break;
+                }
+            }
+        }
+
+        private void CollapseClients()
+        {
+            SetRgbVisible(false);
+        }
+
+        private void SetRgbVisible(bool isVisible)
+        {
+            _rSlider.IsVisible = isVisible;
+            _rNumUpDown.IsVisible = isVisible;
+
+            _gSlider.IsVisible = isVisible;
+            _gNumUpDown.IsVisible = isVisible;
+
+            _bSlider.IsVisible = isVisible;
+            _bNumUpDown.IsVisible = isVisible;
         }
 
         #endregion
