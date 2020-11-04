@@ -30,14 +30,24 @@
 
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1"
+                  RowDefinitions="auto auto auto auto"
+                  ColumnDefinitions="auto *">
 
+
+
+              <local:RgbaColorNumericUpDown Name="PART_AlphaNumUpDown" 
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            Label="A"
+                                            Channel="Alpha"/>
+
+              <local:RgbaColorSlider Name="PART_AlphaSlider"
+                                     Grid.Row="3"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Alpha" />
             </Grid>
-
-            <local:RgbaColorSlider Name="PART_AlphaSlider"
-                                   Grid.Row="2"
-                                   Orientation="Horizontal"
-                                   Channel="Alpha" />
           </Grid>
         </ControlTemplate>
       </Setter.Value>

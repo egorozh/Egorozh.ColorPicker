@@ -46,8 +46,9 @@ namespace Egorozh.ColorPicker
             _hex = e.NameScope.Find<ComboBox>("PART_HexComboBox");
 
             var alphaSlider = e.NameScope.Find<RgbaColorSlider>("PART_AlphaSlider");
+            var alphaNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_AlphaNumUpDown");
 
-            _manager.AddClient(alphaSlider);
+            _manager.AddClient(alphaSlider, alphaNumUpDown);
 
             _hex.Items = HexComboBoxHelpers.GetNamedColors();
             _hex.SelectionChanged += Hex_SelectionChanged;
