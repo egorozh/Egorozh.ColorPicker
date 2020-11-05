@@ -38,30 +38,24 @@ namespace Egorozh.ColorPicker
             get => _hue;
             set
             {
+                if (_hue > 359) _hue = 0;
+
+                if (_hue < 0) _hue = 359;
+
                 _hue = value;
-
-                if (_hue > 359)
-                {
-                    _hue = 0;
-                }
-
-                if (_hue < 0)
-                {
-                    _hue = 359;
-                }
             }
+        }
+        
+        public double S
+        {
+            get => _saturation;
+            set => _saturation = Math.Min(1, Math.Max(0, value));
         }
 
         public double V
         {
             get => _brightness;
             set => _brightness = Math.Min(1, Math.Max(0, value));
-        }
-
-        public double S
-        {
-            get => _saturation;
-            set => _saturation = Math.Min(1, Math.Max(0, value));
         }
 
         #endregion
@@ -104,7 +98,7 @@ namespace Egorozh.ColorPicker
             _hue = color.GetHue();
             _saturation = (max == 0) ? 0 : 1d - (1d * min / max);
             _brightness = max / 255d;
-            
+
             IsEmpty = false;
         }
 

@@ -95,8 +95,7 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #region Private Methods
-
-      
+        
         private void ModeChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count < 1)
