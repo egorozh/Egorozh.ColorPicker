@@ -10,21 +10,21 @@
     <Setter Property="Padding" Value="4" />
     <Setter Property="Margin" Value="0 10 10 10" />
     <Setter Property="Minimum" Value="0" />
-    <Setter Property="Width" Value="100" />
+    <Setter Property="Width" Value="110" />
 
     <Setter Property="Template">
       <ControlTemplate>
         <Border>
           <Grid ColumnDefinitions="auto *">
 
-            <Border BorderThickness="{TemplateBinding BorderThickness}"
+            <Border BorderThickness="1 1 0 1"
                     Background="{DynamicResource ThemeBorderLowBrush}"
-                    BorderBrush="{TemplateBinding BorderBrush}">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Width="{Binding $self.Bounds.Height}">
 
               <Label Content="{TemplateBinding Label}"
                      VerticalAlignment="Center"
-                     HorizontalAlignment="Center"
-                     Margin="10 5" />
+                     HorizontalAlignment="Center"/>
 
             </Border>
 
@@ -57,6 +57,7 @@
       </ControlTemplate>
     </Setter>
   </Style>
+
   <Style Selector="local|LabelNumericUpDown /template/ TextBox#PART_TextBox">
     <Setter Property="Margin" Value="4" />
     <Setter Property="MinWidth" Value="20" />

@@ -12,15 +12,20 @@
 
             <Grid ColumnDefinitions="auto *">
 
-              <ComboBox Name="PART_ModeComboBox">
-                <ComboBoxItem Content="RGB" />
-                <ComboBoxItem Content="HSV" />
-              </ComboBox>
+              <ListBox Name="PART_ModeComboBox">
 
-              <ComboBox Name="PART_HexComboBox"
-                        Grid.Column="1"
-                        Margin="10 2 2 2">
-                <ComboBox.ItemTemplate>
+                <ListBox.Styles>
+                  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ModeListBox.axaml" />
+                </ListBox.Styles>
+
+                <ListBoxItem Content="RGB" />
+                <ListBoxItem Content="HSV" />
+              </ListBox>
+
+              <local:ColorHexComboBox Name="PART_HexComboBox"
+                                Grid.Column="1"
+                                Margin="10 2 2 2">
+                <local:ColorHexComboBox.ItemTemplate>
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                       <Ellipse Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
@@ -30,8 +35,8 @@
                                  Margin="1 0 0 0" />
                     </StackPanel>
                   </DataTemplate>
-                </ComboBox.ItemTemplate>
-              </ComboBox>
+                </local:ColorHexComboBox.ItemTemplate>
+              </local:ColorHexComboBox>
 
             </Grid>
 

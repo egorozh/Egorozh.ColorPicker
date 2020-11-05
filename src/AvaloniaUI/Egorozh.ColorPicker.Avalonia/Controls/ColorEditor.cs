@@ -2,9 +2,7 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Styling;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace Egorozh.ColorPicker
 {
@@ -13,9 +11,8 @@ namespace Egorozh.ColorPicker
         #region Private Methods
 
         private IColorManager _manager;
-        private ComboBox _hex;
-        private ComboBox _modeComboBox;
-
+     
+        private ListBox _modeComboBox;
 
         private RgbaColorSlider _rSlider;
         private RgbaColorNumericUpDown _rNumUpDown;
@@ -43,7 +40,6 @@ namespace Egorozh.ColorPicker
 
         public void ColorUpdated(Color color, IColorClient client)
         {
-            SetSelectedItemInHex(color);
         }
 
         public void Init(IColorManager colorManager)
@@ -59,8 +55,8 @@ namespace Egorozh.ColorPicker
         {
             base.OnApplyTemplate(e);
 
-            _hex = e.NameScope.Find<ComboBox>("PART_HexComboBox");
-            _modeComboBox = e.NameScope.Find<ComboBox>("PART_ModeComboBox");
+            var  hex = e.NameScope.Find<ColorHexComboBox>("PART_HexComboBox");
+            _modeComboBox = e.NameScope.Find<ListBox>("PART_ModeComboBox");
 
             var alphaSlider = e.NameScope.Find<RgbaColorSlider>("PART_AlphaSlider");
             var alphaNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_AlphaNumUpDown");
@@ -79,12 +75,11 @@ namespace Egorozh.ColorPicker
 
             _sSlider = e.NameScope.Find<SaturationColorSlider>("PART_SSlider");
             _sNumUpDown = e.NameScope.Find<SaturationColorNumUpDown>("PART_SNumUpDown");
-            
+
             _vSlider = e.NameScope.Find<ValueColorSlider>("PART_VSlider");
             _vNumUpDown = e.NameScope.Find<ValueColorNumUpDown>("PART_VNumUpDown");
-
-
-            _manager.AddClient(alphaSlider, alphaNumUpDown,
+            
+            _manager.AddClient(alphaSlider, alphaNumUpDown, hex,
                 _rSlider, _rNumUpDown,
                 _gSlider, _gNumUpDown,
                 _bSlider, _bNumUpDown,
@@ -92,57 +87,22 @@ namespace Egorozh.ColorPicker
                 _sSlider, _sNumUpDown,
                 _vSlider, _vNumUpDown);
 
-            _hex.Items = HexComboBoxHelpers.GetNamedColors();
-            _hex.SelectionChanged += Hex_SelectionChanged;
 
             _modeComboBox.SelectionChanged += ModeChanged;
             _modeComboBox.SelectedIndex = 0;
-
-            SetSelectedItemInHex(_manager.CurrentColor);
         }
 
         #endregion
 
         #region Private Methods
 
-        private void Hex_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                if (e.AddedItems[0] is NamedColor namedColor)
-                    _manager.CurrentColor = namedColor.Color;
-            }
-        }
-
-        private void SetSelectedItemInHex(Color color)
-        {
-            if (_hex != null)
-            {
-                var colors = (List<NamedColor>) _hex.Items;
-
-                var namedColor = colors.FirstOrDefault(c => c.Color.A == color.A &&
-                                                            c.Color.R == color.R &&
-                                                            c.Color.G == color.G &&
-                                                            c.Color.B == color.B);
-
-                if (namedColor != null)
-                {
-                    _hex.SelectedItem = namedColor;
-                }
-                else
-                {
-                    _hex.SelectedItem = null;
-                    _hex.PlaceholderText = $"{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
-                }
-            }
-        }
-
+      
         private void ModeChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count < 1)
                 return;
 
-            if (e.AddedItems[0] is ComboBoxItem item)
+            if (e.AddedItems[0] is ListBoxItem item)
             {
                 CollapseClients();
 
