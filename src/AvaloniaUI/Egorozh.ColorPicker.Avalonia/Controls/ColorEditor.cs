@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Styling;
 
 namespace Egorozh.ColorPicker
 {
@@ -15,12 +15,21 @@ namespace Egorozh.ColorPicker
         private IColorManager _manager;
         private ComboBox _hex;
         private ComboBox _modeComboBox;
+
+
         private RgbaColorSlider _rSlider;
         private RgbaColorNumericUpDown _rNumUpDown;
         private RgbaColorSlider _gSlider;
         private RgbaColorNumericUpDown _gNumUpDown;
         private RgbaColorSlider _bSlider;
         private RgbaColorNumericUpDown _bNumUpDown;
+
+        private HueColorSlider _hSlider;
+        private HueColorNumUpDown _hNumUpDown;
+        private SaturationColorSlider _sSlider;
+        private ValueColorSlider _vSlider;
+        private ValueColorNumUpDown _vNumUpDown;
+        private SaturationColorNumUpDown _sNumUpDown;
 
         #endregion
 
@@ -65,11 +74,24 @@ namespace Egorozh.ColorPicker
             _bSlider = e.NameScope.Find<RgbaColorSlider>("PART_BSlider");
             _bNumUpDown = e.NameScope.Find<RgbaColorNumericUpDown>("PART_BNumUpDown");
 
+            _hSlider = e.NameScope.Find<HueColorSlider>("PART_HSlider");
+            _hNumUpDown = e.NameScope.Find<HueColorNumUpDown>("PART_HNumUpDown");
+
+            _sSlider = e.NameScope.Find<SaturationColorSlider>("PART_SSlider");
+            _sNumUpDown = e.NameScope.Find<SaturationColorNumUpDown>("PART_SNumUpDown");
+            
+            _vSlider = e.NameScope.Find<ValueColorSlider>("PART_VSlider");
+            _vNumUpDown = e.NameScope.Find<ValueColorNumUpDown>("PART_VNumUpDown");
+
+
             _manager.AddClient(alphaSlider, alphaNumUpDown,
                 _rSlider, _rNumUpDown,
                 _gSlider, _gNumUpDown,
-                _bSlider, _bNumUpDown);
-            
+                _bSlider, _bNumUpDown,
+                _hSlider, _hNumUpDown,
+                _sSlider, _sNumUpDown,
+                _vSlider, _vNumUpDown);
+
             _hex.Items = HexComboBoxHelpers.GetNamedColors();
             _hex.SelectionChanged += Hex_SelectionChanged;
 
@@ -133,6 +155,11 @@ namespace Egorozh.ColorPicker
                         SetRgbVisible(true);
 
                         break;
+                    case "HSV":
+
+                        SetHsvVisible(true);
+
+                        break;
                 }
             }
         }
@@ -140,6 +167,7 @@ namespace Egorozh.ColorPicker
         private void CollapseClients()
         {
             SetRgbVisible(false);
+            SetHsvVisible(false);
         }
 
         private void SetRgbVisible(bool isVisible)
@@ -152,6 +180,18 @@ namespace Egorozh.ColorPicker
 
             _bSlider.IsVisible = isVisible;
             _bNumUpDown.IsVisible = isVisible;
+        }
+
+        private void SetHsvVisible(bool isVisible)
+        {
+            _hSlider.IsVisible = isVisible;
+            _hNumUpDown.IsVisible = isVisible;
+
+            _sSlider.IsVisible = isVisible;
+            _sNumUpDown.IsVisible = isVisible;
+
+            _vSlider.IsVisible = isVisible;
+            _vNumUpDown.IsVisible = isVisible;
         }
 
         #endregion

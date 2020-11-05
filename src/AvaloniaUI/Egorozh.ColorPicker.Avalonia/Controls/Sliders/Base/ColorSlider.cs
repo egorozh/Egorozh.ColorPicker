@@ -123,7 +123,7 @@ namespace Egorozh.ColorPicker
             return brush;
         }
 
-        private void ColorSlider_PropertyChanged(object sender, global::Avalonia.AvaloniaPropertyChangedEventArgs e)
+        protected void ColorSlider_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.Property == ValueProperty)
                 ValueChanged();
