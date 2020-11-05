@@ -10,7 +10,7 @@
     <Setter Property="Padding" Value="4" />
     <Setter Property="Margin" Value="0 10 10 10" />
     <Setter Property="Minimum" Value="0" />
-    <Setter Property="Width" Value="110" />
+    <Setter Property="Width" Value="125" />
 
     <Setter Property="Template">
       <ControlTemplate>
