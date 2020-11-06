@@ -15,7 +15,7 @@
               <ListBox Name="PART_ModeComboBox">
 
                 <ListBox.Styles>
-                  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/ModeListBox.axaml" />
+                  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/FluentDark/ModeListBox.axaml" />
                 </ListBox.Styles>
 
                 <ListBoxItem Content="RGB" />

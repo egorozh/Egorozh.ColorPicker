@@ -10,13 +10,12 @@
         
         Title="Select Color"
 
-        Width="340"
-        Height="420"
+        Classes="Main"
 
         ShowInTaskbar="False"
 
         CanResize="false"
-        
+
         WindowStartupLocation="CenterScreen"
         
         Name="Dialog">

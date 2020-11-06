@@ -1,0 +1,142 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
+
+  <Style Selector="local|ColorEditor">
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid RowDefinitions="auto * auto">
+
+            <Grid ColumnDefinitions="auto *">
+
+              <ListBox Name="PART_ModeComboBox">
+
+                <ListBox.Styles>
+                  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/FluentLight/ModeListBox.axaml" />
+                </ListBox.Styles>
+
+                <ListBoxItem Content="RGB" />
+                <ListBoxItem Content="HSV" />
+              </ListBox>
+
+              <local:ColorHexComboBox Name="PART_HexComboBox"
+                                Grid.Column="1"
+                                Margin="10 2 2 2">
+                <local:ColorHexComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                      <Ellipse Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
+                               Margin="0 1 1 1"
+                               Width="{Binding $self.Bounds.Height}" />
+                      <TextBlock Text="{Binding Name}"
+                                 Margin="1 0 0 0" />
+                    </StackPanel>
+                  </DataTemplate>
+                </local:ColorHexComboBox.ItemTemplate>
+              </local:ColorHexComboBox>
+
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  RowDefinitions="auto auto auto auto"
+                  ColumnDefinitions="auto *">
+
+              <!--#region RGB-->
+
+              <local:RgbaColorNumericUpDown Name="PART_RNumUpDown"
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Label="R"
+                                            Channel="Red" />
+
+              <local:RgbaColorSlider Name="PART_RSlider"
+                                     Grid.Row="0"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Red" />
+
+
+              <local:RgbaColorNumericUpDown Name="PART_GNumUpDown"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Label="G"
+                                            Channel="Green" />
+
+              <local:RgbaColorSlider Name="PART_GSlider"
+                                     Grid.Row="1"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Green" />
+
+
+              <local:RgbaColorNumericUpDown Name="PART_BNumUpDown"
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Label="B"
+                                            Channel="Blue" />
+
+              <local:RgbaColorSlider Name="PART_BSlider"
+                                     Grid.Row="2"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Blue" />
+
+              <!--#endregion-->
+
+              <!--#region HSV-->
+
+              <local:HueColorNumUpDown Name="PART_HNumUpDown"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       Label="H" />
+
+              <local:HueColorSlider Name="PART_HSlider"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal" />
+
+              <local:SaturationColorNumUpDown Name="PART_SNumUpDown"
+                                              Grid.Row="1"
+                                              Grid.Column="0"
+                                              Label="S"/>
+
+              <local:SaturationColorSlider Name="PART_SSlider"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Orientation="Horizontal" />
+
+              <local:ValueColorNumUpDown Name="PART_VNumUpDown"
+                                         Grid.Row="2"
+                                         Grid.Column="0"
+                                         Label="V" />
+
+              <local:ValueColorSlider Name="PART_VSlider"
+                                      Grid.Row="2"
+                                      Grid.Column="1"
+                                      Orientation="Horizontal" />
+
+              <!--#endregion-->
+
+              <local:RgbaColorNumericUpDown Name="PART_AlphaNumUpDown"
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            Label="A"
+                                            Channel="Alpha" />
+
+              <local:RgbaColorSlider Name="PART_AlphaSlider"
+                                     Grid.Row="3"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     Channel="Alpha" />
+            </Grid>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+  </Style>
+
+</Styles>

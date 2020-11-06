@@ -1,0 +1,88 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style Selector="TabControl">
+    <Setter Property="Padding" Value="0 4 0 0" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <UniformGrid Rows="1"/>
+      </ItemsPanelTemplate>
+    </Setter>
+
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border
+          Margin="{TemplateBinding Margin}"
+          BorderBrush="{TemplateBinding BorderBrush}"
+          BorderThickness="{TemplateBinding BorderThickness}"
+          Background="{TemplateBinding Background}"
+          HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+          VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <DockPanel>
+            <ItemsPresenter Name="PART_ItemsPresenter"
+                            DockPanel.Dock="Top"
+                            Margin="0 0 0 10"
+                            Items="{TemplateBinding Items}"
+                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                            ItemTemplate="{TemplateBinding ItemTemplate}">
+            </ItemsPresenter>
+            <ContentPresenter
+              Name="PART_SelectedContentHost"
+              Margin="{TemplateBinding Padding}"
+              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+              Content="{TemplateBinding SelectedContent}"
+              ContentTemplate="{TemplateBinding SelectedContentTemplate}">
+            </ContentPresenter>
+          </DockPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="TabItem">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundLowBrush}" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Padding" Value="8" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid RowDefinitions="* auto">
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Content="{TemplateBinding Header}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Margin="{TemplateBinding Margin}"
+                            Padding="{TemplateBinding Padding}" />
+
+          <Border Grid.Row="1" 
+                  Height="3"
+                  Background="{TemplateBinding Background}"/>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="TabItem:disabled">
+    <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
+  </Style>
+  <Style Selector="TabItem:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}" />
+  </Style>
+  <Style Selector="TabItem:selected">
+    <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}" />
+  </Style>
+  <Style Selector="TabItem:selected:focus">
+    <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}" />
+  </Style>
+  <Style Selector="TabItem:selected:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush3}" />
+  </Style>
+  <Style Selector="TabItem:selected:focus:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush2}" />
+  </Style>
+</Styles>
