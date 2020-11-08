@@ -11,7 +11,7 @@
           <Grid RowDefinitions="* auto">
             <TabControl>
               <TabControl.Styles>
-                <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/FluentLight/Tabs.axaml" />
+                <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/FluentDark/Tabs.axaml" />
               </TabControl.Styles>
               <TabItem>
                 <TabItem.Header>

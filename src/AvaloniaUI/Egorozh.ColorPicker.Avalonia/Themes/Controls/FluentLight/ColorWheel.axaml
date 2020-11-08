@@ -20,7 +20,7 @@
               <Ellipse Name="PART_CursorEllipse"
                        Width="12" Height="12"
                        Stroke="{Binding $parent[Window].Foreground}"
-                       Fill="{DynamicResource ThemeAccentBrush}"
+                       Fill="{DynamicResource SystemControlHighlightAltAccentBrush}"
                        StrokeThickness="1" 
                        Opacity="0.8"/>
             </Canvas>
