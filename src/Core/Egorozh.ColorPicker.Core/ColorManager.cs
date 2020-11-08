@@ -15,7 +15,7 @@ namespace Egorozh.ColorPicker
 
         #region Events
 
-        public event Action<Color> ColorChanged;
+        public event Action<Color>? ColorChanged;
 
         #endregion
 
@@ -31,14 +31,17 @@ namespace Egorozh.ColorPicker
 
         #region Public Methods
 
-        public void AddClient(params IColorClient[] clients)
+        public void AddClient(params IColorClient?[] clients)
         {
             foreach (var client in clients)
             {
+                if (client == null)
+                    continue;
+
                 _colorClients.Add(client);
                 client.Init(this);
             }
-        }
+        }   
 
         public void SetColorFromHsl(double hue, double saturation, double lightness)
         {

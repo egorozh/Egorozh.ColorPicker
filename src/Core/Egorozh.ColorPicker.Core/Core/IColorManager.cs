@@ -9,8 +9,8 @@ namespace Egorozh.ColorPicker
 
         Color CurrentColor { get; set; } 
         
-        void AddClient(params IColorClient[] clients);
-
+        void AddClient(params IColorClient?[] clients);
+            
         void SetColorFromHsl(double hue, double saturation, double lightness);
     }
 }

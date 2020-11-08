@@ -12,6 +12,7 @@
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/LabelNumericUpDown.axaml" />
 
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorWheel.axaml" />
+  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorPalette.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorPreview.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorSlider.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorHexComboBox.axaml" />

@@ -57,8 +57,10 @@ namespace Egorozh.ColorPicker
             var alphaSlider = e.NameScope.Find<RgbaColorSlider>("PART_AlphaSlider");
             var valuesSlider = e.NameScope.Find<ValueColorSlider>("PART_ValueSlider");
             var colorEditor = e.NameScope.Find<ColorEditor>("PART_ColorEditor");
+            var colorPalette = e.NameScope.Find<ColorPalette>("PART_ColorPalette");
 
-            _manager.AddClient(colorWheel, colorPreview, alphaSlider, valuesSlider, colorEditor);
+            _manager.AddClient(colorWheel, colorPreview, alphaSlider,
+                valuesSlider, colorEditor, colorPalette);
         }
 
         #endregion
