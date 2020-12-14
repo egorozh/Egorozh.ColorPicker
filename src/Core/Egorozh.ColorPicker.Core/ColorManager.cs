@@ -8,7 +8,7 @@ namespace Egorozh.ColorPicker
     {
         #region Private Fields
 
-        private readonly List<IColorClient> _colorClients = new List<IColorClient>();
+        private readonly List<IColorClient> _colorClients = new ();
         private Color _currentColor;
 
         #endregion

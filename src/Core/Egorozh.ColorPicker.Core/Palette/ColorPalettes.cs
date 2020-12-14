@@ -824,35 +824,35 @@ namespace Egorozh.ColorPicker
 
         #region Static Methods
 
-        public static ColorCollection GetPalette(ColorPalette palette)
+        public static ColorCollection GetPalette(ColorPaletteType paletteType)
         {
             ColorCollection result;
 
-            switch (palette)
+            switch (paletteType)
             {
-                case ColorPalette.Named:
+                case ColorPaletteType.Named:
                     result = NamedColors;
                     break;
-                case ColorPalette.Office2010:
+                case ColorPaletteType.Office2010:
                     result = Office2010Standard;
                     break;
-                case ColorPalette.Paint:
+                case ColorPaletteType.Paint:
                     result = PaintPalette;
                     break;
-                case ColorPalette.Standard:
+                case ColorPaletteType.Standard:
                     result = QbColors;
                     break;
-                case ColorPalette.None:
+                case ColorPaletteType.None:
                     result = new ColorCollection();
                     break;
-                case ColorPalette.WebSafe:
+                case ColorPaletteType.WebSafe:
                     result = WebSafe;
                     break;
-                case ColorPalette.Standard256:
+                case ColorPaletteType.Standard256:
                     result = StandardPalette;
                     break;
                 default:
-                    throw new ArgumentException("Invalid palette", nameof(palette));
+                    throw new ArgumentException("Invalid paletteType", nameof(paletteType));
             }
 
             return result;

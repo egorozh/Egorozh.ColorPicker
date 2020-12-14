@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Avalonia;
+using Avalonia.Layout;
+using Avalonia.Media;
 using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker
@@ -72,6 +74,62 @@ namespace Egorozh.ColorPicker
             }
 
             return colors;
+        }
+
+        protected override IBrush CreateBackgroundBrush(in Color color)
+        {
+            var start = Orientation == Orientation.Vertical
+                ? new RelativePoint(0, 1, RelativeUnit.Relative)
+                : new RelativePoint(0, 0, RelativeUnit.Relative);
+
+            var end = Orientation == Orientation.Vertical
+                ? new RelativePoint(0, 0, RelativeUnit.Relative)
+                : new RelativePoint(1, 0, RelativeUnit.Relative);
+
+            GradientStops gradStops = new();
+
+            const int count = 255;
+            const int step = 3;
+            
+            for (uint i = 0; i < count; i+= step)
+            {
+                var a = color.A;
+                var r = color.R;
+                var g = color.G;
+                var b = color.B;
+
+                switch (Channel)
+                {
+                    case RgbaChannel.Red:
+                        r = (byte) i;
+                        break;
+                    case RgbaChannel.Green:
+                        g = (byte) i;
+                        break;
+                    case RgbaChannel.Blue:
+                        b = (byte) i;
+                        break;
+                    case RgbaChannel.Alpha:
+                        a = (byte) i;
+                        break;
+                }
+
+                var offset = i switch
+                {
+                    0 => 0,
+                    count - 1 => 1,
+                    _ => 1.0D / count * i
+                };
+
+                gradStops.Add(new GradientStop(Avalonia.Media.Color.FromArgb(a, r, g, b), offset));
+            }
+
+            return new LinearGradientBrush
+            {
+                GradientStops = gradStops,
+                StartPoint = start,
+                EndPoint = end
+            };
         }
 
         protected override void UpdateColor(in Color color)

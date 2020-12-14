@@ -12,6 +12,7 @@ namespace Egorozh.ColorPicker
         {
             Minimum = 0;
             Maximum = 359;
+            UpdateBackgroundWhenColorUpdated = false;
         }
 
         #endregion
@@ -37,15 +38,6 @@ namespace Egorozh.ColorPicker
             };
 
             ColorManager.CurrentColor = hsv.ToRgbColor();
-        }
-
-        public override void ColorUpdated(Color color, IColorClient client)
-        {
-            PropertyChanged -= ColorSlider_PropertyChanged;
-
-            UpdateColor(color);
-
-            PropertyChanged += ColorSlider_PropertyChanged;
         }
 
         protected override List<Color> CreateBackgroundColors(in Color color) =>

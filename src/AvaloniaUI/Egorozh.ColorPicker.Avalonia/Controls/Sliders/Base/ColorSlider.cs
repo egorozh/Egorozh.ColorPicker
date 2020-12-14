@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Styling;
+using System;
+using System.Collections.Generic;
 using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker
@@ -14,7 +14,9 @@ namespace Egorozh.ColorPicker
     {
         #region Protected Properties
 
-        protected IColorManager ColorManager { get; private set; }
+        protected bool UpdateBackgroundWhenColorUpdated = true;
+
+        protected IColorManager? ColorManager { get; private set; }
 
         #endregion
 
@@ -41,7 +43,8 @@ namespace Egorozh.ColorPicker
 
             UpdateColor(color);
 
-            Background = CreateBackgroundBrush(color);
+            if (UpdateBackgroundWhenColorUpdated)
+                Background = CreateBackgroundBrush(color);
 
             PropertyChanged += ColorSlider_PropertyChanged;
         }
@@ -59,8 +62,11 @@ namespace Egorozh.ColorPicker
         {
             base.OnApplyTemplate(e);
 
-            UpdateColor(ColorManager.CurrentColor);
-            Background = CreateBackgroundBrush(ColorManager.CurrentColor);
+            if (ColorManager != null)
+            {
+                UpdateColor(ColorManager.CurrentColor);
+                Background = CreateBackgroundBrush(ColorManager.CurrentColor);
+            }
 
             PropertyChanged += ColorSlider_PropertyChanged;
         }
@@ -73,23 +79,16 @@ namespace Egorozh.ColorPicker
         {
         }
 
-        protected virtual List<Color> CreateBackgroundColors(in Color color)
-        {
-            return new List<Color>()
+        protected virtual List<Color> CreateBackgroundColors(in Color color) =>
+            new()
             {
                 Color.Transparent
             };
-        }
 
-        #endregion
-
-        #region Private Methods
-
-        private IBrush CreateBackgroundBrush(in Color color)
+        protected virtual IBrush CreateBackgroundBrush(in Color color)
         {
             var colors = CreateBackgroundColors(color);
-            var count = colors?.Count ?? 0;
-
+           
             IBrush brush;
 
             var start = Orientation == Orientation.Vertical
@@ -100,15 +99,23 @@ namespace Egorozh.ColorPicker
                 ? new RelativePoint(0, 0, RelativeUnit.Relative)
                 : new RelativePoint(1, 0, RelativeUnit.Relative);
 
-            if (colors != null && count > 0)
+            var count = colors.Count;
+            
+            if (count > 1)
             {
-                var gradStops = new GradientStops();
-
-                for (var i = 0; i < colors.Count; i++)
+                var gradStops = new GradientStops
                 {
-                    var offset = i == 0 ? 0 : i == count - 1 ? 1 : 1.0D / count * i;
+                    new (colors[0].ToColor(), 0)
+                };
+                
+                for (var i = 1; i < count - 1; i++)
+                {
+                    var offset = 1.0D / count * i;
+
                     gradStops.Add(new GradientStop(colors[i].ToColor(), offset));
                 }
+
+                gradStops.Add(new GradientStop(colors[^1].ToColor(), 1));
 
                 brush = new LinearGradientBrush()
                 {
@@ -117,13 +124,19 @@ namespace Egorozh.ColorPicker
                     EndPoint = end
                 };
             }
+            else if (count == 1)
+                brush = new SolidColorBrush(colors[0].ToColor());
             else
                 brush = Brushes.Transparent;
 
             return brush;
         }
 
-        protected void ColorSlider_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        #endregion
+
+        #region Private Methods
+
+        private void ColorSlider_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.Property == ValueProperty)
                 ValueChanged();

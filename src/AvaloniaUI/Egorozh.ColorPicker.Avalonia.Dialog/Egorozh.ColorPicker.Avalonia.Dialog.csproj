@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0-preview6" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview6" />
+    <PackageReference Include="Avalonia" Version="0.10.0-rc1" />
   </ItemGroup>
 
   <ItemGroup>

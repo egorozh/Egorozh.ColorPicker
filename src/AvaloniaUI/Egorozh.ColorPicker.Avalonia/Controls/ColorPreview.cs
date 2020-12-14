@@ -81,7 +81,7 @@ namespace Egorozh.ColorPicker
 
         #region Private Methods
 
-        private void PreviewBorder_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void PreviewBorder_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             if (sender is Border previewBorder && previewBorder.Background is SolidColorBrush brush)
                 _colorManager.CurrentColor = brush.Color.ToColor();

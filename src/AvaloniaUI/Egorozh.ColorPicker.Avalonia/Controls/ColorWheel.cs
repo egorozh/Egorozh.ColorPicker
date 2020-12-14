@@ -134,7 +134,7 @@ namespace Egorozh.ColorPicker
 
         #region Pointer Events
 
-        private void ColorWheel_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void ColorWheel_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             if (!_isDragging)
             {
@@ -145,13 +145,13 @@ namespace Egorozh.ColorPicker
             }
         }
 
-        private void ColorWheel_PointerMoved(object sender, PointerEventArgs e)
+        private void ColorWheel_PointerMoved(object? sender, PointerEventArgs e)
         {
             if (_isDragging)
                 SetColor(e.GetPosition(this));
         }
 
-        private void ColorWheel_PointerReleased(object sender, PointerEventArgs e)
+        private void ColorWheel_PointerReleased(object? sender, PointerEventArgs e)
         {
             if (_isDragging)
             {

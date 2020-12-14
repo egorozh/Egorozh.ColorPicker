@@ -10,8 +10,8 @@ namespace Egorozh.ColorPicker
     {
         #region Private Methods
 
-        private IColorManager _manager;
-     
+        private IColorManager? _manager;
+
         private ListBox _modeComboBox;
 
         private RgbaColorSlider _rSlider;
@@ -55,7 +55,7 @@ namespace Egorozh.ColorPicker
         {
             base.OnApplyTemplate(e);
 
-            var  hex = e.NameScope.Find<ColorHexComboBox>("PART_HexComboBox");
+            var hex = e.NameScope.Find<ColorHexComboBox>("PART_HexComboBox");
             _modeComboBox = e.NameScope.Find<ListBox>("PART_ModeComboBox");
 
             var alphaSlider = e.NameScope.Find<RgbaColorSlider>("PART_AlphaSlider");
@@ -78,14 +78,20 @@ namespace Egorozh.ColorPicker
 
             _vSlider = e.NameScope.Find<ValueColorSlider>("PART_VSlider");
             _vNumUpDown = e.NameScope.Find<ValueColorNumUpDown>("PART_VNumUpDown");
-            
-            _manager.AddClient(alphaSlider, alphaNumUpDown, hex,
-                _rSlider, _rNumUpDown,
-                _gSlider, _gNumUpDown,
-                _bSlider, _bNumUpDown,
-                _hSlider, _hNumUpDown,
-                _sSlider, _sNumUpDown,
-                _vSlider, _vNumUpDown);
+
+            _manager?.AddClient(alphaSlider, alphaNumUpDown, hex,
+                _rSlider,
+                _rNumUpDown,
+                _gSlider,
+                _gNumUpDown,
+                _bSlider,
+                _bNumUpDown,
+                _hSlider,
+                _hNumUpDown,
+                _sSlider,
+                _sNumUpDown,
+                _vSlider,
+                _vNumUpDown);
 
 
             _modeComboBox.SelectionChanged += ModeChanged;
@@ -95,8 +101,8 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #region Private Methods
-        
-        private void ModeChanged(object sender, SelectionChangedEventArgs e)
+
+        private void ModeChanged(object? sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count < 1)
                 return;
