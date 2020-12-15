@@ -4,6 +4,47 @@
         xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
 
     <Style Selector="local|ColorPalette">
+        <Setter Property="LoadPaletteIconTemplate">
+            <DataTemplate>
+                <Image Source="{StaticResource LoadPaletteIcon}" />
+            </DataTemplate>
+        </Setter>
+
+        <Setter Property="SavePaletteIconTemplate">
+            <DataTemplate>
+                <Image Source="{StaticResource SavePaletteIcon}" />
+            </DataTemplate>
+        </Setter>
+
+        <Setter Property="ContextMenu">
+            <ContextMenu>
+                <MenuItem Name="PART_AddMenuItem" 
+                          Header="{Binding $parent[local:ColorPalette].AddColorContextMenuText}" />
+                <MenuItem Name="PART_RemoveMenuItem"
+                          Header="{Binding $parent[local:ColorPalette].RemoveColorContextMenuText}" />
+                <Separator />
+                <MenuItem Name="PART_LoadPaletteMenuItem"
+                          Header="{Binding $parent[local:ColorPalette].LoadPaletteContextMenuText}">
+                    <MenuItem.Icon>
+                        <ContentControl ContentTemplate="{Binding $parent[local:ColorPalette].LoadPaletteIconTemplate}">
+                            <ContentControl.Content>
+                                <DataObject />
+                            </ContentControl.Content>
+                        </ContentControl>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="PART_SavePaletteMenuItem"
+                          Header="{Binding $parent[local:ColorPalette].SavePaletteContextMenuText}">
+                    <MenuItem.Icon>
+                        <ContentControl ContentTemplate="{Binding $parent[local:ColorPalette].SavePaletteIconTemplate}">
+                            <ContentControl.Content>
+                                <DataObject />
+                            </ContentControl.Content>
+                        </ContentControl>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Setter>
 
         <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -20,7 +61,7 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="border" 
+                <Border Name="border"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                     <ScrollViewer Name="PART_ScrollViewer"
@@ -91,7 +132,7 @@
         </Setter>
     </Style>
     <Style Selector="ListBoxItem:pointerover /template/ Border">
-      <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
     </Style>
     <Style Selector="ListBoxItem:pressed  /template/ Border">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />

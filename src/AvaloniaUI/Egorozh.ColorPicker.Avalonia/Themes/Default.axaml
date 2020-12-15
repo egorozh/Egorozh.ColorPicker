@@ -5,6 +5,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Others/Brushes.axaml" />
+        <ResourceInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Others/Icons.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Styles.Resources> 
