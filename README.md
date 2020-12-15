@@ -6,6 +6,7 @@ This is an attempt to port [Cyotek.Windows.Forms.ColorPicker](https://github.com
 
 ### AvaloniaUI ColorPicker:
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-avalonia-1.png "Пример диалогого окна")
+![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-avalonia-2.png "Пример диалогого окна")
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-avalonia-3.png "Пример диалогого окна")
 
 ### Appearance of control on WPF at the moment:

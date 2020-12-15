@@ -4,64 +4,99 @@
         xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
 
     <Style Selector="local|ColorPalette">
+
+        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <WrapPanel />
+            </ItemsPanelTemplate>
+        </Setter>
+
         <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-                        <ItemsPresenter Items="{Binding $parent[local:ColorPalette].Items}">
-                            <ItemsPresenter.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsPresenter.ItemsPanel>
-                            <ItemsPresenter.DataTemplates>
-                                <DataTemplate DataType="{x:Type local:ColorItemViewModel}">
-                                    <Button BorderThickness="2"
-                                            Width="{Binding $parent[local:ColorPalette].Bounds.Width, Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}"
-                                            Height="24">
-                                        <Button.Background>
-                                            <SolidColorBrush Color="{Binding Color}" />
-                                        </Button.Background>                                      
-                                      <Button.Styles>
-                                        <Style Selector="Button">
-                                          <Setter Property="BorderBrush" Value="Transparent"/>
-                                          <Setter Property="Template">
-                                            <Setter.Value>
-                                              <ControlTemplate>
-                                                <Border Background="Transparent"
-                                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                                        BorderBrush="{TemplateBinding BorderBrush}">
-
-                                                  <Grid>
-                                                    <Rectangle Fill="{StaticResource TransparencyBrush}" />
-                                                    <Rectangle Fill="{TemplateBinding Background}"/>  
-                                                  </Grid>
-
-                                                </Border>
-                                              </ControlTemplate>
-                                            </Setter.Value>
-                                          </Setter>
-
-                                        </Style>
-
-                                        <Style Selector="Button:pointerover /template/ Border">
-                                          <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}"/>
-                                        </Style>
-                                      </Button.Styles>
-                                    </Button>
-                                </DataTemplate>
-                                <DataTemplate DataType="{x:Type local:AddItemViewModel}">
-                                    <Button Width="{Binding $parent[local:ColorPalette].Bounds.Width, Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}"
-                                            Height="24">
-                                        +
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsPresenter.DataTemplates>
-                        </ItemsPresenter>
+            <ControlTemplate>
+                <Border Name="border" 
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <ScrollViewer Name="PART_ScrollViewer"
+                                  Background="{TemplateBinding Background}"
+                                  HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                  VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                        Items="{TemplateBinding Items}"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        ItemTemplate="{TemplateBinding ItemTemplate}"
+                                        Margin="{TemplateBinding Padding}"
+                                        VirtualizationMode="{TemplateBinding VirtualizationMode}" />
                     </ScrollViewer>
-                </ControlTemplate>
-            </Setter.Value>
+                </Border>
+            </ControlTemplate>
         </Setter>
     </Style>
 
+    <Style Selector="ListBoxItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Width"
+                Value="{Binding $parent[local:ColorPalette].Bounds.Width, Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}" />
+        <Setter Property="Padding" Value="2 1" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="Transparent"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}">
+
+                    <Grid>
+                        <Rectangle Fill="{StaticResource TransparencyBrush}" />
+                        <Rectangle Fill="{TemplateBinding Background}" />
+                    </Grid>
+
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="ListBoxItem.Add">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Width"
+                Value="{Binding $parent[local:ColorPalette].Bounds.Width, Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}" />
+        <Setter Property="Padding" Value="4" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}">
+
+                    <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                          Fill="{DynamicResource ThemeAccentBrush}"
+                          Stretch="Uniform"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Margin="{TemplateBinding Padding}" />
+
+                </Border>
+
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="ListBoxItem:pointerover /template/ Border">
+      <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:pressed  /template/ Border">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:selected  /template/ Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
+    </Style>
 </Styles>
