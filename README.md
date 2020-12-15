@@ -45,7 +45,7 @@ Then, reference the preffered theme from your `App.xaml` file:
 Done! Use ColorPickerButton 
 ```xml
 <dialog:ColorPickerButton Color="#99029344"
-                            Cursor="Hand"/>
+                          Cursor="Hand"/>
 ```
 or ColorPickerDialog:
 ```c#
