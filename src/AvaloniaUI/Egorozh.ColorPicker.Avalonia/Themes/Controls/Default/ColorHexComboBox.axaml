@@ -2,97 +2,117 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
 
-  <Style Selector="local|ColorHexComboBox">
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}" />
-    <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Padding" Value="4" />
-    <Setter Property="MinHeight" Value="20" />
-    <Setter Property="PlaceholderForeground" Value="{DynamicResource ThemeForegroundBrush}" />
-    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-    <Setter Property="Template">
-      <ControlTemplate>
+    <Style Selector="local|ColorHexComboBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource ThemeForegroundBrush}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="Template">
+            <ControlTemplate>
 
-        <Grid ColumnDefinitions="auto *">
-          <Border BorderThickness="1 1 0 1"
-                  Background="{DynamicResource ThemeBorderLowBrush}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  Width="{Binding $self.Bounds.Height}">
+                <Grid ColumnDefinitions="auto * Auto">
+                    <Border BorderThickness="1 1 0 1"
+                            Background="{DynamicResource ThemeBorderLowBrush}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Width="{Binding $self.Bounds.Height}">
 
-            <Label Content="#"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" />
+                        <Label Content="#"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center" />
 
-          </Border>
+                    </Border>
 
-          <Border Name="border"
-                  Grid.Column="1"
-                  Background="{TemplateBinding Background}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid ColumnDefinitions="*,Auto">
-              <TextBlock Name="PlaceholderTextBlock"
-                         Grid.Column="0"
-                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                         Margin="{TemplateBinding Padding}"
-                         Text="{TemplateBinding PlaceholderText}"
-                         Foreground="{TemplateBinding PlaceholderForeground}"
-                         IsVisible="{TemplateBinding SelectionBoxItem, Converter={x:Static ObjectConverters.IsNull}}" />
-              <ContentControl Content="{TemplateBinding SelectionBoxItem}"
-                              ContentTemplate="{TemplateBinding ItemTemplate}"
-                              Margin="{TemplateBinding Padding}"
-                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
-              <ToggleButton Name="toggle"
-                            BorderThickness="0"
-                            Background="Transparent"
-                            ClickMode="Press"
-                            Focusable="False"
-                            IsChecked="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
-                            Grid.Column="1">
-                <Path Fill="{DynamicResource ThemeForegroundBrush}"
-                      Width="8"
-                      Height="4"
-                      Stretch="Uniform"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z" />
-              </ToggleButton>
-              <Popup Name="PART_Popup"
-                     IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
-                     MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                     PlacementTarget="{TemplateBinding}"
-                     IsLightDismissEnabled="True">
-                <Border BorderBrush="{DynamicResource ThemeBorderMidBrush}"
-                        BorderThickness="1">
-                  <ScrollViewer
-                    HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                    VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                    <ItemsPresenter Name="PART_ItemsPresenter"
-                                    Items="{TemplateBinding Items}"
-                                    ItemsPanel="{TemplateBinding ItemsPanel}"
-                                    ItemTemplate="{TemplateBinding ItemTemplate}"
-                                    VirtualizationMode="{TemplateBinding VirtualizationMode}" />
-                  </ScrollViewer>
-                </Border>
-              </Popup>
-            </Grid>
-          </Border>
-        </Grid>
-      </ControlTemplate>
-    </Setter>
-  </Style>
+                    <Border Name="border"
+                            Grid.Column="1"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Name="PlaceholderTextBlock"
+                                       Grid.Column="0"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin="{TemplateBinding Padding}"
+                                       Text="{TemplateBinding PlaceholderText}"
+                                       Foreground="{TemplateBinding PlaceholderForeground}"
+                                       IsVisible="{TemplateBinding SelectionBoxItem, Converter={x:Static ObjectConverters.IsNull}}" />
+                            <ContentControl Content="{TemplateBinding SelectionBoxItem}"
+                                            ContentTemplate="{TemplateBinding ItemTemplate}"
+                                            Margin="{TemplateBinding Padding}"
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            <ToggleButton Name="toggle"
+                                          BorderThickness="0"
+                                          Background="Transparent"
+                                          ClickMode="Press"
+                                          Focusable="False"
+                                          IsChecked="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                          Grid.Column="1">
+                                <Path Fill="{DynamicResource ThemeForegroundBrush}"
+                                      Width="8"
+                                      Height="4"
+                                      Stretch="Uniform"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z" />
+                            </ToggleButton>
+                            <Popup Name="PART_Popup"
+                                   IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                   MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                   MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                   PlacementTarget="{TemplateBinding}"
+                                   IsLightDismissEnabled="True">
+                                <Border BorderBrush="{DynamicResource ThemeBorderMidBrush}"
+                                        BorderThickness="1">
+                                    <ScrollViewer
+                                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                                        Items="{TemplateBinding Items}"
+                                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                        ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                        VirtualizationMode="{TemplateBinding VirtualizationMode}" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
 
-  <Style Selector="local|ColorHexComboBox:pointerover /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
-  </Style>
+                    <Button Grid.Column="2"
+                            Name="PART_CopyButton"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0 1 1 1"
+                            Background="{DynamicResource ThemeBorderLowBrush}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Width="{Binding $self.Bounds.Height}">
+                        <Viewbox VerticalAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                 Width="18"
+                                 Height="18">
+                            <Path Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Fill="{Binding $parent[Button].Foreground}"
+                                  Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
 
-  <Style Selector="local|ColorHexComboBox:disabled /template/ Border#border">
-    <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
-  </Style>
+                        </Viewbox>
+                    </Button>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="local|ColorHexComboBox:pointerover /template/ Border#border">
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
+    </Style>
+
+    <Style Selector="local|ColorHexComboBox:disabled /template/ Border#border">
+        <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
+    </Style>
 
 </Styles>

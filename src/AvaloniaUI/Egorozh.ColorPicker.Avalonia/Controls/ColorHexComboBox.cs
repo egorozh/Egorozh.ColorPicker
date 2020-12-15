@@ -4,7 +4,9 @@ using System.Drawing;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Styling;
+using TextCopy;
 
 namespace Egorozh.ColorPicker
 {
@@ -45,6 +47,10 @@ namespace Egorozh.ColorPicker
             Items = HexComboBoxHelpers.GetNamedColors();
             SelectionChanged += Hex_SelectionChanged;
 
+            var copyButton = e.NameScope.Find<Button>("PART_CopyButton");
+            copyButton.Click += CopyButtonOnClick;
+
+
             SetSelectedItemInHex(_manager.CurrentColor);
         }
 
@@ -59,6 +65,15 @@ namespace Egorozh.ColorPicker
                 if (e.AddedItems[0] is NamedColor namedColor)
                     _manager.CurrentColor = namedColor.Color;
             }
+        }
+
+        private void CopyButtonOnClick(object? sender, RoutedEventArgs e)
+        {
+            var currentColor = _manager.CurrentColor;
+
+            var hexColor = $"{currentColor.A:X2}{currentColor.R:X2}{currentColor.G:X2}{currentColor.B:X2}";
+
+            ClipboardService.SetText(hexColor);
         }
 
         private void SetSelectedItemInHex(Color color)
