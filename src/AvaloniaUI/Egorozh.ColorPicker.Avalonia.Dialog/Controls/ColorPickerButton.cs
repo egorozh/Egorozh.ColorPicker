@@ -2,8 +2,8 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Styling;
-using System;
 using Avalonia.VisualTree;
+using System;
 
 namespace Egorozh.ColorPicker.Dialog
 {
@@ -59,7 +59,7 @@ namespace Egorozh.ColorPicker.Dialog
         private async void ColorPickerButton_PointerPressed(object sender,
             global::Avalonia.Input.PointerPressedEventArgs e)
         {
-            var dialog = new ColorPickerDialog()
+            ColorPickerDialog dialog = new ()
             {
                 Color = Color
             };

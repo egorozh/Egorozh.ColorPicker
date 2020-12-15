@@ -1,6 +1,6 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Egorozh.ColorPicker.Client"
+             
              x:Class="Egorozh.ColorPicker.Avalonia.Client.App">
 
   <Application.Styles>
