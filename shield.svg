@@ -3,7 +3,7 @@ width="200"
 height="20">
 <g shape-rendering="crispEdges">
 <path fill="#555" d="M0 0h100v20H0z"/>
-<path fill="#007ec6" d="M100 0h53v20H41z"/>
+<path fill="#007ec6" d="M100 0h100v20H100z"/>
 </g>
 <g fill="#fff" 
 text-anchor="middle" 
