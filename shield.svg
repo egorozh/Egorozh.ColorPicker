@@ -3,16 +3,15 @@
 
  <g>
   <title>background</title>
-  <rect x="-1" y="-1" width="308" height="22" id="canvas_background" fill="#fff"/>
+  <rect fill="#fff" id="canvas_background" height="22" width="308" y="-1" x="-1"/>
  </g>
  <g>
   <title>Layer 1</title>
-  <rect stroke="#000" rx="8" fill="#007ec6" stroke-width="0" x="217.711636" y="-1.722069" width="88.169283" height="23.05078" id="svg_1"/>
-  <rect stroke="#000" rx="8" fill="#333333" stroke-width="0" x="-0.604214" y="-0.7955" width="234.677434" height="21.988587" id="svg_2"/>
-  <rect fill="#333333" stroke="#000" stroke-width="0" x="72.372953" y="68.458514" width="0" height="0.338982" id="svg_3"/>
-  <text fill="#ffffff" stroke-width="0" stroke-opacity="null" x="244.499824" y="15.817699" id="svg_5" font-size="14" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" stroke="#000">v0.10.0-rc1</text>
-  <text fill="#ffffff" stroke="#000" stroke-width="0" stroke-opacity="null" x="0.500118" y="14.999994" id="svg_6" font-size="14" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">Egorozh.ColorPicker.Avalonia.Dialog</text>
-  <rect id="svg_4" height="35" width="7" y="-3.848958" x="228.833333" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#007ec6"/>
-  <rect id="svg_7" height="0" width="0.333333" y="58.817708" x="277.833333" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#007ec6"/>
+  <rect id="svg_1" height="23.05078" width="88.169283" y="-1.722069" x="217.711636" stroke-width="0" fill="#007ec6" stroke="#000"/>
+  <rect id="svg_2" height="21.988587" width="234.677434" y="-0.7955" x="-0.604214" stroke-width="0" fill="#333333" stroke="#000"/>
+  <rect id="svg_3" height="0.338982" width="0" y="68.458514" x="72.372953" stroke-width="0" stroke="#000" fill="#333333"/>
+  <text stroke="#000" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="14" id="svg_5" y="15.460556" x="236.285538" stroke-opacity="null" stroke-width="0" fill="#ffffff">v0.10.0-rc1</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="14" id="svg_6" y="14.999994" x="3.000118" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ffffff">Egorozh.ColorPicker.Avalonia.Dialog</text>
+  <rect fill="#007ec6" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="277.833333" y="58.817708" width="0.333333" height="0" id="svg_7"/>
  </g>
 </svg>
