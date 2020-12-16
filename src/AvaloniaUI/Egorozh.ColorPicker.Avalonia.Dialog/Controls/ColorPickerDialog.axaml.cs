@@ -55,6 +55,19 @@ namespace Egorozh.ColorPicker.Dialog
             _colorPickerControl = this.Find<ColorPickerControl>("PartColorPickerControl");
             _colorPickerControl.LoadPaletteHandler = LoadPaletteAsync;
             _colorPickerControl.SavePaletteHandler = SavePaletteAsync;
+            _colorPickerControl.GetColorHandler = GetColor;
+        }
+
+        private async Task<(bool, Color)> GetColor(Color color)
+        {
+            ColorPickerDialog colorPickerDialog = new ()
+            {
+                Color = color
+            };
+
+            var res = await colorPickerDialog.ShowDialog<bool>(this);
+
+            return res ? (true, colorPickerDialog.Color) : (false, color);
         }
 
         private async Task<(bool, IEnumerable<Color>)> LoadPaletteAsync()

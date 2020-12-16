@@ -29,6 +29,9 @@ namespace Egorozh.ColorPicker
         public static readonly StyledProperty<SavePaletteHandler?> SavePaletteHandlerProperty =
             AvaloniaProperty.Register<ColorPickerControl, SavePaletteHandler?>(nameof(SavePaletteHandler));
 
+        public static readonly StyledProperty<GetColorHandler?> GetColorHandlerProperty =
+            AvaloniaProperty.Register<ColorPickerControl, GetColorHandler?>(nameof(GetColorHandler));
+
         public static readonly StyledProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color), notifying: ColorChanged);
 
@@ -52,6 +55,12 @@ namespace Egorozh.ColorPicker
         {
             get => GetValue(SavePaletteHandlerProperty);
             set => SetValue(SavePaletteHandlerProperty, value);
+        }
+
+        public GetColorHandler? GetColorHandler
+        {
+            get => GetValue(GetColorHandlerProperty);
+            set => SetValue(GetColorHandlerProperty, value);
         }
 
         public Color Color

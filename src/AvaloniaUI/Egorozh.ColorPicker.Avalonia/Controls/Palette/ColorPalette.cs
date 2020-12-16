@@ -43,6 +43,9 @@ namespace Egorozh.ColorPicker
         public static readonly StyledProperty<SavePaletteHandler?> SavePaletteHandlerProperty =
             AvaloniaProperty.Register<ColorPalette, SavePaletteHandler?>(nameof(SavePaletteHandler));
 
+        public static readonly StyledProperty<GetColorHandler?> GetColorHandlerProperty =
+            AvaloniaProperty.Register<ColorPalette, GetColorHandler?>(nameof(GetColorHandler));
+
         public static readonly StyledProperty<IEnumerable<Avalonia.Media.Color>> ColorsProperty =
             AvaloniaProperty.Register<ColorPalette, IEnumerable<Avalonia.Media.Color>>(
                 nameof(Colors),
@@ -76,6 +79,8 @@ namespace Egorozh.ColorPicker
         public static readonly StyledProperty<string> SavePaletteContextMenuTextProperty =
             AvaloniaProperty.Register<ColorPalette, string>(nameof(SavePaletteContextMenuText), "Save Palette");
 
+        private Color _prevColorForDoubleTappedHandler;
+
         #endregion
 
         #region Public Properties
@@ -90,6 +95,12 @@ namespace Egorozh.ColorPicker
         {
             get => GetValue(SavePaletteHandlerProperty);
             set => SetValue(SavePaletteHandlerProperty, value);
+        }
+
+        public GetColorHandler? GetColorHandler
+        {
+            get => GetValue(GetColorHandlerProperty);
+            set => SetValue(GetColorHandlerProperty, value);
         }
 
         public IEnumerable<Avalonia.Media.Color> Colors
@@ -209,16 +220,21 @@ namespace Egorozh.ColorPicker
 
             foreach (var removedItem in removedItems)
                 RemoveItem(removedItem);
-            
+
             UpdateColors();
         }
 
-        private void AddItemOnTapped(object? sender, RoutedEventArgs e)
+        private async void AddItemOnTapped(object? sender, RoutedEventArgs e)
         {
-            if (Items is not IList<object> items)
+            if (Items is not IList<object> items || GetColorHandler == null)
                 return;
 
-            items.Insert(items.Count - 1, CreateColorItem(Avalonia.Media.Colors.Transparent));
+            var (success, newColor) = await GetColorHandler.Invoke(Avalonia.Media.Colors.Red);
+
+            if (!success)
+                return;
+
+            items.Insert(items.Count - 1, CreateColorItem(newColor));
 
             UpdateColors();
         }
@@ -236,12 +252,17 @@ namespace Egorozh.ColorPicker
             items.Add(_addItem);
         }
 
-        private void AddItemOnClick(object? sender, RoutedEventArgs e)
+        private async void AddItemOnClick(object? sender, RoutedEventArgs e)
         {
-            if (Items is not IList<object> items)
+            if (Items is not IList<object> items || GetColorHandler == null)
                 return;
 
-            var newColorItem = CreateColorItem(Avalonia.Media.Colors.Transparent);
+            var (success, newColor) = await GetColorHandler.Invoke(Avalonia.Media.Colors.Red);
+
+            if (!success)
+                return;
+
+            var newColorItem = CreateColorItem(newColor);
 
             if (SelectedItems.Count > 0)
             {
@@ -266,8 +287,24 @@ namespace Egorozh.ColorPicker
             UpdateColors();
         }
 
-        private void ItemOnDoubleTapped(object? sender, RoutedEventArgs e)
+        private async void ItemOnDoubleTapped(object? sender, RoutedEventArgs e)
         {
+            if (sender is not ListBoxItem colorItem ||
+                _colorManager == null || GetColorHandler == null)
+                return;
+
+            _colorManager.CurrentColor = _prevColorForDoubleTappedHandler;
+
+            var color = GetColorFromItem(colorItem);
+
+            var (success, newColor) = await GetColorHandler.Invoke(color);
+
+            if (success)
+            {
+                colorItem.Background = new SolidColorBrush(newColor);
+
+                UpdateColors();
+            }
         }
 
         private void ItemOnTapped(object? sender, RoutedEventArgs e)
@@ -276,6 +313,8 @@ namespace Egorozh.ColorPicker
                 return;
 
             var color = GetColorFromItem(colorItem);
+
+            _prevColorForDoubleTappedHandler = _colorManager.CurrentColor;
 
             _colorManager.CurrentColor = color.ToColor();
         }
@@ -351,4 +390,6 @@ namespace Egorozh.ColorPicker
     public delegate Task<(bool, IEnumerable<Avalonia.Media.Color>)> LoadPaletteHandlerAsync();
 
     public delegate void SavePaletteHandler(IEnumerable<Avalonia.Media.Color> colors);
+
+    public delegate Task<(bool, Avalonia.Media.Color)> GetColorHandler(Avalonia.Media.Color oldColor);
 }
