@@ -3,7 +3,9 @@
 
         xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
 
+
     <Style Selector="local|ColorPalette">
+
         <Setter Property="LoadPaletteIconTemplate">
             <DataTemplate>
                 <Image Source="{StaticResource LoadPaletteIcon}" />
@@ -18,7 +20,7 @@
 
         <Setter Property="ContextMenu">
             <ContextMenu>
-                <MenuItem Name="PART_AddMenuItem" 
+                <MenuItem Name="PART_AddMenuItem"
                           Header="{Binding $parent[local:ColorPalette].AddColorContextMenuText}" />
                 <MenuItem Name="PART_RemoveMenuItem"
                           Header="{Binding $parent[local:ColorPalette].RemoveColorContextMenuText}" />
@@ -46,23 +48,22 @@
             </ContextMenu>
         </Setter>
 
-        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
                 <WrapPanel />
             </ItemsPanelTemplate>
         </Setter>
 
+        <Setter Property="TextBlock.Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="border"
-                        BorderBrush="{TemplateBinding BorderBrush}"
+                <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                     <ScrollViewer Name="PART_ScrollViewer"
                                   Background="{TemplateBinding Background}"
@@ -82,12 +83,12 @@
 
     <Style Selector="ListBoxItem">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{Binding $self.Background}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Height" Value="24" />
         <Setter Property="Width"
                 Value="{Binding $parent[local:ColorPalette].Bounds.Width, Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}" />
-        <Setter Property="Padding" Value="2 1" />
+        <Setter Property="Padding" Value="0" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -104,10 +105,11 @@
             </ControlTemplate>
         </Setter>
     </Style>
+
     <Style Selector="ListBoxItem.Add">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{Binding $self.Background}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Height" Value="24" />
         <Setter Property="Width"
                 Value="{Binding $parent[local:ColorPalette].Bounds.Width, Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}" />
@@ -120,7 +122,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}">
 
                     <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                          Fill="{DynamicResource ThemeAccentBrush}"
+                          Fill="{DynamicResource SystemAccentColor}"
                           Stretch="Uniform"
                           VerticalAlignment="Center"
                           HorizontalAlignment="Center"
@@ -131,13 +133,15 @@
             </ControlTemplate>
         </Setter>
     </Style>
+
     <Style Selector="ListBoxItem:pointerover /template/ Border">
-        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
     </Style>
     <Style Selector="ListBoxItem:pressed  /template/ Border">
-        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
     </Style>
     <Style Selector="ListBoxItem:selected  /template/ Border">
-        <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
     </Style>
+
 </Styles>

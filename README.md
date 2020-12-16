@@ -29,14 +29,15 @@ Then, reference the preffered theme from your `App.xaml` file:
       <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Default.axaml" />
     
      <!-- To use other themes:-->
-        <!--
-      <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml"/>
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentDark.axaml" />
-    -->
       <!--
-      <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentLight.xaml"/>
+      <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"/>
       <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentLight.axaml" />
-    -->
+      -->
+    
+      <!--
+      <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"/>
+      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentDark.axaml" />
+      -->
   </Application.Styles>
 </Application>
 ```

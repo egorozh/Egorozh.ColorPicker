@@ -1,7 +1,7 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
  
-  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/FluentLight.axaml" />
+  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Fluent.axaml" />
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Controls/ColorPickerButton.axaml" />
 
   <Style Selector="Window.Main">
