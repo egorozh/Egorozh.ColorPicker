@@ -54,7 +54,8 @@
                                 <local:ColorPalette Name="PART_ColorPalette"
                                                     LoadPaletteHandler="{Binding $parent[local:ColorPickerControl].LoadPaletteHandler}"
                                                     SavePaletteHandler="{Binding $parent[local:ColorPickerControl].SavePaletteHandler}"
-                                                    GetColorHandler="{Binding $parent[local:ColorPickerControl].GetColorHandler}" />
+                                                    GetColorHandler="{Binding $parent[local:ColorPickerControl].GetColorHandler}"
+                                                    Colors="{Binding $parent[local:ColorPickerControl].Colors, Mode=TwoWay}" />
 
                             </TabItem>
                             <TabItem>

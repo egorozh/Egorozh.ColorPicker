@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Egorozh.ColorPicker.Avaloni
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E8A2D4C1-A57E-44F7-83A5-1F09A84697DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egorozh.ColorPicker.WPF.MahApps.Client", "Samples\Egorozh.ColorPicker.WPF.MahApps.Client\Egorozh.ColorPicker.WPF.MahApps.Client.csproj", "{1BBFD611-55AC-40E2-9615-63AEBAE9C558}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egorozh.ColorPicker.WPF.Dialog.MahApps", "WPF\Egorozh.ColorPicker.WPF.Dialog.MahApps\Egorozh.ColorPicker.WPF.Dialog.MahApps.csproj", "{F795C543-3767-4B71-AA99-FE3B4605FE1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{130118DF-1E4B-4701-9447-2C09C232114B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{130118DF-1E4B-4701-9447-2C09C232114B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{130118DF-1E4B-4701-9447-2C09C232114B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BBFD611-55AC-40E2-9615-63AEBAE9C558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BBFD611-55AC-40E2-9615-63AEBAE9C558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BBFD611-55AC-40E2-9615-63AEBAE9C558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BBFD611-55AC-40E2-9615-63AEBAE9C558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F795C543-3767-4B71-AA99-FE3B4605FE1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F795C543-3767-4B71-AA99-FE3B4605FE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F795C543-3767-4B71-AA99-FE3B4605FE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F795C543-3767-4B71-AA99-FE3B4605FE1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +83,8 @@ Global
 		{F4EB56CA-9202-4CF0-BA20-B0032EC909AC} = {E8A2D4C1-A57E-44F7-83A5-1F09A84697DA}
 		{C254B2F5-5A97-4749-9D9E-45298465BCB0} = {CE8B8882-8A9F-47A0-8BDC-4676FBBDEDB0}
 		{130118DF-1E4B-4701-9447-2C09C232114B} = {CE8B8882-8A9F-47A0-8BDC-4676FBBDEDB0}
+		{1BBFD611-55AC-40E2-9615-63AEBAE9C558} = {E8A2D4C1-A57E-44F7-83A5-1F09A84697DA}
+		{F795C543-3767-4B71-AA99-FE3B4605FE1C} = {092DB559-5F24-43EE-A399-53100AA1C9B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD0851EE-BE76-4C8F-92FF-C4639D787424}

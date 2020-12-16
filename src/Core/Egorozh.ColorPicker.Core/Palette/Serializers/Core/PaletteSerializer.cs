@@ -1,29 +1,6 @@
-﻿/*
-﻿The MIT License (MIT)
-
-Copyright © 2013-2017 Cyotek Ltd.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -38,30 +15,10 @@ namespace Egorozh.ColorPicker
     {
         #region Private Static Fields
 
-        private static string _defaultOpenFilter;
-
-        private static string _defaultSaveFileter;
-
         private static List<(string, List<string>)>? _defaultOpenFilterForAvalonia;
         private static List<(string, List<string>)>? _defaultSaveFilterForAvalonia;
 
-        #endregion
-
-        #region Constants
-
-        private static readonly List<IPaletteSerializer> _serializerCache;
-
-        #endregion
-
-        #region Static Constructors
-
-        /// <summary>
-        /// Initializes static members of the <see cref="PaletteSerializer"/> class.
-        /// </summary>
-        static PaletteSerializer()
-        {
-            _serializerCache = new List<IPaletteSerializer>();
-        }
+        private static readonly List<IPaletteSerializer> SerializerCache = new();
 
         #endregion
 
@@ -71,60 +28,52 @@ namespace Egorozh.ColorPicker
         /// Gets all loaded serializers.
         /// </summary>
         /// <value>The loaded serializers.</value>
-        public static IEnumerable<IPaletteSerializer> AllSerializers => _serializerCache.AsReadOnly();
+        public static IEnumerable<IPaletteSerializer> AllSerializers => SerializerCache.AsReadOnly();
 
         /// <summary>
-        /// Returns a filter suitable for use with the <see cref="System.Windows.Forms.OpenFileDialog"/>.
+        /// Returns a filter suitable for use with the <see cref="System.Windows.OpenFileDialog"/>.
         /// </summary>
-        /// <value>A filter suitable for use with the <see cref="System.Windows.Forms.OpenFileDialog"/>.</value>
+        /// <value>A filter suitable for use with the <see cref="System.Windows.OpenFileDialog"/>.</value>
         /// <remarks>This filter does not include any serializers that cannot read source data.</remarks>
-        public static string DefaultOpenFilter
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_defaultOpenFilter))
-                {
-                    CreateFilters();
-                }
-
-                return _defaultOpenFilter;
-            }
-        }
-
-        public static List<(string, List<string>)> DefaultOpenFilterForAvalonia
+        public static string? DefaultOpenFilterForWpf
         {
             get
             {
                 if (_defaultOpenFilterForAvalonia == null)
-                {
                     CreateFilters();
-                }
+
+                return CreateWpfFilters(_defaultOpenFilterForAvalonia);
+            }
+        }
+
+        public static List<(string, List<string>)>? DefaultOpenFilterForAvalonia
+        {
+            get
+            {
+                if (_defaultOpenFilterForAvalonia == null)
+                    CreateFilters();
 
                 return _defaultOpenFilterForAvalonia;
             }
         }
 
-        public static string DefaultSaveFilter
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_defaultSaveFileter))
-                {
-                    CreateFilters();
-                }
-
-                return _defaultSaveFileter;
-            }
-        }
-
-        public static List<(string, List<string>)> DefaultSaveFilterForAvalonia
+        public static string? DefaultSaveFilterForWpf
         {
             get
             {
                 if (_defaultSaveFilterForAvalonia == null)
-                {
                     CreateFilters();
-                }
+
+                return CreateWpfFilters(_defaultSaveFilterForAvalonia);
+            }
+        }
+
+        public static List<(string, List<string>)>? DefaultSaveFilterForAvalonia
+        {
+            get
+            {
+                if (_defaultSaveFilterForAvalonia == null)
+                    CreateFilters();
 
                 return _defaultSaveFilterForAvalonia;
             }
@@ -137,179 +86,28 @@ namespace Egorozh.ColorPicker
         public static IPaletteSerializer? GetSerializer(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
-            {
                 throw new ArgumentNullException(nameof(fileName));
-            }
 
             if (!File.Exists(fileName))
-            {
                 throw new FileNotFoundException($"Cannot find file '{fileName}'.", fileName);
-            }
 
-            if (_serializerCache.Count == 0)
-            {
+            if (SerializerCache.Count == 0)
                 LoadSerializers();
-            }
 
             IPaletteSerializer? result = null;
 
             foreach (IPaletteSerializer checkSerializer in AllSerializers)
             {
-                using (FileStream file = File.OpenRead(fileName))
+                using FileStream file = File.OpenRead(fileName);
+
+                if (checkSerializer.CanReadFrom(file))
                 {
-                    if (checkSerializer.CanReadFrom(file))
-                    {
-                        result = checkSerializer;
-                        break;
-                    }
+                    result = checkSerializer;
+                    break;
                 }
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Creates the Open and Save As filters.
-        /// </summary>
-        private static void CreateFilters()
-        {
-            List<string> openExtensions = new();
-            List<string> openExtensionsA = new();
-            StringBuilder openFilter = new();
-            StringBuilder saveFilter = new();
-            List<(string, List<string>)> openFilterA = new();
-            List<(string, List<string>)> saveFilterA = new();
-
-            if (_serializerCache.Count == 0)
-            {
-                LoadSerializers();
-            }
-
-            foreach (IPaletteSerializer serializer in _serializerCache.Where(serializer =>
-                !(string.IsNullOrEmpty(serializer.DefaultExtension) ||
-                  openExtensions.Contains(serializer.DefaultExtension))))
-            {
-                StringBuilder extensionMask = new();
-                List<string> extensionMaskA = new();
-
-                foreach (string extension in serializer.DefaultExtension.Split(new[] {';'},
-                    StringSplitOptions.RemoveEmptyEntries))
-                {
-                    string mask = "*." + extension;
-
-                    if (!openExtensions.Contains(mask))
-                    {
-                        openExtensions.Add(mask);
-                    }
-
-                    if (!openExtensionsA.Contains(extension))
-                    {
-                        openExtensionsA.Add(extension);
-                    }
-
-                    if (extensionMask.Length != 0)
-                    {
-                        extensionMask.Append(";");
-                    }
-
-                    extensionMask.Append(mask);
-                    extensionMaskA.Add(extension);
-                }
-
-                string filter = string.Format("{0} Files ({1})|{1}", serializer.Name, extensionMask);
-                var filterA = (serializer.Name, extensionMaskA);
-
-                if (serializer.CanRead)
-                {
-                    if (openFilter.Length != 0)
-                    {
-                        openFilter.Append("|");
-                    }
-
-                    openFilter.Append(filter);
-                    openFilterA.Add(filterA);
-                }
-
-                if (serializer.CanWrite)
-                {
-                    if (saveFilter.Length != 0)
-                    {
-                        saveFilter.Append("|");
-                    }
-
-                    saveFilter.Append(filter);
-                    saveFilterA.Add(filterA);
-                }
-            }
-
-            if (openExtensions.Count != 0)
-            {
-                openFilter.Insert(0,
-                    string.Format("All Supported Palettes ({0})|{0}|", string.Join(";", openExtensions.ToArray())));
-
-                openFilterA.Add(("All Supported Palettes", openExtensionsA));
-            }
-
-            if (openFilter.Length != 0)
-            {
-                openFilter.Append("|");
-            }
-
-            openFilter.Append("All Files (*.*)|*.*");
-
-            openFilterA.Add(("All Files", new() {"*"}));
-
-            _defaultOpenFilter = openFilter.ToString();
-            _defaultSaveFileter = saveFilter.ToString();
-            _defaultOpenFilterForAvalonia = openFilterA;
-            _defaultSaveFilterForAvalonia = saveFilterA;
-        }
-
-        /// <summary>
-        /// Gets the loadable types from an assembly.
-        /// </summary>
-        /// <param name="assembly">The assembly to load types from.</param>
-        /// <returns>Available types</returns>
-        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
-        {
-            try
-            {
-                return assembly.GetTypes();
-            }
-            catch (ReflectionTypeLoadException ex)
-            {
-                return ex.Types.Where(x => x != null);
-            }
-        }
-
-        /// <summary>
-        /// Loads the serializers.
-        /// </summary>
-        private static void LoadSerializers()
-        {
-            _serializerCache.Clear();
-            _defaultOpenFilter = null;
-            _defaultSaveFileter = null;
-
-            foreach (Type type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly =>
-                GetLoadableTypes(assembly).Where(type =>
-                    !type.IsAbstract && type.IsPublic && typeof(IPaletteSerializer).IsAssignableFrom(type))))
-            {
-                try
-                {
-                    _serializerCache.Add((IPaletteSerializer) Activator.CreateInstance(type));
-                }
-                // ReSharper disable EmptyGeneralCatchClause
-                catch
-                    // ReSharper restore EmptyGeneralCatchClause
-                {
-                    // ignore errors
-                }
-            }
-
-            // sort the cache by name, that way the open/save filters won't need independant sorting
-            // and can easily map FileDialog.FilterIndex to an item in this collection
-            _serializerCache.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
         }
 
         #endregion
@@ -320,28 +118,24 @@ namespace Egorozh.ColorPicker
         /// Gets a value indicating whether this serializer can be used to read palettes.
         /// </summary>
         /// <value><c>true</c> if palettes can be read using this serializer; otherwise, <c>false</c>.</value>
-        [Browsable(false)]
         public virtual bool CanRead => true;
 
         /// <summary>
         /// Gets a value indicating whether this serializer can be used to write palettes.
         /// </summary>
         /// <value><c>true</c> if palettes can be written using this serializer; otherwise, <c>false</c>.</value>
-        [Browsable(false)]
         public virtual bool CanWrite => true;
 
         /// <summary>
         /// Gets the default extension for files generated with this palette format.
         /// </summary>
         /// <value>The default extension for files generated with this palette format.</value>
-        [Browsable(false)]
-        public abstract string DefaultExtension { get; }
+        public abstract string[] DefaultExtension { get; }
 
         /// <summary>
         /// Gets a descriptive name of the palette format
         /// </summary>
         /// <value>The descriptive name of the palette format.</value>
-        [Browsable(false)]
         public abstract string Name { get; }
 
         #endregion
@@ -355,9 +149,9 @@ namespace Egorozh.ColorPicker
         /// <returns><c>true</c> if this instance can read palette data from the specified stream; otherwise, <c>false</c>.</returns>
         public abstract bool CanReadFrom(Stream stream);
 
-        public abstract ColorCollection DeserializeNew(Stream stream);
+        public abstract List<Color> DeserializeNew(Stream stream);
 
-        public abstract void Serialize(Stream stream, ColorCollection palette);
+        public abstract void Serialize(Stream stream, IEnumerable<Color> palette);
 
         /// <summary>
         /// Reads a 16bit unsigned integer in big-endian format.
@@ -437,24 +231,21 @@ namespace Egorozh.ColorPicker
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <returns><c>true</c> if this instance can read palette data from the specified stream; otherwise, <c>false</c>.</returns>
-        bool IPaletteSerializer.CanReadFrom(Stream stream)
-        {
-            return this.CanReadFrom(stream);
-        }
+        bool IPaletteSerializer.CanReadFrom(Stream stream) => CanReadFrom(stream);
 
         /// <summary>
-        /// Deserializes the <see cref="ColorCollection" /> contained by the specified <see cref="Stream" />.
+        /// Deserializes the <see cref="List<Color>" /> contained by the specified <see cref="Stream" />.
         /// </summary>
         /// <param name="stream">The <see cref="Stream" /> that contains the palette to deserialize.</param>
-        /// <returns>The <see cref="ColorCollection" /> being deserialized.</returns>
-        ColorCollection IPaletteSerializer.DeserializeNew(Stream stream) => DeserializeNew(stream);
+        /// <returns>The <see cref="List<Color>" /> being deserialized.</returns>
+        List<Color>? IPaletteSerializer.DeserializeNew(Stream stream) => DeserializeNew(stream);
 
         /// <summary>
-        /// Serializes the specified <see cref="ColorCollection" /> and writes the palette to a file using the specified Stream.
+        /// Serializes the specified <see cref="List<Color>" /> and writes the palette to a file using the specified Stream.
         /// </summary>
         /// <param name="stream">The <see cref="Stream" /> used to write the palette.</param>
-        /// <param name="palette">The <see cref="ColorCollection" /> to serialize.</param>
-        void IPaletteSerializer.Serialize(Stream stream, ColorCollection palette)
+        /// <param name="palette">The <see cref="List<Color>" /> to serialize.</param>
+        void IPaletteSerializer.Serialize(Stream stream, IEnumerable<Color> palette)
         {
             Serialize(stream, palette);
         }
@@ -491,13 +282,126 @@ namespace Egorozh.ColorPicker
         /// Gets the default extension for files generated with this palette format.
         /// </summary>
         /// <value>The default extension for files generated with this palette format.</value>
-        string IPaletteSerializer.DefaultExtension => this.DefaultExtension;
+        string[] IPaletteSerializer.DefaultExtensions => this.DefaultExtension;
 
         /// <summary>
         /// Gets a descriptive name of the palette format
         /// </summary>
         /// <value>The descriptive name of the palette format.</value>
         string IPaletteSerializer.Name => this.Name;
+
+        #endregion
+
+        #region Private Static Methods
+
+        /// <summary>
+        /// Creates the Open and Save As filters.
+        /// </summary>
+        private static void CreateFilters()
+        {
+            List<(string, List<string>)> openFilterA = new();
+            List<(string, List<string>)> saveFilterA = new();
+
+            if (SerializerCache.Count == 0)
+                LoadSerializers();
+
+            foreach (IPaletteSerializer serializer in SerializerCache.Where(serializer =>
+                serializer.DefaultExtensions.Length > 0))
+            {
+                var filter = (serializer.Name, serializer.DefaultExtensions.ToList());
+
+                if (serializer.CanRead)
+                    openFilterA.Add(filter);
+
+                if (serializer.CanWrite)
+                    saveFilterA.Add(filter);
+            }
+
+            if (openFilterA.Count != 0)
+            {
+                List<string> allExts = openFilterA.SelectMany(f => f.Item2).Distinct().ToList();
+                openFilterA.Insert(0, ("All Supported Palettes", allExts));
+            }
+
+            openFilterA.Add(("All Files", new() {"*"}));
+
+            _defaultOpenFilterForAvalonia = openFilterA;
+            _defaultSaveFilterForAvalonia = saveFilterA;
+        }
+
+        private static string CreateWpfFilters(List<(string, List<string>)> filters)
+        {
+            StringBuilder wpfFilterBuilder = new();
+
+            foreach (var (filterName, extensions) in filters)
+            {
+                StringBuilder extensionMask = new();
+
+                foreach (var extension in extensions)
+                {
+                    string mask = "*." + extension;
+
+                    if (extensionMask.Length != 0)
+                        extensionMask.Append(";");
+
+                    extensionMask.Append(mask);
+                }
+
+                string wpfFilter = $"{filterName} Files ({extensionMask})|{extensionMask}";
+
+                if (wpfFilterBuilder.Length != 0)
+                    wpfFilterBuilder.Append("|");
+
+                wpfFilterBuilder.Append(wpfFilter);
+            }
+
+            return wpfFilterBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the loadable types from an assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly to load types from.</param>
+        /// <returns>Available types</returns>
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                return ex.Types.Where(x => x != null);
+            }
+        }
+
+        /// <summary>
+        /// Loads the serializers.
+        /// </summary>
+        private static void LoadSerializers()
+        {
+            SerializerCache.Clear();
+            
+            foreach (Type type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly =>
+                GetLoadableTypes(assembly).Where(type =>
+                    !type.IsAbstract && type.IsPublic && typeof(IPaletteSerializer).IsAssignableFrom(type))))
+            {
+                try
+                {
+                    SerializerCache.Add((IPaletteSerializer) Activator.CreateInstance(type));
+                }
+                // ReSharper disable EmptyGeneralCatchClause
+                catch
+                    // ReSharper restore EmptyGeneralCatchClause
+                {
+                    // ignore errors
+                }
+            }
+
+            // sort the cache by name, that way the open/save filters won't need independant sorting
+            // and can easily map FileDialog.FilterIndex to an item in this collection
+            SerializerCache.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
+        }
 
         #endregion
     }

@@ -1,0 +1,22 @@
+﻿<mah:MetroWindow x:Class="Egorozh.ColorPicker.Client.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.WPF.Dialog"
+                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 mc:Ignorable="d"
+                 Title="MainWindow"
+
+                 Height="450" Width="800"
+
+                 WindowStartupLocation="CenterScreen">
+
+    <dialog:ColorPickerButton Color="#99029344"
+                              Cursor="Hand">
+        <TextBlock Text="Click me"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="36" />
+    </dialog:ColorPickerButton>
+</mah:MetroWindow>

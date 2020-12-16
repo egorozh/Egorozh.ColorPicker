@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
+   
+    <Version>2.4.3-preview1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
+    <PackageTags>Color, ColorPicker, Avalonia, AvaloniaUI</PackageTags>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Description>ColorPicker dialog for Avalonia</Description>
+    <AssemblyVersion>2.4.3</AssemblyVersion>
+    <FileVersion>2.4.3</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Egorozh.ColorPicker.WPF.Dialog\Egorozh.ColorPicker.WPF.Dialog.csproj" />
+  </ItemGroup>
+
+</Project>

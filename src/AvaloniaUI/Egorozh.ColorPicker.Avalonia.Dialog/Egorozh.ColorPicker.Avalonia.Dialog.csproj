@@ -4,15 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
     <Nullable>enable</Nullable>
-    <Version>0.10.0.1-rc1</Version>
+    <Version>0.10.0.2-rc1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
     <PackageTags>Color, ColorPicker, Avalonia, AvaloniaUI</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Description>ColorPicker dialog for Avalonia</Description>
-    <AssemblyVersion>0.10.0.1</AssemblyVersion>
-    <FileVersion>0.10.0.1</FileVersion>
+    <AssemblyVersion>0.10.0.2</AssemblyVersion>
+    <FileVersion>0.10.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

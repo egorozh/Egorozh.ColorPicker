@@ -25,6 +25,10 @@ namespace Egorozh.ColorPicker.Dialog
         public static readonly AvaloniaProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPickerDialog, Color>(nameof(Color));
 
+        public static readonly StyledProperty<IEnumerable<Color>> ColorsProperty =
+            AvaloniaProperty.Register<ColorPickerDialog, IEnumerable<Color>>(
+                nameof(Colors), ColorPalettes.PaintPalette.Select(c => c.ToColor()));
+
         #endregion
 
         #region Public Properties
@@ -33,6 +37,12 @@ namespace Egorozh.ColorPicker.Dialog
         {
             get => (Color) GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
+        }
+
+        public IEnumerable<Color> Colors
+        {
+            get => GetValue(ColorsProperty);
+            set => SetValue(ColorsProperty, value);
         }
 
         #endregion
@@ -92,7 +102,7 @@ namespace Egorozh.ColorPicker.Dialog
                         if (!serializer.CanRead)
                             throw new InvalidOperationException("Serializer does not support reading palettes.");
 
-                        ColorCollection? palette;
+                        List<System.Drawing.Color>? palette;
 
                         await using (var file = File.OpenRead(res[0]))
                         {
@@ -103,7 +113,7 @@ namespace Egorozh.ColorPicker.Dialog
                         {
                             return (true, palette.Select(c => c.ToColor()));
                         }
-                    }
+                    }   
                 }
 
                 catch (Exception ex)
@@ -134,14 +144,14 @@ namespace Egorozh.ColorPicker.Dialog
                 var fileExt = new FileInfo(res).Extension.Substring(1);
 
                 var serializer = PaletteSerializer.AllSerializers.Where(s => s.CanWrite)
-                    .FirstOrDefault(s => s.DefaultExtension.Contains(fileExt));
+                    .FirstOrDefault(s => s.DefaultExtensions.Contains(fileExt));
 
                 if (serializer != null)
                 {
                     try
                     {
                         await using var file = File.OpenWrite(res);
-                        serializer.Serialize(file, new ColorCollection(colors.Select(c => c.ToColor())));
+                        serializer.Serialize(file, (colors.Select(c => c.ToColor())));
                     }
                     catch (Exception ex)
                     {

@@ -1,9 +1,13 @@
-﻿using Avalonia;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
-using System;
 
 namespace Egorozh.ColorPicker.Dialog
 {
@@ -16,9 +20,13 @@ namespace Egorozh.ColorPicker.Dialog
         #endregion
 
         #region Dependency Properties
+        
+        public static readonly StyledProperty<IEnumerable<Color>> ColorsProperty =
+            AvaloniaProperty.Register<ColorPickerButton, IEnumerable<Color>>(
+                nameof(Colors), ColorPalettes.PaintPalette.Select(c => c.ToColor()));
 
-        public static readonly StyledProperty<global::Avalonia.Media.Color> ColorProperty =
-            AvaloniaProperty.Register<ColorPickerButton, global::Avalonia.Media.Color>(nameof(Color));
+        public static readonly StyledProperty<Color> ColorProperty =
+            AvaloniaProperty.Register<ColorPickerButton, Color>(nameof(Color));
 
         public static readonly StyledProperty<Window> OwnerProperty =
             AvaloniaProperty.Register<ColorPickerButton, Window>(nameof(Owner));
@@ -27,7 +35,13 @@ namespace Egorozh.ColorPicker.Dialog
 
         #region Public Properties
 
-        public global::Avalonia.Media.Color Color
+        public IEnumerable<Color> Colors
+        {
+            get => GetValue(ColorsProperty);
+            private set => SetValue(ColorsProperty, value);
+        }
+
+        public Color Color
         {
             get => GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
@@ -56,12 +70,13 @@ namespace Egorozh.ColorPicker.Dialog
 
         #region Private Methods
 
-        private async void ColorPickerButton_PointerPressed(object sender,
-            global::Avalonia.Input.PointerPressedEventArgs e)
+        private async void ColorPickerButton_PointerPressed(object? sender,
+            PointerPressedEventArgs e)
         {
             ColorPickerDialog dialog = new ()
             {
-                Color = Color
+                Color = Color,
+                Colors = Colors
             };
 
             var res = await dialog.ShowDialog<bool>(Owner);

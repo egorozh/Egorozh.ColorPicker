@@ -4,6 +4,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia.Styling;
 using System;
+using System.Collections.Generic;
 
 namespace Egorozh.ColorPicker
 {
@@ -31,6 +32,9 @@ namespace Egorozh.ColorPicker
 
         public static readonly StyledProperty<GetColorHandler?> GetColorHandlerProperty =
             AvaloniaProperty.Register<ColorPickerControl, GetColorHandler?>(nameof(GetColorHandler));
+
+        public static readonly StyledProperty<IEnumerable<Color>> ColorsProperty =
+            AvaloniaProperty.Register<ColorPickerControl, IEnumerable<Color>>(nameof(Colors));
 
         public static readonly StyledProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color), notifying: ColorChanged);
@@ -67,6 +71,12 @@ namespace Egorozh.ColorPicker
         {
             get => GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
+        }
+
+        public IEnumerable<Color> Colors
+        {
+            get => GetValue(ColorsProperty);
+            set => SetValue(ColorsProperty, value);
         }
 
         #endregion

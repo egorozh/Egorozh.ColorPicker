@@ -5,15 +5,15 @@
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
     <Nullable>enable</Nullable>
     <Authors>egorozh</Authors>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
     <PackageTags>Color, ColorPicker</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Description>ColorPicker Shared Library for WPF and Avalonia packages</Description>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

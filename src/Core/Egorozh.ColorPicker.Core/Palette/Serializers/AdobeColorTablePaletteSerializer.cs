@@ -22,8 +22,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace Egorozh.ColorPicker
 {
@@ -38,7 +40,7 @@ namespace Egorozh.ColorPicker
         /// Gets the default extension for files generated with this palette format.
         /// </summary>
         /// <value>The default extension for files generated with this palette format.</value>
-        public override string DefaultExtension => "act";
+        public override string[] DefaultExtension => new[] {"act"};
 
         /// <summary>
         /// Gets the maximum number of colors supported by this format.
@@ -91,17 +93,17 @@ namespace Egorozh.ColorPicker
 
             return result;
         }
-        
-        public override ColorCollection DeserializeNew(Stream stream)
+
+        public override List<Color> DeserializeNew(Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            var results = new ColorCollection();
+            var results = new List<Color>();
 
-            var count = (int)(stream.Length / 3);
+            var count = (int) (stream.Length / 3);
 
             for (int i = 0; i < count; i++)
             {
@@ -136,8 +138,8 @@ namespace Egorozh.ColorPicker
 
             return results;
         }
-        
-        public override void Serialize(Stream stream, ColorCollection palette)
+
+        public override void Serialize(Stream stream, IEnumerable<Color> palette)
         {
             if (stream == null)
             {
@@ -149,7 +151,7 @@ namespace Egorozh.ColorPicker
                 throw new ArgumentNullException(nameof(palette));
             }
 
-            var count = palette.Count;
+            var count = palette.Count();
 
             if (count > 256)
             {
@@ -176,7 +178,7 @@ namespace Egorozh.ColorPicker
                 // add an extra four bytes which seem to describe the number
                 // of used colours
                 stream.WriteByte(0);
-                stream.WriteByte((byte)count);
+                stream.WriteByte((byte) count);
                 stream.WriteByte(0);
                 stream.WriteByte(0);
             }

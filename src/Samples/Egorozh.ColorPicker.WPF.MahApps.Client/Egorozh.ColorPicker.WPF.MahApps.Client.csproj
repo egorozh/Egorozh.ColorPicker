@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Egorozh.ColorPicker.Client</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WPF\Egorozh.ColorPicker.WPF.Dialog.MahApps\Egorozh.ColorPicker.WPF.Dialog.MahApps.csproj" />
+  </ItemGroup>
+
+</Project>

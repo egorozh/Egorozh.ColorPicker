@@ -22,8 +22,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 #if USEEXTERNALCYOTEKLIBS
 using Cyotek.Drawing;
@@ -43,7 +45,7 @@ namespace Egorozh.ColorPicker
         /// Gets the default extension for files generated with this palette format.
         /// </summary>
         /// <value>The default extension for files generated with this palette format.</value>
-        public override string DefaultExtension => "aco";
+        public override string[] DefaultExtension => new []{"aco"};
 
         /// <summary>
         /// Gets a descriptive name of the palette format
@@ -88,7 +90,7 @@ namespace Egorozh.ColorPicker
             return result;
         }
 
-        public override ColorCollection DeserializeNew(Stream stream)
+        public override List<Color> DeserializeNew(Stream stream)
         {
             if (stream == null)
             {
@@ -124,17 +126,17 @@ namespace Egorozh.ColorPicker
         }
 
 
-        public override void Serialize(Stream stream, ColorCollection palette)
+        public override void Serialize(Stream stream, IEnumerable<Color> palette)
         {
             Serialize(stream, palette, AdobePhotoshopColorSwatchColorSpace.Rgb);
         }
 
-        public void Serialize(Stream stream, ColorCollection palette, AdobePhotoshopColorSwatchColorSpace colorSpace)
+        public void Serialize(Stream stream, IEnumerable<Color> palette, AdobePhotoshopColorSwatchColorSpace colorSpace)
         {
             Serialize(stream, palette, AdobePhotoshopColorSwatchFileVersion.Version2, colorSpace);
         }
 
-        public void Serialize(Stream stream, ColorCollection palette, AdobePhotoshopColorSwatchFileVersion version,
+        public void Serialize(Stream stream, IEnumerable<Color> palette, AdobePhotoshopColorSwatchFileVersion version,
             AdobePhotoshopColorSwatchColorSpace colorSpace)
         {
             if (stream == null)
@@ -149,9 +151,9 @@ namespace Egorozh.ColorPicker
             WritePaletteNew(stream, palette, version, colorSpace);
         }
 
-        protected virtual ColorCollection ReadPaletteNew(Stream stream, AdobePhotoshopColorSwatchFileVersion version)
+        protected virtual List<Color> ReadPaletteNew(Stream stream, AdobePhotoshopColorSwatchFileVersion version)
         {
-            var results = new ColorCollection();
+            var results = new List<Color>();
 
             // read the number of colors, which also occupies two bytes
             var colorCount = ReadInt16(stream);
@@ -242,11 +244,11 @@ namespace Egorozh.ColorPicker
             return results;
         }
 
-        protected virtual void WritePaletteNew(Stream stream, ColorCollection palette,
+        protected virtual void WritePaletteNew(Stream stream, IEnumerable<Color> palette,
             AdobePhotoshopColorSwatchFileVersion version, AdobePhotoshopColorSwatchColorSpace colorSpace)
         {
             WriteInt16(stream, (short) version);
-            WriteInt16(stream, (short) palette.Count);
+            WriteInt16(stream, (short) palette.Count());
 
             var swatchIndex = 0;
 

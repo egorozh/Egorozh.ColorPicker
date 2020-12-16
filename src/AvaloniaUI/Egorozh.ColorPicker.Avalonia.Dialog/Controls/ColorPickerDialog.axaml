@@ -24,7 +24,8 @@
           RowDefinitions="* auto">
 
         <picker:ColorPickerControl Name="PartColorPickerControl"
-                                   Color="{Binding #Dialog.Color, Mode=TwoWay}" />
+                                   Color="{Binding #Dialog.Color, Mode=TwoWay}"
+                                   Colors="{Binding #Dialog.Colors, Mode=TwoWay}"/>
 
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal"

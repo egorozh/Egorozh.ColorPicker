@@ -11,7 +11,7 @@ namespace Egorozh.ColorPicker
     {
         #region Protected Properties
 
-        protected IColorManager ColorManager { get; private set; }
+        protected IColorManager? ColorManager { get; private set; }
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace Egorozh.ColorPicker
         #region Dependency Properties
 
         public static readonly StyledProperty<string> LabelProperty =
-            AvaloniaProperty.Register<ColorPreview, string>(nameof(Label));
+            AvaloniaProperty.Register<LabelNumericUpDown, string>(nameof(Label));
 
         #endregion
         

@@ -8,7 +8,7 @@ namespace Egorozh.ColorPicker
         #region Dependency Properties
 
         public static readonly StyledProperty<RgbaChannel> ChannelProperty =
-            AvaloniaProperty.Register<RgbaColorSlider, RgbaChannel>(nameof(RgbaChannel), notifying: ChannelChanged);
+            AvaloniaProperty.Register<RgbaColorNumericUpDown, RgbaChannel>(nameof(RgbaChannel), notifying: ChannelChanged);
 
         private static void ChannelChanged(IAvaloniaObject obj, bool isAfter)
         {

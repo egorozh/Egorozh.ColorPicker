@@ -12,7 +12,7 @@
 
         WindowStartupLocation="CenterScreen">
 
-    <dialog:ColorPickerButton Color="Transparent"
+    <dialog:ColorPickerButton Color="#99029344"
                               Cursor="Hand">
         <TextBlock Text="Click me"
                    VerticalAlignment="Center"

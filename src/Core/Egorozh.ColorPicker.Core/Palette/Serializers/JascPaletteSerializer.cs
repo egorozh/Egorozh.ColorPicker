@@ -22,8 +22,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Egorozh.ColorPicker
@@ -39,7 +41,7 @@ namespace Egorozh.ColorPicker
         /// Gets the default extension for files generated with this palette format.
         /// </summary>
         /// <value>The default extension for files generated with this palette format.</value>
-        public override string DefaultExtension => "pal";
+        public override string[] DefaultExtension => new[] {"pal"};
 
         /// <summary>
         /// Gets a descriptive name of the palette format
@@ -86,13 +88,13 @@ namespace Egorozh.ColorPicker
 
             return result;
         }
-        
-        public override ColorCollection DeserializeNew(Stream stream)
+
+        public override List<Color> DeserializeNew(Stream stream)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var results = new ColorCollection();
+            var results = new List<Color>();
 
             using (var reader = new StreamReader(stream))
             {
@@ -128,8 +130,8 @@ namespace Egorozh.ColorPicker
 
             return results;
         }
-        
-        public override void Serialize(Stream stream, ColorCollection palette)
+
+        public override void Serialize(Stream stream, IEnumerable<Color> palette)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
@@ -141,7 +143,7 @@ namespace Egorozh.ColorPicker
 
             writer.WriteLine("JASC-PAL");
             writer.WriteLine("0100");
-            writer.WriteLine(palette.Count);
+            writer.WriteLine(palette.Count());
 
             foreach (var color in palette)
             {
