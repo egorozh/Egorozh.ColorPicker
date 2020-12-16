@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0-rc1" />
+    <PackageReference Include="MessageBox.Avalonia" Version="0.10.6-rc1" />
   </ItemGroup>
 
   <ItemGroup>

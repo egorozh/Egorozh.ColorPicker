@@ -8,6 +8,7 @@ using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker
@@ -36,9 +37,15 @@ namespace Egorozh.ColorPicker
 
         #region Dependency Properties
 
+        public static readonly StyledProperty<LoadPaletteHandlerAsync?> LoadPaletteHandlerProperty =
+            AvaloniaProperty.Register<ColorPalette, LoadPaletteHandlerAsync?>(nameof(LoadPaletteHandler));
+
+        public static readonly StyledProperty<SavePaletteHandler?> SavePaletteHandlerProperty =
+            AvaloniaProperty.Register<ColorPalette, SavePaletteHandler?>(nameof(SavePaletteHandler));
+
         public static readonly StyledProperty<IEnumerable<Avalonia.Media.Color>> ColorsProperty =
-            AvaloniaProperty.Register<ColorPreview, IEnumerable<Avalonia.Media.Color>>(
-                nameof(RemoveColorContextMenuText),
+            AvaloniaProperty.Register<ColorPalette, IEnumerable<Avalonia.Media.Color>>(
+                nameof(Colors),
                 ColorPalettes.PaintPalette.Select(c => c.ToColor()),
                 notifying: ColorsPropertyChanged);
 
@@ -49,29 +56,41 @@ namespace Egorozh.ColorPicker
         }
 
         public static readonly StyledProperty<string> RemoveColorContextMenuTextProperty =
-            AvaloniaProperty.Register<ColorPreview, string>(nameof(RemoveColorContextMenuText), "Remove color");
+            AvaloniaProperty.Register<ColorPalette, string>(nameof(RemoveColorContextMenuText), "Remove color");
 
         public static readonly StyledProperty<string> RemoveColorsContextMenuTextProperty =
-            AvaloniaProperty.Register<ColorPreview, string>(nameof(RemoveColorsContextMenuText), "Remove colors");
+            AvaloniaProperty.Register<ColorPalette, string>(nameof(RemoveColorsContextMenuText), "Remove colors");
 
         public static readonly StyledProperty<string> AddColorContextMenuTextProperty =
-            AvaloniaProperty.Register<ColorPreview, string>(nameof(AddColorContextMenuText), "Add color");
+            AvaloniaProperty.Register<ColorPalette, string>(nameof(AddColorContextMenuText), "Add color");
 
         public static readonly StyledProperty<DataTemplate> LoadPaletteIconTemplateProperty =
-            AvaloniaProperty.Register<ColorPreview, DataTemplate>(nameof(LoadPaletteIconTemplate));
+            AvaloniaProperty.Register<ColorPalette, DataTemplate>(nameof(LoadPaletteIconTemplate));
 
         public static readonly StyledProperty<DataTemplate> SavePaletteIconTemplateProperty =
-            AvaloniaProperty.Register<ColorPreview, DataTemplate>(nameof(SavePaletteIconTemplate));
+            AvaloniaProperty.Register<ColorPalette, DataTemplate>(nameof(SavePaletteIconTemplate));
 
         public static readonly StyledProperty<string> LoadPaletteContextMenuTextProperty =
-            AvaloniaProperty.Register<ColorPreview, string>(nameof(LoadPaletteContextMenuText), "Load Palette");
+            AvaloniaProperty.Register<ColorPalette, string>(nameof(LoadPaletteContextMenuText), "Load Palette");
 
         public static readonly StyledProperty<string> SavePaletteContextMenuTextProperty =
-            AvaloniaProperty.Register<ColorPreview, string>(nameof(SavePaletteContextMenuText), "Save Palette");
+            AvaloniaProperty.Register<ColorPalette, string>(nameof(SavePaletteContextMenuText), "Save Palette");
 
         #endregion
 
         #region Public Properties
+
+        public LoadPaletteHandlerAsync? LoadPaletteHandler
+        {
+            get => GetValue(LoadPaletteHandlerProperty);
+            set => SetValue(LoadPaletteHandlerProperty, value);
+        }
+
+        public SavePaletteHandler? SavePaletteHandler
+        {
+            get => GetValue(SavePaletteHandlerProperty);
+            set => SetValue(SavePaletteHandlerProperty, value);
+        }
 
         public IEnumerable<Avalonia.Media.Color> Colors
         {
@@ -190,6 +209,8 @@ namespace Egorozh.ColorPicker
 
             foreach (var removedItem in removedItems)
                 RemoveItem(removedItem);
+            
+            UpdateColors();
         }
 
         private void AddItemOnTapped(object? sender, RoutedEventArgs e)
@@ -198,6 +219,8 @@ namespace Egorozh.ColorPicker
                 return;
 
             items.Insert(items.Count - 1, CreateColorItem(Avalonia.Media.Colors.Transparent));
+
+            UpdateColors();
         }
 
         private void ColorsPropertyChanged()
@@ -239,6 +262,8 @@ namespace Egorozh.ColorPicker
             {
                 items.Insert(items.Count - 1, newColorItem);
             }
+
+            UpdateColors();
         }
 
         private void ItemOnDoubleTapped(object? sender, RoutedEventArgs e)
@@ -250,9 +275,7 @@ namespace Egorozh.ColorPicker
             if (sender is not ListBoxItem colorItem || _colorManager == null)
                 return;
 
-            var brush = colorItem.Background as SolidColorBrush;
-
-            var color = brush.Color;
+            var color = GetColorFromItem(colorItem);
 
             _colorManager.CurrentColor = color.ToColor();
         }
@@ -290,12 +313,42 @@ namespace Egorozh.ColorPicker
 
         private void SavePaletteContextMenuItemOnClick(object? sender, RoutedEventArgs e)
         {
+            SavePaletteHandler?.Invoke(Colors);
         }
 
-        private void LoadPaletteContextMenuItemOnClick(object? sender, RoutedEventArgs e)
+        private async void LoadPaletteContextMenuItemOnClick(object? sender, RoutedEventArgs e)
         {
+            if (LoadPaletteHandler != null)
+            {
+                var (success, colors) = await LoadPaletteHandler.Invoke();
+
+                if (success)
+                    Colors = colors;
+            }
+        }
+
+        private void UpdateColors()
+        {
+            if (Items is not IList<object> items)
+                return;
+
+            Colors = items.OfType<ListBoxItem>()
+                .Where(item => item != _addItem)
+                .Select(GetColorFromItem)
+                .ToList();
+        }
+
+        private static Avalonia.Media.Color GetColorFromItem(ListBoxItem item)
+        {
+            var brush = item.Background as SolidColorBrush;
+
+            return brush.Color;
         }
 
         #endregion
     }
+
+    public delegate Task<(bool, IEnumerable<Avalonia.Media.Color>)> LoadPaletteHandlerAsync();
+
+    public delegate void SavePaletteHandler(IEnumerable<Avalonia.Media.Color> colors);
 }

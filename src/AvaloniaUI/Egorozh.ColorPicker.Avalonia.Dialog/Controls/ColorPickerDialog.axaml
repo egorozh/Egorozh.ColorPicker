@@ -3,11 +3,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        
+
         x:Class="Egorozh.ColorPicker.Dialog.ColorPickerDialog"
-        
+
         xmlns:picker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia"
-        
+
         Title="Select Color"
 
         Classes="Main"
@@ -17,31 +17,32 @@
         CanResize="false"
 
         WindowStartupLocation="CenterScreen"
-        
+
         Name="Dialog">
 
-  <Grid Margin="10"
-        RowDefinitions="* auto">
-    
-    <picker:ColorPickerControl Color="{Binding #Dialog.Color, Mode=TwoWay}" />
+    <Grid Margin="10"
+          RowDefinitions="* auto">
 
-    <StackPanel Grid.Row="1"
-                Orientation="Horizontal"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right">
+        <picker:ColorPickerControl Name="PartColorPickerControl"
+                                   Color="{Binding #Dialog.Color, Mode=TwoWay}" />
 
-      <Button Content="OK"
-              Margin="0 0 5 0"
-              Width="85"
-              Name="btOk"
-              Click="btOk_Click" />
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right">
 
-      <Button Content="Cancel"
-              Width="85"
-              Name="btCancel"
-              Click="btCancel_Click" />
-    </StackPanel>
+            <Button Content="OK"
+                    Margin="0 0 5 0"
+                    Width="85"
+                    Name="btOk"
+                    Click="btOk_Click" />
 
-  </Grid>
-  
+            <Button Content="Cancel"
+                    Width="85"
+                    Name="btCancel"
+                    Click="btCancel_Click" />
+        </StackPanel>
+
+    </Grid>
+
 </Window>
