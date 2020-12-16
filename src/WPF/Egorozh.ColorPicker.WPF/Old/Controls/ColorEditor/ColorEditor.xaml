@@ -26,7 +26,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Margin="5">
+        <!--<Grid Margin="5">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -174,9 +174,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <!--#region RGB -->
+            --><!--#region RGB -->
 
-            <!-- R -->
+            <!-- R --><!--
 
             <TextBlock Grid.Row="0" Grid.Column="0"
                        Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
@@ -197,7 +197,7 @@
                                    ValueChanged="ColorBar_OnValueChanged" />
 
 
-            <!-- G -->
+            --><!-- G --><!--
 
             <TextBlock Grid.Row="1" Grid.Column="0"
                        Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
@@ -220,7 +220,7 @@
                                  Maximum="255"
                                  ValueChanged="NumericUpDown_OnValueChanged" />
 
-            <!-- B -->
+            --><!-- B --><!--
 
             <TextBlock Grid.Row="2" Grid.Column="0"
                        Visibility="{Binding IsChecked, ElementName=RgbOnButton, Converter={local:BoolToVisibilityConverter}}"
@@ -242,11 +242,11 @@
                                  Minimum="0"
                                  Maximum="255"
                                  ValueChanged="NumericUpDown_OnValueChanged" />
-            <!--#endregion-->
+            --><!--#endregion-->
 
             <!--#region HSL -->
 
-            <!-- H -->
+            <!-- H --><!--
 
             <TextBlock Grid.Row="0" Grid.Column="0"
                        Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
@@ -268,7 +268,7 @@
                                  Maximum="359"
                                  ValueChanged="NumericUpDown_OnValueChanged" />
 
-            <!-- S -->
+            --><!-- S --><!--
 
             <TextBlock Grid.Row="1" Grid.Column="0"
                        Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
@@ -290,7 +290,7 @@
                                  Maximum="100"
                                  ValueChanged="NumericUpDown_OnValueChanged" />
 
-            <!-- L -->
+            --><!-- L --><!--
 
             <TextBlock Grid.Row="2" Grid.Column="0"
                        Visibility="{Binding IsChecked, ElementName=HslOnButton, Converter={local:BoolToVisibilityConverter}}"
@@ -312,7 +312,7 @@
                                  Maximum="100"
                                  ValueChanged="NumericUpDown_OnValueChanged" />
 
-            <!--#endregion-->
+            --><!--#endregion--><!--
 
             <TextBlock Grid.Row="3" Grid.Column="0"
                        Text="A" />
@@ -329,7 +329,7 @@
                                    Channel="Alpha"
                                    ValueChanged="ColorBar_OnValueChanged" />
 
-        </Grid>
+        </Grid>-->
 
     </Grid>
 

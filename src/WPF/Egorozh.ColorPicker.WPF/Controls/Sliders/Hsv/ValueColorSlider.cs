@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Egorozh.ColorPicker
 {
@@ -25,9 +26,9 @@ namespace Egorozh.ColorPicker
             Value = hsv.V * 100;
         }
 
-        protected override void ValueChanged()
+        protected override void OnValueChanged()
         {
-            base.ValueChanged();
+            base.OnValueChanged();
 
             var hsv = new HsvColor(ColorManager.CurrentColor)
             {

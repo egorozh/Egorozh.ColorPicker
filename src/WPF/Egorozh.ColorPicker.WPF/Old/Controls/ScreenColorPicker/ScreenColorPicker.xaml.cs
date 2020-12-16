@@ -11,8 +11,9 @@ using Point = System.Drawing.Point;
 
 namespace Egorozh.ColorPicker
 {
-    public partial class ScreenColorPickerOld : IColorEditor
+    public partial class ScreenColorPickerOld 
     {
+        /*
         #region Private Fields
 
         private Bitmap _bitmap;
@@ -192,5 +193,7 @@ namespace Egorozh.ColorPicker
         }
 
         #endregion
+        
+        */
     }
 }

@@ -1,16 +1,50 @@
-﻿using System.Drawing;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace Egorozh.ColorPicker
 {
     public class HueColorSlider : ColorSlider
     {
-        public void ColorUpdated(Color color, IColorClient client)
+        #region Constructor
+
+        public HueColorSlider()
         {
+            Minimum = 0;
+            Maximum = 359;
+            UpdateBackgroundWhenColorUpdated = false;
         }
 
-        public void Init(IColorManager colorManager)
+        #endregion
+
+        #region Protected Methods
+
+        protected override void UpdateColor(in Color color)
         {
+            base.UpdateColor(in color);
+
+            var hsv = new HsvColor(color);
+
+            Value = hsv.H;
         }
+
+        protected override void OnValueChanged()
+        {
+            base.OnValueChanged();
+
+            var hsv = new HsvColor(ColorManager.CurrentColor)
+            {
+                H = Value
+            };
+
+            ColorManager.CurrentColor = hsv.ToRgbColor();
+        }
+
+        protected override List<Color> CreateBackgroundColors(in Color color) =>
+            Enumerable.Range(0, 359)
+                .Select(h => new HslColor(h, 1, 0.5).ToRgbColor())
+                .ToList();
+
+        #endregion
     }
 }

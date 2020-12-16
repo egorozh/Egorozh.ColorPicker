@@ -9,7 +9,7 @@
         Title="Select Color"
 
         Width="340"
-        Height="380"
+        Height="420"
 
         ShowInTaskbar="False"
         ResizeMode="NoResize"
@@ -17,7 +17,7 @@
         WindowStartupLocation="CenterScreen"
 
         x:Name="Dialog">
-  
+
     <Grid Margin="10">
 
         <Grid.RowDefinitions>
@@ -25,10 +25,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <picker:ColorPickerControl Color="{Binding Color, ElementName=Dialog, Mode=TwoWay}"
-                                   GetColorForPaletteAction="{Binding GetColorForPaletteAction, ElementName=Dialog, Mode=TwoWay}" />
+        <picker:ColorPickerControl x:Name="ColorPickerControl"
+                                   Color="{Binding Color, ElementName=Dialog, Mode=TwoWay}"
+                                   GetColorHandler="{Binding GetColorHandler, ElementName=Dialog, Mode=TwoWay}"
+                                   Colors="{Binding Colors, ElementName=Dialog, Mode=TwoWay}" />
 
         <StackPanel Grid.Row="1"
+                    Margin="0 10 0 0"
                     Orientation="Horizontal"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right">

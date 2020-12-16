@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Egorozh.ColorPicker.WPF.Dialog\Egorozh.ColorPicker.WPF.Dialog.csproj" />
+    <ProjectReference Include="..\Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj" />
   </ItemGroup>
 
 </Project>

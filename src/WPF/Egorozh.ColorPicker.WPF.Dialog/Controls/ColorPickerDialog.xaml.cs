@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Egorozh.ColorPicker.Dialog
@@ -10,9 +13,13 @@ namespace Egorozh.ColorPicker.Dialog
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             nameof(Color), typeof(Color), typeof(ColorPickerDialog), new PropertyMetadata(default(Color)));
 
-        public static readonly DependencyProperty GetColorForPaletteActionProperty = DependencyProperty.Register(
-            nameof(GetColorForPaletteAction), typeof(GetColorHandler), typeof(ColorPickerDialog),
-            new PropertyMetadata(new GetColorHandler(GetColorForPalette)));
+        public static readonly DependencyProperty GetColorHandlerProperty = DependencyProperty.Register(
+            nameof(GetColorHandler), typeof(GetColorHandler), typeof(ColorPickerDialog),
+            new PropertyMetadata(default(GetColorHandler)));
+
+        public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
+            nameof(Colors), typeof(IEnumerable<Color>), typeof(ColorPickerDialog),
+            new PropertyMetadata(ColorPalettes.PaintPalette.Select(c => c.ToColor())));
 
         #endregion
 
@@ -24,10 +31,16 @@ namespace Egorozh.ColorPicker.Dialog
             set => SetValue(ColorProperty, value);
         }
 
-        public GetColorHandler GetColorForPaletteAction
+        public GetColorHandler GetColorHandler
         {
-            get => (GetColorHandler) GetValue(GetColorForPaletteActionProperty);
-            set => SetValue(GetColorForPaletteActionProperty, value);
+            get => (GetColorHandler) GetValue(GetColorHandlerProperty);
+            set => SetValue(GetColorHandlerProperty, value);
+        }
+
+        public IEnumerable<Color> Colors
+        {
+            get => (IEnumerable<Color>) GetValue(ColorsProperty);
+            set => SetValue(ColorsProperty, value);
         }
 
         #endregion
@@ -37,6 +50,8 @@ namespace Egorozh.ColorPicker.Dialog
         public ColorPickerDialog()
         {
             InitializeComponent();
+
+            GetColorHandler = GetColor;
         }
 
         #endregion
@@ -47,23 +62,20 @@ namespace Egorozh.ColorPicker.Dialog
 
         private void btCancel_Click(object sender, RoutedEventArgs e) => this.DialogResult = false;
 
-        private static bool GetColorForPalette(ref Color color)
+        private Task<(bool, Color)> GetColor(Color color)
         {
-            var colorPicker = new ColorPickerDialog
+            ColorPickerDialog colorPicker = new()
             {
                 Color = color,
+                Owner = this,
+                Colors = Colors
             };
 
             var res = colorPicker.ShowDialog();
 
-            if (res != true)
-                return false;
-
-            color = colorPicker.Color;
-
-            return true;
+            return Task.FromResult(res != true ? (false, color) : (true, colorPicker.Color));
         }
-
+        
         #endregion
     }
 }

@@ -88,36 +88,36 @@ namespace Egorozh.ColorPicker
         protected virtual IBrush CreateBackgroundBrush(in Color color)
         {
             var colors = CreateBackgroundColors(color);
-           
+
             IBrush brush;
 
-            var start = Orientation == Orientation.Vertical
-                ? new RelativePoint(0, 1, RelativeUnit.Relative)
-                : new RelativePoint(0, 0, RelativeUnit.Relative);
-
-            var end = Orientation == Orientation.Vertical
-                ? new RelativePoint(0, 0, RelativeUnit.Relative)
-                : new RelativePoint(1, 0, RelativeUnit.Relative);
-
             var count = colors.Count;
-            
+
             if (count > 1)
             {
-                var gradStops = new GradientStops
+                GradientStops gradStops = new()
                 {
-                    new (colors[0].ToColor(), 0)
+                    new(colors[0].ToColor(), 0)
                 };
-                
+
                 for (var i = 1; i < count - 1; i++)
                 {
                     var offset = 1.0D / count * i;
 
-                    gradStops.Add(new GradientStop(colors[i].ToColor(), offset));
+                    gradStops.Add(new(colors[i].ToColor(), offset));
                 }
 
-                gradStops.Add(new GradientStop(colors[^1].ToColor(), 1));
+                gradStops.Add(new(colors[^1].ToColor(), 1));
 
-                brush = new LinearGradientBrush()
+                var start = Orientation == Orientation.Vertical
+                    ? new RelativePoint(0, 1, RelativeUnit.Relative)
+                    : new RelativePoint(0, 0, RelativeUnit.Relative);
+
+                var end = Orientation == Orientation.Vertical
+                    ? new RelativePoint(0, 0, RelativeUnit.Relative)
+                    : new RelativePoint(1, 0, RelativeUnit.Relative);
+
+                brush = new LinearGradientBrush
                 {
                     GradientStops = gradStops,
                     StartPoint = start,

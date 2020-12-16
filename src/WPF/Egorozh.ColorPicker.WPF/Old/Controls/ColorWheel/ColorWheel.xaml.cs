@@ -6,8 +6,9 @@ using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker
 {
-    public partial class ColorWheelOld : IColorEditor
+    public partial class ColorWheelOld 
     {   
+        /*
         #region Private Fields
 
         private Color _color;
@@ -177,5 +178,6 @@ namespace Egorozh.ColorPicker
         }
 
         #endregion
+        */
     }
 }

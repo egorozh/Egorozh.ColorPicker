@@ -5,8 +5,9 @@ using System.Windows.Controls;
 
 namespace Egorozh.ColorPicker
 {
-    public partial class ColorEditorOld : IColorEditor
+    public partial class ColorEditorOld 
     {
+        /*
         #region Private Fields
 
         private Color _color;
@@ -198,11 +199,7 @@ namespace Egorozh.ColorPicker
 
         private void ColorPropertyChanged(Color oldColor, Color newColor)
         {
-            /*
-             * If the color isn't solid, and ShowAlphaChannel is false
-             * remove the alpha channel. Not sure if this is the best
-             * place to do it, but it is a blanket fix for now
-             */
+           
             if (newColor.A != 255 && !_showAlphaChannel)
             {
                 newColor = Color.FromArgb(255, newColor);
@@ -448,5 +445,7 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #endregion
+
+*/
     }
 }

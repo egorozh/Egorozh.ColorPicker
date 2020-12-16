@@ -72,7 +72,8 @@ namespace Egorozh.ColorPicker.Dialog
         {
             ColorPickerDialog colorPickerDialog = new ()
             {
-                Color = color
+                Color = color,
+                Colors = Colors
             };
 
             var res = await colorPickerDialog.ShowDialog<bool>(this);

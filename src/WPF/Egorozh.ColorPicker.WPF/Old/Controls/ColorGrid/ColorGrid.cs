@@ -6,8 +6,9 @@ using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker
 {
-    public class ColorGrid : WrapPanel, IColorEditor
+    public class ColorGrid : WrapPanel
     {
+        /*
         #region Dependency Properties
 
         public static readonly DependencyProperty ColorButtonStyleProperty = DependencyProperty.Register(
@@ -29,10 +30,7 @@ namespace Egorozh.ColorPicker
             if (d is ColorGrid colorGrid)
                 colorGrid.Colors = ColorPalettes.GetPalette(colorGrid.Palette);
         }
-
-        public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
-            nameof(Colors), typeof(ColorCollection), typeof(ColorGrid),
-            new PropertyMetadata(default(ColorCollection), ColorsChanged));
+        
 
         private static void ColorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -146,5 +144,6 @@ namespace Egorozh.ColorPicker
         }
 
         #endregion
+        */
     }
 }

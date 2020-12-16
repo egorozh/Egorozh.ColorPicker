@@ -8,6 +8,7 @@ using System.Windows.Media;
 
 namespace Egorozh.ColorPicker
 {
+    /*
     internal class ColorSliderOld : Slider
     {
         #region Private Fields
@@ -229,4 +230,5 @@ namespace Egorozh.ColorPicker
 
         #endregion
     }
+    */
 }
