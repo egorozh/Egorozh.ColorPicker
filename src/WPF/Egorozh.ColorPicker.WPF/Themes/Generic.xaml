@@ -8,6 +8,8 @@
 
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorWheel.xaml" />
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorPreview.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorSlider.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorEditor.xaml" />
 
 
 

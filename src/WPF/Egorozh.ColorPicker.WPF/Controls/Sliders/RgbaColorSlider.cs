@@ -118,8 +118,20 @@ namespace Egorozh.ColorPicker
             }
 
             double angle = Orientation == Orientation.Horizontal ? 0 : 90;
+            var start = Orientation == Orientation.Vertical
+                ? new Point(0, 1)
+                : new Point(0, 0);
 
-            return new LinearGradientBrush(gradStops, angle);
+            var end = Orientation == Orientation.Vertical
+                ? new Point(0, 0)
+                : new Point(1, 0);
+
+            return new LinearGradientBrush
+            {
+                StartPoint = start,
+                EndPoint = end,
+                GradientStops = gradStops
+            };
         }
 
         protected override void UpdateColor(in Color color)

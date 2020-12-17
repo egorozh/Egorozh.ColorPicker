@@ -112,8 +112,20 @@ namespace Egorozh.ColorPicker
 
                 gradStops.Add(new(colors[^1].ToColor(), 1));
 
+                var start = Orientation == Orientation.Vertical
+                    ? new Point(0, 1)
+                    : new Point(0, 0);
 
-                brush = new LinearGradientBrush(gradStops, angle);
+                var end = Orientation == Orientation.Vertical
+                    ? new Point(0, 0)
+                    : new Point(1, 0);
+
+                brush = new LinearGradientBrush
+                {
+                    StartPoint = start,
+                    EndPoint = end,
+                    GradientStops = gradStops
+                };
             }
             else if (count == 1)
                 brush = new SolidColorBrush(colors[0].ToColor());

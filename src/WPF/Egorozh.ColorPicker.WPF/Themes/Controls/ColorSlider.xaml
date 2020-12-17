@@ -1,0 +1,253 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egorozh.ColorPicker">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Others/Brushes.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}"
+                               Height="{TemplateBinding Height}"
+                               Width="{TemplateBinding Width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="SliderThumbHorizontalDefault"
+                     TargetType="{x:Type Thumb}">
+        <Grid UseLayoutRounding="True">
+            <Ellipse x:Name="grip"
+                     Stroke="{TemplateBinding Foreground}"
+                     StrokeThickness="1"
+                     SnapsToDevicePixels="True" 
+                     Fill="DeepSkyBlue"
+                     Opacity="0.8"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true" />
+            <Trigger Property="IsDragging" Value="true" />
+            <Trigger Property="IsEnabled" Value="false" />
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SliderHorizontalTemplate"
+                     TargetType="{x:Type local:ColorSlider}">
+        <Grid>
+
+            <Border BorderThickness="0"
+                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self},Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                    Background="{StaticResource TransparencyBrush}"
+                    VerticalAlignment="Stretch">
+                <Border Name="TrackBackground"
+                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0" />
+            </Border>
+
+            <Track x:Name="PART_Track"
+                   Orientation="Horizontal">
+
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                  Style="{StaticResource RepeatButtonTransparent}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}"
+                                  Style="{StaticResource RepeatButtonTransparent}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb x:Name="Thumb"
+                           Focusable="False"
+                           Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=local:ColorSlider}}"
+                           Width="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=local:ColorSlider}}"
+                           OverridesDefaultStyle="True"
+                           Template="{StaticResource SliderThumbHorizontalDefault}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SliderVerticalTemplate"
+                     TargetType="{x:Type local:ColorSlider}">
+        <Grid>
+
+            <Border BorderThickness="0"
+                    CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self},Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                    Background="{StaticResource TransparencyBrush}"
+                    VerticalAlignment="Stretch">
+                <Border Name="TrackBackground"
+                        CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0" />
+            </Border>
+
+            <Track x:Name="PART_Track"
+                   Orientation="Vertical">
+
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                  Style="{StaticResource RepeatButtonTransparent}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}"
+                                  Style="{StaticResource RepeatButtonTransparent}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb x:Name="Thumb"
+                           Focusable="False"
+                           Height="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=local:ColorSlider}}"
+                           Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=local:ColorSlider}}"
+                           OverridesDefaultStyle="True"
+                           Template="{StaticResource SliderThumbHorizontalDefault}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:ColorSlider}">
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="MinWidth" Value="40" />
+                <Setter Property="MinHeight" Value="18" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Template" Value="{StaticResource SliderHorizontalTemplate}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="MinWidth" Value="18" />
+                <Setter Property="MinHeight" Value="40" />
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Template" Value="{StaticResource SliderVerticalTemplate}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--<Style Selector="local|ColorSlider:horizontal">
+        
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <Border
+                        CornerRadius="{Binding $self.Bounds.Height, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                        Background="{StaticResource TransparencyBrush}"
+                        VerticalAlignment="Stretch"
+                        BorderThickness="0">
+                        <Border Name="TrackBackground"
+                                CornerRadius="{Binding $self.Bounds.Height, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0" />
+                    </Border>
+
+                    <Track Name="PART_Track"
+                           Orientation="Horizontal">
+                        <Track.DecreaseButton>
+                            <RepeatButton Name="PART_DecreaseButton"
+                                          Classes="repeattrack" />
+                        </Track.DecreaseButton>
+                        <Track.IncreaseButton>
+                            <RepeatButton Name="PART_IncreaseButton"
+                                          Classes="repeattrack" />
+                        </Track.IncreaseButton>
+                        <Thumb Name="thumb" MinWidth="18" MinHeight="18">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Ellipse Width="{Binding $self.Bounds.Height}"
+                                                 Height="{Binding $parent.Bounds.Height}"
+                                                 Stroke="{Binding $parent[Window].Foreground}"
+                                                 StrokeThickness="1"
+                                                 Opacity="0.8"
+                                                 Fill="{DynamicResource ThemeAccentBrush}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Track>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="local|ColorSlider:vertical">
+        <Setter Property="MinWidth" Value="18" />
+        <Setter Property="Width" Value="18" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <Border
+                        CornerRadius="{Binding $self.Bounds.Width, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                        Background="{StaticResource TransparencyBrush}"
+                        HorizontalAlignment="Stretch"
+                        BorderThickness="0">
+                        <Border Name="TrackBackground"
+                                CornerRadius="{Binding $self.Bounds.Width, Converter={local:DivideDoubleToCornerRadiusConverter}}"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0" />
+                    </Border>
+
+                    <Track Name="PART_Track"
+                           Orientation="Vertical">
+                        <Track.DecreaseButton>
+                            <RepeatButton Name="PART_DecreaseButton"
+                                          Classes="repeattrack" />
+                        </Track.DecreaseButton>
+                        <Track.IncreaseButton>
+                            <RepeatButton Name="PART_IncreaseButton"
+                                          Classes="repeattrack" />
+                        </Track.IncreaseButton>
+                        <Thumb Name="thumb" MinWidth="18" MinHeight="18">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Ellipse Width="{Binding $parent.Bounds.Width}"
+                                                 Height="{Binding $self.Bounds.Width}"
+                                                 Stroke="{Binding $parent[Window].Foreground}"
+                                                 StrokeThickness="1"
+                                                 Opacity="0.8"
+                                                 Fill="{DynamicResource ThemeAccentBrush}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Track>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="local|ColorSlider /template/ Track#PART_Track">
+        <Setter Property="Minimum" Value="{TemplateBinding Minimum}" />
+        <Setter Property="Maximum" Value="{TemplateBinding Maximum}" />
+        <Setter Property="Value" Value="{TemplateBinding Value, Mode=TwoWay}" />
+    </Style>
+    <Style Selector="local|ColorSlider /template/ Border#TrackBackground">
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}" />
+    </Style>
+    <Style Selector="local|ColorSlider /template/ RepeatButton.repeattrack">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource ThemeBorderLowBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" />
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="local|ColorSlider /template/ TickBar">
+        <Setter Property="Ticks" Value="{TemplateBinding Ticks}" />
+    </Style>
+    <Style Selector="local|ColorSlider:disabled /template/ Grid#grid">
+        <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
+    </Style>-->
+
+</ResourceDictionary>

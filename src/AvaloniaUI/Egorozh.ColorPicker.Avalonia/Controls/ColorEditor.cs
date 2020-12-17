@@ -8,7 +8,7 @@ namespace Egorozh.ColorPicker
 {
     public class ColorEditor : TemplatedControl, IStyleable, IColorClient
     {
-        #region Private Methods
+        #region Private Fields
 
         private IColorManager? _manager;
 

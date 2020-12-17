@@ -1,0 +1,162 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egorozh.ColorPicker">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ModeListBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:ColorEditor}">
+        <Setter Property="ModeListBoxStyle" Value="{StaticResource MainModeListBoxStyle}"></Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorEditor}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <ListBox x:Name="PART_ModeComboBox"
+                                     Style="{TemplateBinding ModeListBoxStyle}">
+                                <ListBoxItem Content="RGB" />
+                                <ListBoxItem Content="HSV" />
+                            </ListBox>
+
+                            <local:ColorHexComboBox x:Name="PART_HexComboBox"
+                                                    Grid.Column="1"
+                                                    Margin="10 2 2 2">
+                                <local:ColorHexComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse
+                                                Fill="{Binding Color, Converter={local:ColorToSolidColorBrushConverter}}"
+                                                Margin="0 1 1 1"
+                                                Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                                            <TextBlock Text="{Binding Name}"
+                                                       Margin="1 0 0 0" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </local:ColorHexComboBox.ItemTemplate>
+                            </local:ColorHexComboBox>
+
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!--#region RGB-->
+
+                            <local:RgbaColorNumericUpDown x:Name="PART_RNumUpDown"
+                                                          Grid.Row="0"
+                                                          Grid.Column="0"
+                                                          Label="R"
+                                                          Channel="Red" />
+
+                            <local:RgbaColorSlider x:Name="PART_RSlider"
+                                                   Grid.Row="0"
+                                                   Grid.Column="1"
+                                                   Orientation="Horizontal"
+                                                   Channel="Red" />
+
+
+                            <local:RgbaColorNumericUpDown x:Name="PART_GNumUpDown"
+                                                          Grid.Row="1"
+                                                          Grid.Column="0"
+                                                          Label="G"
+                                                          Channel="Green" />
+
+                            <local:RgbaColorSlider x:Name="PART_GSlider"
+                                                   Grid.Row="1"
+                                                   Grid.Column="1"
+                                                   Orientation="Horizontal"
+                                                   Channel="Green" />
+
+
+                            <local:RgbaColorNumericUpDown x:Name="PART_BNumUpDown"
+                                                          Grid.Row="2"
+                                                          Grid.Column="0"
+                                                          Label="B"
+                                                          Channel="Blue" />
+
+                            <local:RgbaColorSlider x:Name="PART_BSlider"
+                                                   Grid.Row="2"
+                                                   Grid.Column="1"
+                                                   Orientation="Horizontal"
+                                                   Channel="Blue" />
+
+                            <!--#endregion-->
+
+                            <!--#region HSV-->
+
+                            <local:HueColorNumUpDown x:Name="PART_HNumUpDown"
+                                                     Grid.Row="0"
+                                                     Grid.Column="0"
+                                                     Label="H" />
+
+                            <local:HueColorSlider x:Name="PART_HSlider"
+                                                  Grid.Row="0"
+                                                  Grid.Column="1"
+                                                  Orientation="Horizontal" />
+
+                            <local:SaturationColorNumUpDown x:Name="PART_SNumUpDown"
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"
+                                                            Label="S" />
+
+                            <local:SaturationColorSlider x:Name="PART_SSlider"
+                                                         Grid.Row="1"
+                                                         Grid.Column="1"
+                                                         Orientation="Horizontal" />
+
+                            <local:ValueColorNumUpDown x:Name="PART_VNumUpDown"
+                                                       Grid.Row="2"
+                                                       Grid.Column="0"
+                                                       Label="V" />
+
+                            <local:ValueColorSlider x:Name="PART_VSlider"
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Orientation="Horizontal" />
+
+                            <!--#endregion-->
+
+                            <local:RgbaColorNumericUpDown x:Name="PART_AlphaNumUpDown"
+                                                          Grid.Row="3"
+                                                          Grid.Column="0"
+                                                          Label="A"
+                                                          Channel="Alpha" />
+
+                            <local:RgbaColorSlider x:Name="PART_AlphaSlider"
+                                                   Grid.Row="3"
+                                                   Grid.Column="1"
+                                                   Orientation="Horizontal"
+                                                   Channel="Alpha" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>
