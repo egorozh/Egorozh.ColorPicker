@@ -4,14 +4,14 @@ using System.Windows.Controls;
 
 namespace Egorozh.ColorPicker
 {
-    public class ColorEditor : Control, IColorClient
+    public class ScreenColorPicker : Control, IColorClient
     {
         #region Static Constructor
 
-        static ColorEditor()
+        static ScreenColorPicker()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorEditor),
-                new FrameworkPropertyMetadata(typeof(ColorEditor)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ScreenColorPicker),
+                new FrameworkPropertyMetadata(typeof(ScreenColorPicker)));
         }
 
         #endregion

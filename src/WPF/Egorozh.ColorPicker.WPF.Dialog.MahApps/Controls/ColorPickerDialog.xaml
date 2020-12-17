@@ -1,0 +1,54 @@
+﻿<mah:MetroWindow x:Class="Egorozh.ColorPicker.Dialog.ColorPickerDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:colorPicker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.WPF"
+                 mc:Ignorable="d"
+
+                 Title="Select Color"
+
+                 Width="340"
+                 Height="420"
+
+                 ShowInTaskbar="False"
+                 ResizeMode="NoResize"
+                 WindowStyle="ToolWindow"
+                 WindowStartupLocation="CenterScreen"
+
+                 x:Name="Dialog">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <colorPicker:ColorPickerControl x:Name="ColorPickerControl"
+                                   Color="{Binding Color, ElementName=Dialog, Mode=TwoWay}"
+                                   GetColorHandler="{Binding GetColorHandler, ElementName=Dialog, Mode=TwoWay}"
+                                   Colors="{Binding Colors, ElementName=Dialog, Mode=TwoWay}" />
+
+        <StackPanel Grid.Row="1"
+                    Margin="0 10 0 0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right">
+
+            <Button Content="OK"
+                    Margin="0 0 5 0"
+                    Width="85"
+                    Name="btOk"
+                    Click="btOk_Click" />
+
+            <Button Content="Cancel"
+                    Width="85"
+                    Name="btCancel"
+                    Click="btCancel_Click" />
+        </StackPanel>
+
+    </Grid>
+
+</mah:MetroWindow>

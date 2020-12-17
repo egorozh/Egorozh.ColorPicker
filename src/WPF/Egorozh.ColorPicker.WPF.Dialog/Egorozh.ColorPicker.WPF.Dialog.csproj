@@ -28,11 +28,4 @@
     <ProjectReference Include="..\Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Themes\Controls\ColorPickerButton.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-
 </Project>

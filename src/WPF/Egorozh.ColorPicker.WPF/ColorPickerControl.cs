@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.Win32;
 
 namespace Egorozh.ColorPicker
 {
@@ -16,6 +16,7 @@ namespace Egorozh.ColorPicker
     [TemplatePart(Name = PART_ValueSlider, Type = typeof(ValueColorSlider))]
     [TemplatePart(Name = PART_ColorEditor, Type = typeof(ColorEditor))]
     [TemplatePart(Name = PART_ColorPalette, Type = typeof(ColorPalette))]
+    [TemplatePart(Name = PART_ScreenColorPicker, Type = typeof(ScreenColorPicker))]
     public class ColorPickerControl : Control
     {
         #region Private Fields
@@ -26,6 +27,7 @@ namespace Egorozh.ColorPicker
         private const string PART_ValueSlider = "PART_ValueSlider";
         private const string PART_ColorEditor = "PART_ColorEditor";
         private const string PART_ColorPalette = "PART_ColorPalette";
+        private const string PART_ScreenColorPicker = "PART_ScreenColorPicker";
 
         private readonly IColorManager _manager = new ColorManager();
 
@@ -42,6 +44,8 @@ namespace Egorozh.ColorPicker
         #endregion
 
         #region Dependency Properties
+
+        #region Main
 
         public static readonly DependencyProperty LoadPaletteHandlerProperty = DependencyProperty.Register(
             nameof(LoadPaletteHandler), typeof(LoadPaletteHandlerAsync), typeof(ColorPickerControl),
@@ -71,7 +75,19 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
+        #region Styling
+
+        public static readonly DependencyProperty MainTabControlStyleProperty = DependencyProperty.Register(
+            nameof(MainTabControlStyle), typeof(Style), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Style)));
+
+        #endregion
+
+        #endregion
+
         #region Public Properties
+
+        #region Main
 
         public LoadPaletteHandlerAsync? LoadPaletteHandler
         {
@@ -105,6 +121,18 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
+        #region Styling
+
+        public Style MainTabControlStyle
+        {
+            get => (Style) GetValue(MainTabControlStyleProperty);
+            set => SetValue(MainTabControlStyleProperty, value);
+        }
+
+        #endregion
+
+        #endregion
+
         #region Public Methods
 
         public override void OnApplyTemplate()
@@ -119,9 +147,10 @@ namespace Egorozh.ColorPicker
             var valuesSlider = GetTemplateChild(PART_ValueSlider) as ValueColorSlider;
             var colorEditor = GetTemplateChild(PART_ColorEditor) as ColorEditor;
             var colorPalette = GetTemplateChild(PART_ColorPalette) as ColorPalette;
+            var screenColorPicker = GetTemplateChild(PART_ScreenColorPicker) as ScreenColorPicker;
 
             _manager.AddClient(colorWheel, colorPreview, alphaSlider,
-                valuesSlider, colorEditor, colorPalette);
+                valuesSlider, colorEditor, colorPalette, screenColorPicker);
         }
 
         #endregion

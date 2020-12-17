@@ -17,7 +17,7 @@
     <AssemblyVersion>5.0.0</AssemblyVersion>
     <FileVersion>5.0.0</FileVersion>
   </PropertyGroup>
-
+ 
   <ItemGroup>
     <None Include="..\..\LICENSE.md">
       <Pack>True</Pack>
@@ -32,6 +32,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Themes\Controls\ColorPreview.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,12 @@
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Others/Brushes.xaml" />
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Others/Icons.xaml" />
 
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorWheel.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorPreview.xaml" />
 
+
+
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorPickerButton.xaml" />
 
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorPickerControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
