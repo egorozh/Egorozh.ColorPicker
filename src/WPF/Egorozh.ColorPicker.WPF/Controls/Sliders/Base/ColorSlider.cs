@@ -8,9 +8,12 @@ namespace Egorozh.ColorPicker
 {
     public abstract class ColorSlider : Slider, IColorClient
     {
+        //private Thumb _thumb;
+
         #region Protected Properties
 
         protected bool UpdateBackgroundWhenColorUpdated = true;
+        private bool _isDownOnSlider;
 
         protected IColorManager? ColorManager { get; private set; }
 
@@ -67,6 +70,17 @@ namespace Egorozh.ColorPicker
                 UpdateColor(ColorManager.CurrentColor);
                 Background = CreateBackgroundBrush(ColorManager.CurrentColor);
             }
+
+            //if (_thumb != null)
+            //    _thumb.LostMouseCapture -= thumb_LostMouseCapture;
+
+            //if (GetTemplateChild("PART_Track") is Track track)
+            //{
+            //    _thumb = track.Thumb;
+
+            //    if (_thumb != null)
+            //        _thumb.LostMouseCapture += thumb_LostMouseCapture;
+            //}
 
             ValueChanged += ColorSlider_PropertyChanged;
         }
@@ -143,6 +157,37 @@ namespace Egorozh.ColorPicker
         {
             OnValueChanged();
         }
+
+        //protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        //{
+        //    base.OnPreviewMouseLeftButtonDown(e);
+
+        //    _isDownOnSlider = true;
+        //    Mouse.Capture(_thumb);
+        //    _thumb.PreviewMouseMove += _thumb_PreviewMouseMove;
+        //}
+
+        //private void _thumb_PreviewMouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (_isDownOnSlider && !_thumb.IsDragging && e.LeftButton == MouseButtonState.Pressed)
+        //    {
+        //        var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Left)
+        //        {
+        //            RoutedEvent = MouseLeftButtonDownEvent
+        //        };
+
+        //        Mouse.Capture(null);
+        //        _thumb.PreviewMouseMove -= _thumb_PreviewMouseMove;
+        //        _isDownOnSlider = false;
+
+        //        _thumb.RaiseEvent(args);
+        //    }
+        //}
+
+        //private void thumb_LostMouseCapture(object sender, EventArgs e)
+        //{
+        //    _isDownOnSlider = false;
+        //}
 
         #endregion
     }
