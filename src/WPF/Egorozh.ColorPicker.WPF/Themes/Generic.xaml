@@ -11,6 +11,8 @@
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorEditor.xaml" />
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/LabelNumericUpDown.xaml" />
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorHexComboBox.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorPalette.xaml" />
+
 
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorPickerButton.xaml" />
 

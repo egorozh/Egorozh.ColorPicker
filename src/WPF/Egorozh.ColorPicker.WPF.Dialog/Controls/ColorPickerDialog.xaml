@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:picker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.WPF"
+        xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog"
         mc:Ignorable="d"
 
         Title="Select Color"
@@ -26,9 +27,9 @@
         </Grid.RowDefinitions>
 
         <picker:ColorPickerControl x:Name="ColorPickerControl"
-                                   Color="{Binding Color, ElementName=Dialog, Mode=TwoWay}"
-                                   GetColorHandler="{Binding GetColorHandler, ElementName=Dialog, Mode=TwoWay}"
-                                   Colors="{Binding Colors, ElementName=Dialog, Mode=TwoWay}" />
+                                   Color="{Binding Color,  RelativeSource={RelativeSource AncestorType={x:Type dialog:ColorPickerDialog}}, Mode=TwoWay}"
+                                   GetColorHandler="{Binding GetColorHandler,  RelativeSource={RelativeSource AncestorType={x:Type dialog:ColorPickerDialog}},Mode=TwoWay}"
+                                   Colors="{Binding Colors, RelativeSource={RelativeSource AncestorType={x:Type dialog:ColorPickerDialog}}, Mode=TwoWay}" />
 
         <StackPanel Grid.Row="1"
                     Margin="0 10 0 0"

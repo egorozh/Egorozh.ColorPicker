@@ -1,0 +1,170 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egorozh.ColorPicker">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Others/Icons.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Others/Brushes.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:ColorPalette}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="SelectionMode" Value="Extended" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+
+
+        <Setter Property="LoadPaletteIconTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Image Source="{StaticResource LoadPaletteIcon}" />
+                </DataTemplate>
+            </Setter.Value>
+
+        </Setter>
+
+        <Setter Property="SavePaletteIconTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Image Source="{StaticResource SavePaletteIcon}" />
+                </DataTemplate>
+            </Setter.Value>
+
+        </Setter>
+
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="2" />
+                    <Setter Property="Height" Value="24" />
+                    <Setter Property="Width"
+                            Value="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}} ,Converter={local:DivideDoubleToDoubleConverter}, ConverterParameter=10}" />
+                    <Setter Property="Padding" Value="2 1" />
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Background="Transparent"
+                                        x:Name="Border"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        BorderBrush="{TemplateBinding BorderBrush}">
+
+                                    <Grid>
+                                        <Rectangle Fill="{StaticResource TransparencyBrush}" />
+                                        <Rectangle Fill="{TemplateBinding Background}" />
+                                    </Grid>
+
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="LightGray" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="DeepSkyBlue" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="AddItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}"
+                       BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="2" />
+                    <Setter Property="Height" Value="24" />
+                    <Setter Property="Padding" Value="4" />
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Border"
+                                        HorizontalAlignment="Stretch"
+                                        Background="{TemplateBinding Background}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        BorderBrush="{TemplateBinding BorderBrush}">
+
+                                    <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                                          Fill="DeepSkyBlue"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="LightGray" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="DeepSkyBlue" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorPalette}">
+                    <Border x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Padding="0"
+                            SnapsToDevicePixels="true">
+                        <Border.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="PART_AddMenuItem"
+                                          Header="{Binding AddColorContextMenuText, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}}, UpdateSourceTrigger=PropertyChanged}" />
+                                <MenuItem x:Name="PART_RemoveMenuItem"
+                                          Header="{Binding RemoveColorContextMenuText, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}}}" />
+                                <Separator />
+                                <MenuItem x:Name="PART_LoadPaletteMenuItem"
+                                          Header="{Binding LoadPaletteContextMenuText, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}}}">
+                                    <MenuItem.Icon>
+                                        <ContentPresenter
+                                            ContentTemplate="{Binding LoadPaletteIconTemplate, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}}}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="PART_SavePaletteMenuItem"
+                                          Header="{Binding SavePaletteContextMenuText, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}}}">
+                                    <MenuItem.Icon>
+                                        <ContentPresenter
+                                            ContentTemplate="{Binding SavePaletteIconTemplate, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPalette}}}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Border.ContextMenu>
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>

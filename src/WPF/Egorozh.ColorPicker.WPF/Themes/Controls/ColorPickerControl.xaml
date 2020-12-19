@@ -63,11 +63,11 @@
                                     </Canvas>
                                 </TabItem.Header>
 
-                                <!--<local:ColorPalette Name="PART_ColorPalette"
-                                                    LoadPaletteHandler="{Binding $parent[local:ColorPickerControl].LoadPaletteHandler}"
-                                                    SavePaletteHandler="{Binding $parent[local:ColorPickerControl].SavePaletteHandler}"
-                                                    GetColorHandler="{Binding $parent[local:ColorPickerControl].GetColorHandler}"
-                                                    Colors="{Binding $parent[local:ColorPickerControl].Colors, Mode=TwoWay}" />-->
+                                <local:ColorPalette x:Name="PART_ColorPalette"
+                                                    LoadPaletteHandler="{Binding LoadPaletteHandler, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}"
+                                                    SavePaletteHandler="{Binding SavePaletteHandler, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}"
+                                                    GetColorHandler="{Binding GetColorHandler, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}"
+                                                    Colors="{Binding Colors, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}, Mode=TwoWay}" />
 
                             </TabItem>
                             <TabItem>
