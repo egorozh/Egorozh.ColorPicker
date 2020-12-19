@@ -6,7 +6,7 @@ using System.Windows.Markup;
 
 namespace Egorozh.ColorPicker
 {
-    internal class BoolToVisibilityConverter : MarkupExtension, IValueConverter
+    public class BoolToVisibilityConverter : MarkupExtension, IValueConverter
     {
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -15,10 +15,15 @@ namespace Egorozh.ColorPicker
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool isVisible)
-                return isVisible ? Visibility.Visible : Visibility.Collapsed;
+            if (value is not bool canVisible)
+                return Visibility.Visible;
 
-            return Visibility.Visible;
+            var invert = parameter != null;
+
+            if (invert)
+                return canVisible ? Visibility.Collapsed : Visibility.Visible;
+            else
+                return canVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

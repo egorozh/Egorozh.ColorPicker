@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -98,7 +97,7 @@ namespace Egorozh.ColorPicker
 
         private static void AddItemContainerStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorPalette colorPalette) 
+            if (d is ColorPalette colorPalette)
                 colorPalette._addItem.Style = colorPalette.AddItemContainerStyle;
         }
 
@@ -189,15 +188,7 @@ namespace Egorozh.ColorPicker
                 Style = AddItemContainerStyle,
             };
 
-            Binding widthBinding = new ()
-            {
-                Source = this,
-                Path = new PropertyPath("ActualWidth"),
-                Converter = new DivideDoubleToDoubleConverter(),
-                ConverterParameter = 10
-            };
-            
-            BindingOperations.SetBinding(_addItem, WidthProperty, widthBinding);
+            SetBinding(_addItem, WidthProperty, "ActualWidth", new DivideDoubleToDoubleConverter(), 10);
 
             _addItem.PreviewMouseLeftButtonDown += AddItemOnMouseLeftButtonDown;
 
@@ -227,6 +218,19 @@ namespace Egorozh.ColorPicker
             _loadPaletteContextMenuItem = GetTemplateChild(PART_LoadPaletteMenuItem) as MenuItem;
             _savePaletteContextMenuItem = GetTemplateChild(PART_SavePaletteMenuItem) as MenuItem;
 
+            SetBinding(_addContextMenuItem, HeaderedItemsControl.HeaderProperty, nameof(AddColorContextMenuText));
+            _removeItem.Header = RemoveColorContextMenuText;
+
+            SetBinding(_loadPaletteContextMenuItem, HeaderedItemsControl.HeaderProperty,
+                nameof(LoadPaletteContextMenuText));
+            SetBinding(_savePaletteContextMenuItem, HeaderedItemsControl.HeaderProperty,
+                nameof(SavePaletteContextMenuText));
+
+            SetBinding(_loadPaletteContextMenuItem.Icon as ContentPresenter, ContentPresenter.ContentTemplateProperty,
+                nameof(LoadPaletteIconTemplate));
+            SetBinding(_savePaletteContextMenuItem.Icon as ContentPresenter, ContentPresenter.ContentTemplateProperty,
+                nameof(SavePaletteIconTemplate));
+            
             _removeItem.Click += RemoveItemOnClick;
             _addContextMenuItem.Click += AddItemOnClick;
             _loadPaletteContextMenuItem.Click += LoadPaletteContextMenuItemOnClick;
@@ -406,6 +410,20 @@ namespace Egorozh.ColorPicker
             var brush = item.Background as SolidColorBrush;
 
             return brush.Color;
+        }
+
+        private void SetBinding(DependencyObject element, DependencyProperty property, string path,
+            IValueConverter? converter = null, object? converterParameter = null)
+        {
+            Binding widthBinding = new()
+            {
+                Source = this,
+                Path = new PropertyPath(path),
+                Converter = converter,
+                ConverterParameter = converterParameter
+            };
+
+            BindingOperations.SetBinding(element, property, widthBinding);
         }
 
         #endregion

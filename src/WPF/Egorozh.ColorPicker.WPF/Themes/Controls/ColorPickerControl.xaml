@@ -7,6 +7,8 @@
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/Tabs.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Cursor x:Key="EyedropperCursor">/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur</Cursor>
+
     <Style TargetType="{x:Type local:ColorPickerControl}">
 
         <Setter Property="MainTabControlStyle" Value="{StaticResource MainTabControlStyle}" />
@@ -88,13 +90,15 @@
                                              Width="24"
                                              Height="24" />
                                 </TabItem.Header>
-                                <local:ScreenColorPicker x:Name="PART_ScreenColorPicker"/>
-                                                         <!--VerticalAlignment="Center"
-                                                         Width="85"
-                                                         Height="85"
-                                                         EyedropperCursor="{TemplateBinding EyedropperCursor}"
+                                <local:ScreenColorPicker x:Name="PART_ScreenColorPicker"
+                                                         Margin="20 0"
+                                                         Width="180"
+                                                         Height="180"
+                                                         VerticalAlignment="Center"
+                                                         HorizontalAlignment="Center"
                                                          ToolTip="Click and drag to select screen color"
-                                                         InitImage="{TemplateBinding DropperImage}"--> 
+                                                         InitImage="{StaticResource DropperImage}"
+                                                         EyedropperCursor="{StaticResource EyedropperCursor}" />
                             </TabItem>
                         </TabControl>
 
