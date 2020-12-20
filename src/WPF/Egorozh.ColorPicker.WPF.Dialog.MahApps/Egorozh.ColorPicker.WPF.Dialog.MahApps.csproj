@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
    
-    <Version>2.4.3-preview1</Version>
+    <Version>2.4.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>

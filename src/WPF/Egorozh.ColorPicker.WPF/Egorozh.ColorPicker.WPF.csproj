@@ -8,7 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
     <Authors>egorozh</Authors>
-    <Version>5.0.0-preview1</Version>
+    <Version>5.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
