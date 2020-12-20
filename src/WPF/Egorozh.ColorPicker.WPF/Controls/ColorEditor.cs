@@ -68,7 +68,7 @@ namespace Egorozh.ColorPicker
         private SaturationColorNumUpDown _sNumUpDown;
 
         #endregion
-        
+
         #region Static Constructor
 
         static ColorEditor()
@@ -81,17 +81,48 @@ namespace Egorozh.ColorPicker
 
         #region Dependency Properties
 
+        #region Styling
+
+        public static readonly DependencyProperty LabelNumericUpDownStyleProperty = DependencyProperty.Register(
+            nameof(LabelNumericUpDownStyle), typeof(Style), typeof(ColorEditor),
+            new PropertyMetadata(default(Style)));
+
         public static readonly DependencyProperty ModeListBoxStyleProperty = DependencyProperty.Register(
-            "ModeListBoxStyle", typeof(Style), typeof(ColorEditor), new PropertyMetadata(default(Style)));
+            nameof(ModeListBoxStyle), typeof(Style), typeof(ColorEditor), new PropertyMetadata(default(Style)));
+
+        public static readonly DependencyProperty ColorSliderStyleProperty = DependencyProperty.Register(
+            nameof(ColorSliderStyle), typeof(Style), typeof(ColorEditor), new PropertyMetadata(default(Style)));
+
+        #endregion
+
+        #endregion
+
+        #region Public Properties
+
+        #region Styling
 
         public Style ModeListBoxStyle
         {
-            get => (Style)GetValue(ModeListBoxStyleProperty);
+            get => (Style) GetValue(ModeListBoxStyleProperty);
             set => SetValue(ModeListBoxStyleProperty, value);
         }
 
+        public Style LabelNumericUpDownStyle
+        {
+            get => (Style) GetValue(LabelNumericUpDownStyleProperty);
+            set => SetValue(LabelNumericUpDownStyleProperty, value);
+        }
+
+        public Style ColorSliderStyle
+        {
+            get => (Style) GetValue(ColorSliderStyleProperty);
+            set => SetValue(ColorSliderStyleProperty, value);
+        }
+
         #endregion
-        
+
+        #endregion
+
         #region Public Methods
 
         public void ColorUpdated(Color color, IColorClient client)

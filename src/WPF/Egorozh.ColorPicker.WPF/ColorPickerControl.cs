@@ -31,6 +31,8 @@ namespace Egorozh.ColorPicker
 
         private readonly IColorManager _manager = new ColorManager();
 
+        private bool _lock;
+
         #endregion
 
         #region Static Constructor
@@ -77,9 +79,19 @@ namespace Egorozh.ColorPicker
 
         #region Styling
 
+        public static readonly DependencyProperty LabelNumericUpDownStyleProperty = DependencyProperty.Register(
+            nameof(LabelNumericUpDownStyle), typeof(Style), typeof(ColorPickerControl),
+            new PropertyMetadata(default(Style)));
+
         public static readonly DependencyProperty MainTabControlStyleProperty = DependencyProperty.Register(
             nameof(MainTabControlStyle), typeof(Style), typeof(ColorPickerControl),
             new PropertyMetadata(default(Style)));
+
+        public static readonly DependencyProperty ModeListBoxStyleProperty = DependencyProperty.Register(
+            nameof(ModeListBoxStyle), typeof(Style), typeof(ColorPickerControl), new PropertyMetadata(default(Style)));
+
+        public static readonly DependencyProperty ColorSliderStyleProperty = DependencyProperty.Register(
+            nameof(ColorSliderStyle), typeof(Style), typeof(ColorPickerControl), new PropertyMetadata(default(Style)));
 
         #endregion
 
@@ -129,6 +141,24 @@ namespace Egorozh.ColorPicker
             set => SetValue(MainTabControlStyleProperty, value);
         }
 
+        public Style ColorSliderStyle
+        {
+            get => (Style) GetValue(ColorSliderStyleProperty);
+            set => SetValue(ColorSliderStyleProperty, value);
+        }
+
+        public Style LabelNumericUpDownStyle
+        {
+            get => (Style) GetValue(LabelNumericUpDownStyleProperty);
+            set => SetValue(LabelNumericUpDownStyleProperty, value);
+        }
+
+        public Style ModeListBoxStyle
+        {
+            get => (Style) GetValue(ModeListBoxStyleProperty);
+            set => SetValue(ModeListBoxStyleProperty, value);
+        }
+
         #endregion
 
         #endregion
@@ -138,9 +168,7 @@ namespace Egorozh.ColorPicker
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            _manager.ColorChanged += Manager_ColorChanged;
-
+            
             var colorWheel = GetTemplateChild(PART_ColorWheel) as ColorWheel;
             var colorPreview = GetTemplateChild(PART_ColorPreview) as ColorPreview;
             var alphaSlider = GetTemplateChild(PART_AlphaSlider) as RgbaColorSlider;
@@ -151,6 +179,8 @@ namespace Egorozh.ColorPicker
 
             _manager.AddClient(colorWheel, colorPreview, alphaSlider,
                 valuesSlider, colorEditor, colorPalette, screenColorPicker);
+
+            _manager.ColorChanged += Manager_ColorChanged;
         }
 
         #endregion
@@ -159,16 +189,23 @@ namespace Egorozh.ColorPicker
 
         private void Manager_ColorChanged(System.Drawing.Color color)
         {
-            _manager.ColorChanged -= Manager_ColorChanged;
+            _lock = true;
 
             Color = color.ToColor();
 
-            _manager.ColorChanged += Manager_ColorChanged;
+            _lock = false;
         }
 
         private void ColorChanged(Color color)
         {
+            if (_lock)
+                return;
+
+            _manager.ColorChanged -= Manager_ColorChanged;
+
             _manager.CurrentColor = color.ToColor();
+
+            _manager.ColorChanged += Manager_ColorChanged;
         }
 
         private static async Task<(bool, IEnumerable<Color>)> LoadPaletteAsync()

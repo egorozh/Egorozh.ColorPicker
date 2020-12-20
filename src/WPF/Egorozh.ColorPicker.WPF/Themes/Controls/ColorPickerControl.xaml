@@ -5,6 +5,9 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Others/Icons.xaml" />
         <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/Tabs.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ModeListBox.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/ColorSlider.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF;component/Themes/Controls/LabelNumericUpDown.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Cursor x:Key="EyedropperCursor">/Egorozh.ColorPicker.WPF;component/Resources/eyedropper.cur</Cursor>
@@ -12,6 +15,9 @@
     <Style TargetType="{x:Type local:ColorPickerControl}">
 
         <Setter Property="MainTabControlStyle" Value="{StaticResource MainTabControlStyle}" />
+        <Setter Property="ModeListBoxStyle" Value="{StaticResource MainModeListBoxStyle}" />
+        <Setter Property="ColorSliderStyle" Value="{StaticResource ColorSliderStyle}" />
+        <Setter Property="LabelNumericUpDownStyle" Value="{StaticResource LabelNumericUpDownStyle}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -41,7 +47,8 @@
 
                                     <local:ValueColorSlider x:Name="PART_ValueSlider"
                                                             Grid.Column="0"
-                                                            Orientation="Vertical" />
+                                                            Orientation="Vertical"
+                                                            Style="{Binding ColorSliderStyle, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}" />
 
                                     <local:ColorWheel x:Name="PART_ColorWheel"
                                                       Grid.Column="1"
@@ -52,7 +59,8 @@
                                     <local:RgbaColorSlider x:Name="PART_AlphaSlider"
                                                            Grid.Column="2"
                                                            Orientation="Vertical"
-                                                           Channel="Alpha" />
+                                                           Channel="Alpha"
+                                                           Style="{Binding ColorSliderStyle, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}" />
                                 </Grid>
 
                             </TabItem>
@@ -81,7 +89,10 @@
                                     </Canvas>
                                 </TabItem.Header>
 
-                                <local:ColorEditor x:Name="PART_ColorEditor" />
+                                <local:ColorEditor x:Name="PART_ColorEditor"
+                                                   LabelNumericUpDownStyle="{Binding LabelNumericUpDownStyle, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}"
+                                                   ModeListBoxStyle="{Binding ModeListBoxStyle, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}" 
+                                                   ColorSliderStyle="{Binding ColorSliderStyle, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPickerControl}}}"/>
 
                             </TabItem>
                             <TabItem>

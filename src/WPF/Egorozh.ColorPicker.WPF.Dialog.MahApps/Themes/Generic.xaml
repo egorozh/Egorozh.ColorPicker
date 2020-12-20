@@ -2,6 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:colorPicker="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.WPF">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary
+            Source="/Egorozh.ColorPicker.WPF.Dialog.MahApps;component/Themes/Controls/LabelNumericUpDown.xaml" />
+        <ResourceDictionary
+            Source="/Egorozh.ColorPicker.WPF.Dialog.MahApps;component/Themes/Controls/ColorHexComboBox.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF.Dialog.MahApps;component/Themes/Controls/ModeListBox.xaml" />
+        <ResourceDictionary Source="/Egorozh.ColorPicker.WPF.Dialog.MahApps;component/Themes/Controls/ColorSlider.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="{x:Type TabItem}"
            x:Key="MetroMainTabItemStyle">
         <Setter Property="Background" Value="Transparent" />
@@ -200,10 +209,33 @@
 
     </Style>
 
+    <Style TargetType="{x:Type colorPicker:ColorSlider}"
+           x:Key="MahAppsColorSliderStyle">
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="MinWidth" Value="40" />
+                <Setter Property="MinHeight" Value="18" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Template" Value="{StaticResource MahSliderHorizontalTemplate}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="MinWidth" Value="18" />
+                <Setter Property="MinHeight" Value="40" />
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Template" Value="{StaticResource MahSliderVerticalTemplate}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type colorPicker:ColorPickerControl}"
            BasedOn="{StaticResource {x:Type colorPicker:ColorPickerControl}}">
 
-        <Setter Property="MainTabControlStyle" Value="{StaticResource MetroTabControlStyle}"></Setter>
+        <Setter Property="MainTabControlStyle" Value="{StaticResource MetroTabControlStyle}" />
+        <Setter Property="LabelNumericUpDownStyle" Value="{StaticResource MahAppsLabelNumericUpDownStyle}" />
+        <Setter Property="ModeListBoxStyle" Value="{StaticResource MainModeListBoxStyle}" />
+        <Setter Property="ColorSliderStyle" Value="{StaticResource MahAppsColorSliderStyle}" />
 
     </Style>
 

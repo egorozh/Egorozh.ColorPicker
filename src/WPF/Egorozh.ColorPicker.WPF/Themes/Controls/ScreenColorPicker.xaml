@@ -14,82 +14,33 @@
                             <Image SnapsToDevicePixels="False"
                                    x:Name="PART_SnapshotImage" />
 
-                            <Grid Margin="-16 -16 0 0">
+                            <Grid Margin="0 0 0 0">
                                 <Grid.Background>
-                                    <VisualBrush TileMode="Tile"
-                                                 Viewport="0 0 16 16"
-                                                 ViewportUnits="Absolute"
-                                                 Stretch="Uniform">
-                                        <VisualBrush.Visual>
-                                            <Image Stretch="None" RenderOptions.EdgeMode="Aliased"
-                                                   SnapsToDevicePixels="True">
-                                                <Image.Source>
-                                                    <DrawingImage>
-                                                        <DrawingImage.Drawing>
-                                                            <DrawingGroup>
-                                                                <GeometryDrawing Geometry="M 0 -2 L 0 2">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
+                                    <DrawingBrush TileMode="Tile"
+                                                  Viewport="0 0 12 12"
+                                                  ViewportUnits="Absolute"
+                                                  Stretch="Uniform">
+                                        <DrawingBrush.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="#A0A0A0"
+                                                         Thickness="0.8"
+                                                         DashCap="Round"
+                                                         LineJoin="Round"
+                                                         StartLineCap="Round"
+                                                         EndLineCap="Round">
+                                                        <Pen.DashStyle>
+                                                            <DashStyle Dashes="2" />
+                                                        </Pen.DashStyle>
+                                                    </Pen>
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <RectangleGeometry Rect="0 0 12 12" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingBrush.Drawing>
 
-                                                                <GeometryDrawing Geometry="M 0 6 L 0 10">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                                <GeometryDrawing Geometry="M 0 14 L 0 18">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                                <GeometryDrawing Geometry="M 0 22.99 L 0 23">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                                <GeometryDrawing Geometry="M 0 0 L 2 0">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                                <GeometryDrawing Geometry="M 6 0 L 10 0">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                                <GeometryDrawing Geometry="M 14 0 L 18 0">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                                <GeometryDrawing Geometry="M 22.99 0 L 23 0">
-                                                                    <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#A0A0A0"
-                                                                             Thickness="4" />
-                                                                    </GeometryDrawing.Pen>
-                                                                </GeometryDrawing>
-
-                                                            </DrawingGroup>
-                                                        </DrawingImage.Drawing>
-                                                    </DrawingImage>
-                                                </Image.Source>
-                                            </Image>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
+                                    </DrawingBrush>
                                 </Grid.Background>
                             </Grid>
 
@@ -97,16 +48,15 @@
                                        Visibility="{Binding IsStartSelectColor,
                                 RelativeSource={RelativeSource AncestorType={x:Type local:ScreenColorPicker }},
                                 Converter={local:BoolToVisibilityConverter}}"
-                                       Width="16"
-                                       Height="16"
+                                       Width="14"
+                                       Height="14"
                                        StrokeThickness="2"
                                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
 
                             <ContentControl Margin="25"
                                             Visibility="{Binding IsStartSelectColor,
                                 RelativeSource={RelativeSource AncestorType={x:Type local:ScreenColorPicker }},
-                                Converter={local:BoolToVisibilityConverter},
-                                ConverterParameter=10}"
+                                Converter={local:BoolToVisibilityConverter}, ConverterParameter=10}"
                                             Content="{TemplateBinding InitImage}" />
 
                         </Grid>

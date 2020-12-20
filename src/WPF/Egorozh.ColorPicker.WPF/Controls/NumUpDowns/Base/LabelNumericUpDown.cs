@@ -39,6 +39,15 @@ namespace Egorozh.ColorPicker
 
         #endregion
 
+        #region Constructor
+
+        public LabelNumericUpDown()
+        {
+            ValueChanged += ColorSlider_PropertyChanged;
+        }
+
+        #endregion
+
         #region Public Methods
 
         public virtual void ColorUpdated(Color color, IColorClient client)
@@ -59,9 +68,7 @@ namespace Egorozh.ColorPicker
         {
             base.OnApplyTemplate();
 
-            UpdateColor(ColorManager.CurrentColor);
-
-            ValueChanged += ColorSlider_PropertyChanged;
+            ColorUpdated(ColorManager.CurrentColor, this);
         }
 
         #endregion

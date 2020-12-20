@@ -34,6 +34,8 @@ namespace Egorozh.ColorPicker
         protected ColorSlider()
         {
             TickFrequency = 1;
+
+            ValueChanged += ColorSlider_ValueChanged;
         }
 
         #endregion
@@ -42,14 +44,14 @@ namespace Egorozh.ColorPicker
 
         public virtual void ColorUpdated(Color color, IColorClient client)
         {
-            ValueChanged -= ColorSlider_PropertyChanged;
+            ValueChanged -= ColorSlider_ValueChanged;
 
             UpdateColor(color);
 
             if (UpdateBackgroundWhenColorUpdated)
                 Background = CreateBackgroundBrush(color);
 
-            ValueChanged += ColorSlider_PropertyChanged;
+            ValueChanged += ColorSlider_ValueChanged;
         }
 
         public void Init(IColorManager colorManager)
@@ -64,10 +66,10 @@ namespace Egorozh.ColorPicker
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
+            
             if (ColorManager != null)
             {
-                UpdateColor(ColorManager.CurrentColor);
+                ColorUpdated(ColorManager.CurrentColor, this);
                 Background = CreateBackgroundBrush(ColorManager.CurrentColor);
             }
 
@@ -81,11 +83,8 @@ namespace Egorozh.ColorPicker
             //    if (_thumb != null)
             //        _thumb.LostMouseCapture += thumb_LostMouseCapture;
             //}
-
-            ValueChanged += ColorSlider_PropertyChanged;
         }
-
-
+        
         protected virtual void OnValueChanged()
         {
         }
@@ -153,7 +152,7 @@ namespace Egorozh.ColorPicker
 
         #region Private Methods
 
-        private void ColorSlider_PropertyChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             OnValueChanged();
         }

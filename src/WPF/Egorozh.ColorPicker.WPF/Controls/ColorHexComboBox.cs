@@ -12,6 +12,7 @@ namespace Egorozh.ColorPicker
         #region Private Fields
 
         private IColorManager? _manager;
+        private TextChangedEventHandler _textChangedEventHandler;
 
         #endregion
 
@@ -48,9 +49,10 @@ namespace Egorozh.ColorPicker
             copyButton.Click += CopyButtonOnClick;
 
 
-            SetSelectedItemInHex(_manager.CurrentColor);
+            _textChangedEventHandler = HexTextBox_OnTextChanged;
+            AddHandler(TextBoxBase.TextChangedEvent, _textChangedEventHandler);
 
-            AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler(HexTextBox_OnTextChanged));
+            SetSelectedItemInHex(_manager.CurrentColor);
         }
 
         #endregion
@@ -100,6 +102,9 @@ namespace Egorozh.ColorPicker
                                                         c.Color.G == color.G &&
                                                         c.Color.B == color.B);
 
+            RemoveHandler(TextBoxBase.TextChangedEvent, _textChangedEventHandler);
+            SelectionChanged -= Hex_SelectionChanged;
+            
             if (namedColor != null)
             {
                 SelectedItem = namedColor;
@@ -107,10 +112,15 @@ namespace Egorozh.ColorPicker
             else
             {
                 SelectedItem = null;
-                Text = color.A == byte.MaxValue 
-                    ? $"{color.R:X2}{color.G:X2}{color.B:X2}" 
+
+
+                Text = color.A == byte.MaxValue
+                    ? $"{color.R:X2}{color.G:X2}{color.B:X2}"
                     : $"{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
             }
+            
+            SelectionChanged += Hex_SelectionChanged;
+            AddHandler(TextBoxBase.TextChangedEvent, _textChangedEventHandler);
         }
 
         #endregion

@@ -199,7 +199,8 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type local:LabelNumericUpDown}">
+    <Style TargetType="{x:Type local:LabelNumericUpDown}"
+           x:Key="LabelNumericUpDownStyle">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="#FFACACAC" />
 
