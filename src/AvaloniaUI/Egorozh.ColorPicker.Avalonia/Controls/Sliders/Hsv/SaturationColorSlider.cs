@@ -26,9 +26,9 @@ namespace Egorozh.ColorPicker
             Value = hsv.S * 100;
         }
 
-        protected override void ValueChanged()
+        protected override void OnValueChanged()
         {
-            base.ValueChanged();
+            base.OnValueChanged();
 
             var hsv = new HsvColor(ColorManager.CurrentColor)
             {

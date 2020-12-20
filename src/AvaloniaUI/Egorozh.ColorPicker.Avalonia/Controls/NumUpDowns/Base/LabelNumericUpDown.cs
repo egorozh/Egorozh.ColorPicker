@@ -27,13 +27,22 @@ namespace Egorozh.ColorPicker
             AvaloniaProperty.Register<LabelNumericUpDown, string>(nameof(Label));
 
         #endregion
-        
+
         #region Public Properties
 
         public string Label
         {
             get => GetValue(LabelProperty);
             set => SetValue(LabelProperty, value);
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public LabelNumericUpDown()
+        {
+            PropertyChanged += ColorSlider_PropertyChanged;
         }
 
         #endregion
@@ -45,7 +54,7 @@ namespace Egorozh.ColorPicker
             PropertyChanged -= ColorSlider_PropertyChanged;
 
             UpdateColor(color);
-            
+
             PropertyChanged += ColorSlider_PropertyChanged;
         }
 
@@ -62,14 +71,12 @@ namespace Egorozh.ColorPicker
         {
             base.OnApplyTemplate(e);
 
-            UpdateColor(ColorManager.CurrentColor);
-
-            PropertyChanged += ColorSlider_PropertyChanged;
+            ColorUpdated(ColorManager.CurrentColor, this);
         }
 
-        protected virtual void ValueChanged()
+        protected virtual void OnValueChanged()
         {
-        }
+        }   
 
         protected virtual void UpdateColor(in Color color)
         {
@@ -79,10 +86,10 @@ namespace Egorozh.ColorPicker
 
         #region Private Methods
 
-        private void ColorSlider_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        private void ColorSlider_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.Property == ValueProperty)
-                ValueChanged();
+                OnValueChanged();
         }
 
         #endregion

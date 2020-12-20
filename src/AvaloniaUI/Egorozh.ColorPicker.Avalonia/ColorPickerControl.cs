@@ -13,6 +13,7 @@ namespace Egorozh.ColorPicker
         #region Private Fields
 
         private readonly IColorManager _manager = new ColorManager();
+        private bool _lock;
 
         #endregion
 
@@ -38,6 +39,7 @@ namespace Egorozh.ColorPicker
 
         public static readonly StyledProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color), notifying: ColorChanged);
+
 
         private static void ColorChanged(IAvaloniaObject obj, bool isAfter)
         {
@@ -106,16 +108,23 @@ namespace Egorozh.ColorPicker
 
         private void Manager_ColorChanged(System.Drawing.Color color)
         {
-            _manager.ColorChanged -= Manager_ColorChanged;
+            _lock = true;
 
             Color = color.ToColor();
 
-            _manager.ColorChanged += Manager_ColorChanged;
+            _lock = false;
         }
 
         private void ColorChanged(Color color)
         {
+            if (_lock)
+                return;
+
+            _manager.ColorChanged -= Manager_ColorChanged;
+
             _manager.CurrentColor = color.ToColor();
+
+            _manager.ColorChanged += Manager_ColorChanged;
         }
 
         #endregion

@@ -31,6 +31,8 @@ namespace Egorozh.ColorPicker
         protected ColorSlider()
         {
             TickFrequency = 1;
+
+            PropertyChanged += ColorSlider_PropertyChanged;
         }
 
         #endregion
@@ -64,14 +66,12 @@ namespace Egorozh.ColorPicker
 
             if (ColorManager != null)
             {
-                UpdateColor(ColorManager.CurrentColor);
+                ColorUpdated(ColorManager.CurrentColor, this);
                 Background = CreateBackgroundBrush(ColorManager.CurrentColor);
             }
-
-            PropertyChanged += ColorSlider_PropertyChanged;
         }
 
-        protected virtual void ValueChanged()
+        protected virtual void OnValueChanged()
         {
         }
 
@@ -139,7 +139,7 @@ namespace Egorozh.ColorPicker
         private void ColorSlider_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.Property == ValueProperty)
-                ValueChanged();
+                OnValueChanged();
         }
 
         #endregion

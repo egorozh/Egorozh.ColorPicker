@@ -146,9 +146,9 @@ namespace Egorozh.ColorPicker
             };
         }
 
-        protected override void ValueChanged()
+        protected override void OnValueChanged()
         {
-            base.ValueChanged();
+            base.OnValueChanged();
 
             var color = ColorManager.CurrentColor;
 
