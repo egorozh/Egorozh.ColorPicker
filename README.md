@@ -7,7 +7,7 @@
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-avalonia-2.png "Пример диалогого окна")
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-avalonia-3.png "Пример диалогого окна")
 
-### Getting Started
+### AvaloniaUI  Getting Started
 
 Install the library as a NuGet package:
 
@@ -59,8 +59,66 @@ if (res)
   _color = dialog.Color;
 ```
 
-## WPF ColorPicker (Not ready yet. Will be rewritten):
+## WPF ColorPicker:
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-wpf-1.png "Пример диалогого окна")
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-wpf-2.png "Пример диалогого окна")
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-wpf-3.png "Пример диалогого окна")
 ![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-wpf-4.png "Пример диалогого окна")
+![example](https://github.com/egorozh/Egorozh.ColorPicker.WPF/blob//v2.0/images/example-wpf-mahapps-1.png "MahApps")
+
+### WPF Getting Started
+
+Install the library as a NuGet package:
+
+```powershell
+Install-Package Egorozh.ColorPicker.WPF.Dialog
+# Or 'dotnet add package Egorozh.ColorPicker.WPF.Dialog'
+```
+Done! Use ColorPickerButton 
+```xml
+<dialog:ColorPickerButton Color="#99029344"
+                          Cursor="Hand"/>
+```
+or ColorPickerDialog:
+```c#
+var dialog = new ColorPickerDialog
+{
+  Owner = Owner,
+  Color = Color
+};
+
+var res = dialog.ShowDialog();
+
+if (res == true)
+  Color = dialog.Color;
+```
+### To run MahApps Version:
+Install the library as a NuGet package:
+
+```powershell
+Install-Package Egorozh.ColorPicker.WPF.Dialog.MahApps
+# Or 'dotnet add Egorozh.ColorPicker.WPF.Dialog.MahApps'
+```
+Then, reference the preffered theme from your `App.xaml` file:
+
+```xml
+<Application x:Class="Egorozh.ColorPicker.Client.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            
+             StartupUri="MainWindow.xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Crimson.xaml" />
+
+
+                <ResourceDictionary Source="pack://application:,,,/Egorozh.ColorPicker.WPF.Dialog.MahApps;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+```
