@@ -105,7 +105,7 @@ namespace Egorozh.ColorPicker.Dialog
 
                         List<System.Drawing.Color>? palette;
 
-                        await using (var file = File.OpenRead(res[0]))
+                        using (var file = File.OpenRead(res[0]))
                         {
                             palette = serializer.DeserializeNew(file);
                         }
@@ -151,7 +151,7 @@ namespace Egorozh.ColorPicker.Dialog
                 {
                     try
                     {
-                        await using var file = File.OpenWrite(res);
+                        using var file = File.OpenWrite(res);
                         serializer.Serialize(file, (colors.Select(c => c.ToColor())));
                     }
                     catch (Exception ex)

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>netcoreapp3.0;net47;net5.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
@@ -10,9 +11,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
-    <PackageTags>Color, ColorPicker, Avalonia, AvaloniaUI</PackageTags>
+    <PackageTags>Color, ColorPicker, WPF, MahApps</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <Description>ColorPicker dialog for Avalonia</Description>
+    <Description>ColorPicker dialog for MahApps</Description>
     <AssemblyVersion>2.4.3</AssemblyVersion>
     <FileVersion>2.4.3</FileVersion>
   </PropertyGroup>
@@ -30,29 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Egorozh.ColorPicker.WPF\Egorozh.ColorPicker.WPF.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Themes\Controls\ColorHexComboBox.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Themes\Controls\ColorSlider.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Themes\Controls\LabelNumericUpDown.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Themes\Controls\ModeListBox.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Themes\Generic.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
 
 </Project>

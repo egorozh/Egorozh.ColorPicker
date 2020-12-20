@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>netcoreapp3.0;net47;net5.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -17,7 +18,7 @@
     <AssemblyVersion>5.0.0</AssemblyVersion>
     <FileVersion>5.0.0</FileVersion>
   </PropertyGroup>
- 
+
   <ItemGroup>
     <None Include="..\..\LICENSE.md">
       <Pack>True</Pack>
@@ -34,10 +35,8 @@
     <ProjectReference Include="..\..\Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Themes\Controls\ScreenColorPicker.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
+    <Reference Include="PresentationFramework.Aero" />
   </ItemGroup>
 
 </Project>

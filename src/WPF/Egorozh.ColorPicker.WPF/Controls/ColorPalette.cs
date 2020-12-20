@@ -301,7 +301,7 @@ namespace Egorozh.ColorPicker
 
             if (SelectedItems.Count > 0)
             {
-                var selectedItem = SelectedItems[^1] as ListBoxItem;
+                var selectedItem = SelectedItems[SelectedItems.Count-1] as ListBoxItem;
 
                 if (selectedItem != _addItem)
                 {

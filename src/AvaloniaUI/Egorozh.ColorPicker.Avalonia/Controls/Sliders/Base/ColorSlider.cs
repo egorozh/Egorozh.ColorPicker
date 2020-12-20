@@ -107,7 +107,7 @@ namespace Egorozh.ColorPicker
                     gradStops.Add(new(colors[i].ToColor(), offset));
                 }
 
-                gradStops.Add(new(colors[^1].ToColor(), 1));
+                gradStops.Add(new(colors[colors.Count-1].ToColor(), 1));
 
                 var start = Orientation == Orientation.Vertical
                     ? new RelativePoint(0, 1, RelativeUnit.Relative)

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>netcoreapp3.0;net47;net5.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>

@@ -243,7 +243,7 @@ namespace Egorozh.ColorPicker
                 return;
 
             items.Clear();
-            
+
             foreach (var color in Colors)
                 items.Add(CreateColorItem(color));
 
@@ -264,7 +264,7 @@ namespace Egorozh.ColorPicker
 
             if (SelectedItems.Count > 0)
             {
-                var selectedItem = SelectedItems[^1];
+                var selectedItem = SelectedItems[SelectedItems.Count - 1];
 
                 if (selectedItem != _addItem)
                 {

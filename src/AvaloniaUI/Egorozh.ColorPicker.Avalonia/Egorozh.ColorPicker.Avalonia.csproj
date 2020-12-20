@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net47;net5.0</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
     <Nullable>enable</Nullable>
 
