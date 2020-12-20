@@ -7,15 +7,15 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
    
-    <Version>2.4.3.1</Version>
+    <Version>2.4.3.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
     <PackageTags>Color, ColorPicker, WPF, MahApps</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Description>ColorPicker dialog for MahApps</Description>
-    <AssemblyVersion>2.4.3.1</AssemblyVersion>
-    <FileVersion>2.4.3.1</FileVersion>
+    <AssemblyVersion>2.4.3.2</AssemblyVersion>
+    <FileVersion>2.4.3.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
