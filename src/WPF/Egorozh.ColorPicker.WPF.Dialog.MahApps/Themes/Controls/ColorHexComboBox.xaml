@@ -7,6 +7,240 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+
+    <Style x:Key="MahApps.Styles.TextBox.ComboBox.Editable"
+           BasedOn="{StaticResource MahApps.Styles.TextBox}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid x:Name="PART_InnerGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition x:Name="ButtonRow" Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Grid.Row="1"
+                                          Grid.Column="0"
+                                          Margin="0"
+                                          Padding="{TemplateBinding Padding}"
+                                          VerticalAlignment="Stretch"
+                                          Background="{x:Null}"
+                                          BorderThickness="0"
+                                          IsTabStop="False"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                            <TextBlock x:Name="PART_Message"
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       Margin="4 0"
+                                       Padding="{TemplateBinding Padding}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
+                                       Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                       TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                       Visibility="Collapsed" />
+
+                            <ContentControl x:Name="PART_FloatingMessageContainer"
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="4 0"
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
+                                <ContentControl.Height>
+                                    <MultiBinding Converter="{mah:MathMultiplyConverter}">
+                                        <Binding ElementName="PART_FloatingMessage"
+                                                 Mode="OneWay"
+                                                 Path="ActualHeight" />
+                                        <Binding ElementName="PART_FloatingMessageContainer"
+                                                 Mode="OneWay"
+                                                 Path="Opacity" />
+                                    </MultiBinding>
+                                </ContentControl.Height>
+                                <TextBlock x:Name="PART_FloatingMessage"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
+                                           Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                           TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="FloatingMessageTransform">
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{mah:MathSubtractConverter}">
+                                                    <Binding ElementName="PART_FloatingMessage"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                    <Binding ElementName="PART_FloatingMessageContainer"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </ContentControl>
+
+                            <Button x:Name="PART_ClearText"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                    mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                    Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                    Focusable="False"
+                                    FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
+                            <Setter TargetName="PART_Message" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(mah:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(mah:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ClearTextButton)}" Value="False">
+                            <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
+                        </DataTrigger>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:TextBoxHelper.HasText" Value="False" />
+                                <Condition Property="IsFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+                        <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ComboBoxDropDown" TargetType="{x:Type ToggleButton}">
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid x:Name="ToggleButtonRootGrid" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="TextColumn" Width="*" />
+                            <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                            <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="PART_ClearText"
+                                Grid.Column="1"
+                                Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                Focusable="False"
+                                FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                Foreground="{TemplateBinding Foreground}"
+                                IsTabStop="False"
+                                Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                        <Grid x:Name="BtnArrowBackground"
+                              Grid.Column="2"
+                              Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                              Background="Transparent">
+                            <Path x:Name="Arrow"
+                                  Width="8"
+                                  Height="4"
+                                  HorizontalAlignment="Center"
+                                  Data="{DynamicResource ComboBoxDownArrowGeometry}"
+                                  Fill="{DynamicResource MahApps.Brushes.Gray1}"
+                                  IsHitTestVisible="false"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  Stretch="Uniform" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True">
+                            <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </DataTrigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                            <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type colorPicker:ColorHexComboBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
