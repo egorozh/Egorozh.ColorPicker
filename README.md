@@ -1,3 +1,5 @@
+![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Egorozh.ColorPicker.Avalonia.Dialog?label=avalonia-nuget&style=plastic) ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Egorozh.ColorPicker.WPF.Dialog?label=wpf-nuget&style=plastic) ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Egorozh.ColorPicker.WPF.Dialog.MahApps?label=wpf-mahapps-nuget&style=plastic)
+
 # Egorozh.ColorPicker
 
 ## AvaloniaUI ColorPicker:
