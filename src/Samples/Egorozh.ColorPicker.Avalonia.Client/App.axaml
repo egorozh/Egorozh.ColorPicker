@@ -1,25 +1,25 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             
+             xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog"
+
              x:Class="Egorozh.ColorPicker.Avalonia.Client.App">
 
-  <Application.Styles>
-    
-      <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-      <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Default.axaml" />
-    
-      <!--
-      <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"/>
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentLight.axaml" />
-      -->
-    
-      <!--
-      <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"/>
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentDark.axaml" />
-      -->
-    
+    <Application.Styles>
 
-  </Application.Styles>
+        <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml" />
+        <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml" />
+        <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Default.axaml" />
+
+        <!--
+        <FluentTheme Mode="Light" />
+        <dialog:FluentColorPickerTheme Mode="Light" />
+        -->
+
+        <!--
+        <FluentTheme Mode="Dark" />
+        <dialog:FluentColorPickerTheme Mode="Dark" />
+        -->
+
+    </Application.Styles>
 
 </Application>
