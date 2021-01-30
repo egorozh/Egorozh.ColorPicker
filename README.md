@@ -1,4 +1,4 @@
-[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Egorozh.ColorPicker.Avalonia.Dialog?label=avalonia-nuget&style=plastic)](https://www.nuget.org/packages/Egorozh.ColorPicker.Avalonia.Dialog/0.10.0.2-rc1) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Egorozh.ColorPicker.WPF.Dialog?label=wpf-nuget&style=plastic)](https://www.nuget.org/packages/Egorozh.ColorPicker.WPF.Dialog/) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Egorozh.ColorPicker.WPF.Dialog.MahApps?label=wpf-mahapps-nuget&style=plastic)](https://www.nuget.org/packages/Egorozh.ColorPicker.WPF.Dialog.MahApps/)
+[![Nuget (with prereleases)](https://img.shields.io/nuget/v/Egorozh.ColorPicker.Avalonia.Dialog?label=avalonia-nuget&style=plastic)](https://www.nuget.org/packages/Egorozh.ColorPicker.Avalonia.Dialog/) [![Nuget (with prereleases)](https://img.shields.io/nuget/v/Egorozh.ColorPicker.WPF.Dialog?label=wpf-nuget&style=plastic)](https://www.nuget.org/packages/Egorozh.ColorPicker.WPF.Dialog/) [![Nuget (with prereleases)](https://img.shields.io/nuget/v/Egorozh.ColorPicker.WPF.Dialog.MahApps?label=wpf-mahapps-nuget&style=plastic)](https://www.nuget.org/packages/Egorozh.ColorPicker.WPF.Dialog.MahApps/)
 
 # Egorozh.ColorPicker
 
@@ -21,6 +21,7 @@ Then, reference the preffered theme from your `App.xaml` file:
 ```xml
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog"
              x:Class="YourNamespace.App">
   <Application.Styles>  
       <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
@@ -28,15 +29,15 @@ Then, reference the preffered theme from your `App.xaml` file:
     
       <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Default.axaml" />
     
-     <!-- To use other themes:-->
+      <!-- To use other themes:-->
       <!--
-      <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"/>
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentLight.axaml" />
+      <FluentTheme Mode="Light" />
+      <dialog:FluentColorPickerTheme Mode="Light" />
       -->
-    
+
       <!--
-      <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"/>
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/FluentDark.axaml" />
+      <FluentTheme Mode="Dark" />
+      <dialog:FluentColorPickerTheme Mode="Dark" />
       -->
   </Application.Styles>
 </Application>
