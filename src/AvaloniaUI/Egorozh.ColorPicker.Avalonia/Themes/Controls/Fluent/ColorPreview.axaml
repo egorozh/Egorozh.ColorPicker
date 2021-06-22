@@ -10,17 +10,19 @@
         <ControlTemplate>
           <Grid ColumnDefinitions="auto auto * auto auto">
             <Border  Grid.Column="0"
-                     Width="50"
-                     Height="36"
-                     CornerRadius="4,0,0,4"
-                     HorizontalAlignment="Stretch"
+                     Width="49"
+                     ClipToBounds="True"
+                     Height="35"
+                     CornerRadius="6,0,0,6"
+                     HorizontalAlignment="Right"
                      VerticalAlignment="Center"
                      Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_PreviewBorder1"
                     Grid.Column="0"
                     Width="50"
+                    ClipToBounds="True"
                     Height="36"
-                    CornerRadius="4,0,0,4"
+                    CornerRadius="6,0,0,6"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center">
               <Border.Background>
@@ -31,7 +33,7 @@
 
             <Border Grid.Column="1"
                     Width="50"
-                    Height="36"
+                    Height="35"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
                     Background="{StaticResource TransparencyBrush}"/>
@@ -48,13 +50,15 @@
             </Border>
 
             <Border Grid.Column="2"
-                    CornerRadius="4"
+                    ClipToBounds="True"
+                    CornerRadius="8"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_MainBorder"
                     Grid.Column="2"
-                    CornerRadius="4"
+                    ClipToBounds="True"
+                    CornerRadius="6"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch">
               <Border.Background>
@@ -64,7 +68,7 @@
 
             <Border Grid.Column="3"
                     Width="50"
-                    Height="36"
+                    Height="35"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
                     Background="{StaticResource TransparencyBrush}"/>
@@ -81,17 +85,19 @@
             </Border>
 
             <Border  Grid.Column="4"
-                     Width="50"
-                     Height="36"
-                     CornerRadius="0,4,4,0"
-                     HorizontalAlignment="Stretch"
+                     ClipToBounds="True"
+                     Width="49"
+                     Height="35"
+                     CornerRadius="0,6,6,0"
+                     HorizontalAlignment="Left"
                      VerticalAlignment="Center"
                      Background="{StaticResource TransparencyBrush}"/>
             <Border Name="PART_PreviewBorder4"
                     Grid.Column="4"
+                    ClipToBounds="True"
                     Width="50"
                     Height="36"
-                    CornerRadius="0,4,4,0"
+                    CornerRadius="0,6,6,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center">
               <Border.Background>

@@ -10,15 +10,14 @@
         <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml" />
         <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Default.axaml" />
 
+        <!-- To use other themes:-->
         <!--
         <FluentTheme Mode="Light" />
         <dialog:FluentColorPickerTheme Mode="Light" />
         -->
 
-        <!--
-        <FluentTheme Mode="Dark" />
-        <dialog:FluentColorPickerTheme Mode="Dark" />
-        -->
+        <!--<FluentTheme Mode="Dark" />
+        <dialog:FluentColorPickerTheme Mode="Dark" />-->
 
     </Application.Styles>
 
