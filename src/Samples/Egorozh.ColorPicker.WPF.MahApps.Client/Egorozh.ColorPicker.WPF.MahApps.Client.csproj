@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\WPF\Egorozh.ColorPicker.WPF.Dialog.MahApps\Egorozh.ColorPicker.WPF.Dialog.MahApps.csproj" />
   </ItemGroup>
 
