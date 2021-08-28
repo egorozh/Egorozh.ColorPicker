@@ -1,5 +1,7 @@
-﻿using Avalonia.Controls;
+﻿using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Egorozh.ColorPicker.Dialog;
 
 namespace Egorozh.ColorPicker.Avalonia.Client
 {
@@ -13,6 +15,26 @@ namespace Egorozh.ColorPicker.Avalonia.Client
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+    }
+
+    internal class CustomColorPickerButton : ColorPickerButtonBase
+    {
+        protected override async Task ChangeColor()
+        {
+            ColorPickerDialog dialog = new()
+            {
+                Color = Color,
+                Colors = Colors,
+                ExtendClientAreaToDecorationsHint = false,
+                SystemDecorations = SystemDecorations.None,
+                Title = "Custom Title"
+            };
+
+            var res = await dialog.ShowDialog<bool>(Owner);
+
+            if (res)
+                Color = dialog.Color;
         }
     }
 }

@@ -11,15 +11,16 @@
         Height="450" Width="800"
 
         xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog"
+        xmlns:client="clr-namespace:Egorozh.ColorPicker.Avalonia.Client"
 
         WindowStartupLocation="CenterScreen">
 
-  <dialog:ColorPickerButton Color="#99029344"
-                            Cursor="Hand">
+  <client:CustomColorPickerButton Color="#99029344"
+                                  Cursor="Hand">
     <TextBlock Text="Click me"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                FontSize="36" />
-  </dialog:ColorPickerButton>
+  </client:CustomColorPickerButton>
   
 </Window>

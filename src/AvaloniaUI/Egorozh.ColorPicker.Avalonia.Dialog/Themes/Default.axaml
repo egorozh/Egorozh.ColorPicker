@@ -2,8 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
  
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Default.axaml" />
-  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Controls/ColorPickerButton.axaml" />
-
+  
   <Style Selector="Window.Main">
     <Setter Property="Width" Value="340"/>
     <Setter Property="Height" Value="420"/>

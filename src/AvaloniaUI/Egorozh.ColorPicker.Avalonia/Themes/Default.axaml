@@ -21,4 +21,6 @@
 
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorPicker.axaml" />
 
+  <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/ColorPickerButton.axaml" />
+
 </Styles>
