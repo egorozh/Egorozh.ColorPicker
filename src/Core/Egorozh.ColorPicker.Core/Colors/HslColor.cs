@@ -72,20 +72,11 @@ namespace Egorozh.ColorPicker
             // ReSharper restore CompareOfFloatsByEqualityOperator
         }
 
-        public static implicit operator HslColor(Color color)
-        {
-            return new HslColor(color);
-        }
+        public static implicit operator HslColor(Color color) => new(color);
 
-        public static implicit operator Color(HslColor color)
-        {
-            return color.ToRgbColor();
-        }
+        public static implicit operator Color(HslColor color) => color.ToRgbColor();
 
-        public static bool operator !=(HslColor a, HslColor b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(HslColor a, HslColor b) => !(a == b);
 
         #endregion
 
@@ -106,18 +97,12 @@ namespace Egorozh.ColorPicker
             {
                 _hue = value;
 
-                if (_hue > 359)
-                {
-                    _hue = 0;
-                }
+                if (_hue > 359) _hue = 0;
 
-                if (_hue < 0)
-                {
-                    _hue = 359;
-                }
+                if (_hue < 0) _hue = 359;
             }
         }
-        
+
         public double L
         {
             get => _lightness;
@@ -136,110 +121,74 @@ namespace Egorozh.ColorPicker
 
         public override bool Equals(object obj)
         {
-            bool result;
-
-            if (obj is HslColor)
-            {
-                HslColor color;
-
-                color = (HslColor) obj;
-                result = this == color;
-            }
-            else
-            {
-                result = false;
-            }
+            var result = obj is HslColor hslColor && this == hslColor;
 
             return result;
         }
 
         public override int GetHashCode() => base.GetHashCode();
 
-        public Color ToRgbColor()
-        {
-            return this.ToRgbColor(this.A);
-        }
+        public Color ToRgbColor() => ToRgbColor(A);
 
         public Color ToRgbColor(int alpha)
         {
-            double q;
-            if (this.L < 0.5)
+            var q = L switch
             {
-                q = this.L * (1 + this.S);
-            }
-            else
-            {
-                q = this.L + this.S - this.L * this.S;
-            }
-
-            double p = 2 * this.L - q;
-            double hk = this.H / 360;
-
-            // r,g,b colors
-            double[] tc = new[]
-            {
-                hk + 1d / 3d,
-                hk,
-                hk - 1d / 3d
-            };
-            double[] colors = new[]
-            {
-                0.0,
-                0.0,
-                0.0
+                < 0.5 => L * (1 + S),
+                _ => L + S - L * S
             };
 
-            for (int color = 0; color < colors.Length; color++)
-            {
-                if (tc[color] < 0)
-                {
-                    tc[color] += 1;
-                }
+            var p = 2 * L - q;
 
-                if (tc[color] > 1)
-                {
-                    tc[color] -= 1;
-                }
+            var hk = H / 360;
 
-                if (tc[color] < 1d / 6d)
-                {
-                    colors[color] = p + (q - p) * 6 * tc[color];
-                }
-                else if (tc[color] >= 1d / 6d && tc[color] < 1d / 2d)
-                {
-                    colors[color] = q;
-                }
-                else if (tc[color] >= 1d / 2d && tc[color] < 2d / 3d)
-                {
-                    colors[color] = p + (q - p) * 6 * (2d / 3d - tc[color]);
-                }
-                else
-                {
-                    colors[color] = p;
-                }
+            var r = GetColor(hk + 1d / 3d, p, q);
+            var g = GetColor(hk, p, q);
+            var b = GetColor(hk - 1d / 3d, p, q);
 
-                colors[color] *= 255;
-            }
-
-            return Color.FromArgb(alpha, (int) colors[0], (int) colors[1], (int) colors[2]);
+            return Color.FromArgb(alpha, (int)r, (int)g, (int)b);
         }
 
         public override string ToString()
         {
-            StringBuilder builder;
+            StringBuilder builder = new();
 
-            builder = new StringBuilder();
-            builder.Append(this.GetType().Name);
+            builder.Append(GetType().Name);
             builder.Append(" [");
             builder.Append("H=");
-            builder.Append(this.H);
+            builder.Append(H);
             builder.Append(", S=");
-            builder.Append(this.S);
+            builder.Append(S);
             builder.Append(", L=");
-            builder.Append(this.L);
+            builder.Append(L);
             builder.Append("]");
 
             return builder.ToString();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static double GetColor(double tc, double p, double q)
+        {
+            if (tc < 0)
+                tc += 1;
+
+            if (tc > 1)
+                tc -= 1;
+
+            var color = tc switch
+            {
+                < 1d / 6d => p + (q - p) * 6 * tc,
+                >= 1d / 6d and < 1d / 2d => q,
+                >= 1d / 2d and < 2d / 3d => p + (q - p) * 6 * (2d / 3d - tc),
+                _ => p
+            };
+
+            color *= 255;
+
+            return color;
         }
 
         #endregion

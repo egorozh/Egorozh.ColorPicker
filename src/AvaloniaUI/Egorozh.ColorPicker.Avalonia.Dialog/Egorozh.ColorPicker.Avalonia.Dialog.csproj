@@ -37,8 +37,4 @@
     <ProjectReference Include="..\Egorozh.ColorPicker.Avalonia\Egorozh.ColorPicker.Avalonia.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Themes\Controls\" />
-  </ItemGroup>
-
 </Project>
