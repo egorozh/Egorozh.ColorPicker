@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net47;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net47;net5.0;net6.0</TargetFrameworks>
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
-    <Nullable>enable</Nullable>
-    <Authors>egorozh</Authors>
-    <LangVersion>preview</LangVersion>
-    <Version>1.0.1</Version>
+  
+    <Version>1.0.2</Version>
+
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
+ 
     <PackageTags>Color, ColorPicker</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Description>ColorPicker Shared Library for WPF and Avalonia packages</Description>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
+
   </PropertyGroup>
 
   <ItemGroup>

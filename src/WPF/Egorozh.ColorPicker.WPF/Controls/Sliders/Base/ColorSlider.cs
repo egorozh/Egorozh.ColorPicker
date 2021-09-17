@@ -13,7 +13,7 @@ namespace Egorozh.ColorPicker
         #region Protected Properties
 
         protected bool UpdateBackgroundWhenColorUpdated = true;
-        private bool _isDownOnSlider;
+        //private bool _isDownOnSlider;
 
         protected IColorManager? ColorManager { get; private set; }
 

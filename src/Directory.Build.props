@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+   
+    <Nullable>Enable</Nullable>
+    <LangVersion>preview</LangVersion>
+
+    <Authors>egorozh</Authors>
+    <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
+
+  </PropertyGroup>
+</Project>

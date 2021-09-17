@@ -1,36 +1,19 @@
-﻿using System;
-using System.Globalization;
-using Avalonia;
-using Avalonia.Data.Converters;
-using Avalonia.Markup.Xaml;
+﻿namespace Egorozh.ColorPicker;
 
-namespace Egorozh.ColorPicker
+public class DivideDoubleToCornerRadiusConverter : BaseValueConverter
 {
-    public class DivideDoubleToCornerRadiusConverter : MarkupExtension, IValueConverter
+    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public override object ProvideValue(IServiceProvider serviceProvider)
+        var divider = 2.0;
+
+        if (parameter != null && double.TryParse(parameter.ToString(), out var div))
         {
-            return this;
+            divider = div;
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var divider = 2.0;
+        if (value is double dividend)
+            return new CornerRadius(dividend / divider);
 
-            if (parameter != null && double.TryParse(parameter.ToString(), out var div))
-            {
-                divider = div;
-            }
-
-            if (value is double dividend)
-                return new CornerRadius(dividend / divider);
-
-            return 0;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return 0;
     }
 }

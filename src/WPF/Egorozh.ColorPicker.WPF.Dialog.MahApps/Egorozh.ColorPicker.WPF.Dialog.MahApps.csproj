@@ -1,21 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net47;net5.0-windows</TargetFrameworks>
-    <LangVersion>preview</LangVersion>
+    <TargetFrameworks>netcoreapp3.0;net47;net5.0-windows;net6.0-windows</TargetFrameworks>
+  
     <UseWPF>true</UseWPF>
-    <Nullable>enable</Nullable>
+  
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
    
     <Version>2.4.3.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/egorozh/Egorozh.ColorPicker</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/egorozh/Egorozh.ColorPicker</RepositoryUrl>
+   
     <PackageTags>Color, ColorPicker, WPF, MahApps</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Description>ColorPicker dialog for MahApps</Description>
-    <AssemblyVersion>2.4.3.2</AssemblyVersion>
-    <FileVersion>2.4.3.2</FileVersion>
+   
   </PropertyGroup>
 
   <ItemGroup>
