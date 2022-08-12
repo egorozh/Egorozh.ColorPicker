@@ -67,7 +67,8 @@
                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                    PlacementTarget="{TemplateBinding}"
                                    IsLightDismissEnabled="True">
-                                <Border BorderBrush="{DynamicResource ThemeBorderMidBrush}"
+                                <Border Background="{DynamicResource ThemeBackgroundBrush}"
+                                        BorderBrush="{DynamicResource ThemeBorderMidBrush}"
                                         BorderThickness="1">
                                     <ScrollViewer
                                         HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
@@ -106,7 +107,7 @@
             </ControlTemplate>
         </Setter>
     </Style>
-
+    
     <Style Selector="local|ColorHexComboBox:pointerover /template/ Border#border">
         <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
     </Style>

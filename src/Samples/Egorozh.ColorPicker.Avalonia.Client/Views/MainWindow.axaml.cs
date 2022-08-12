@@ -26,8 +26,6 @@ namespace Egorozh.ColorPicker.Avalonia.Client
             {
                 Color = Color,
                 Colors = Colors,
-                ExtendClientAreaToDecorationsHint = false,
-                SystemDecorations = SystemDecorations.None,
                 Title = "Custom Title"
             };
 

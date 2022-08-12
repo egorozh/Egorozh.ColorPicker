@@ -10,7 +10,6 @@
 
         Height="450" Width="800"
 
-        xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog"
         xmlns:client="clr-namespace:Egorozh.ColorPicker.Avalonia.Client"
 
         WindowStartupLocation="CenterScreen">

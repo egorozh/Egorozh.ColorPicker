@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net47;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;</TargetFrameworks>
    
     <RootNamespace>Egorozh.ColorPicker.Dialog</RootNamespace>
- 
-  
+    
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <PackageTags>Color, ColorPicker, Avalonia, AvaloniaUI</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Description>ColorPicker dialog for Avalonia</Description>
-    <Version>0.10.7</Version>
-   
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0" />
-    <PackageReference Include="MessageBox.Avalonia" Version="1.0.1" />
+    <PackageReference Include="Avalonia" Version="0.10.17" />
+    <PackageReference Include="MessageBox.Avalonia" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
