@@ -73,8 +73,15 @@ namespace Egorozh.ColorPicker.Dialog
             ColorPickerDialog colorPickerDialog = new ()
             {
                 Color = color,
-                Colors = Colors
+                Colors = Colors,
+                WindowStartupLocation = WindowStartupLocation.Manual
             };
+
+            var newPos = Position
+                .WithX(Position.X + 30)
+                .WithY(Position.Y + 30);
+
+            colorPickerDialog.Position = newPos;
 
             var res = await colorPickerDialog.ShowDialog<bool>(this);
 

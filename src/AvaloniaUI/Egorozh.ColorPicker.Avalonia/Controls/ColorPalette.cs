@@ -217,7 +217,7 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
         if (Items is not IList<object> items || GetColorHandler == null)
             return;
 
-        var (success, newColor) = await GetColorHandler.Invoke(Avalonia.Media.Colors.Red);
+        var (success, newColor) = await GetColorHandler.Invoke(_colorManager.CurrentColor.ToColor());
 
         if (!success)
             return;
@@ -245,7 +245,7 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
         if (Items is not IList<object> items || GetColorHandler == null)
             return;
 
-        var (success, newColor) = await GetColorHandler.Invoke(Avalonia.Media.Colors.Red);
+        var (success, newColor) = await GetColorHandler.Invoke(_colorManager.CurrentColor.ToColor());
 
         if (!success)
             return;
