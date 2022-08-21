@@ -22,19 +22,22 @@ public class HueColorNumUpDown : LabelNumericUpDown
 
         var hsv = new HsvColor(color);
 
-        Value = hsv.H;
+        Value = (decimal) hsv.H;
     }
 
     protected override void OnValueChanged()
     {
         base.OnValueChanged();
 
-        var hsv = new HsvColor(ColorManager.CurrentColor)
+        if (Value.HasValue)
         {
-            H = Value
-        };
+            var hsv = new HsvColor(ColorManager.CurrentColor)
+            {
+                H = (double) Value.Value
+            };
 
-        ColorManager.CurrentColor = hsv.ToRgbColor();
+            ColorManager.CurrentColor = hsv.ToRgbColor();
+        }
     }
 
     #endregion

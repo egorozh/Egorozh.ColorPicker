@@ -31,9 +31,8 @@
 
                                     <local:ColorWheel Name="PART_ColorWheel"
                                                       Grid.Column="1"
-                                                      Margin="20 0"
-                                                      Width="180"
-                                                      Height="180" />
+                                                      Width="256"
+                                                      Height="256" />
 
                                     <local:RgbaColorSlider Name="PART_AlphaSlider"
                                                            Grid.Column="2"

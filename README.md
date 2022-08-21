@@ -23,22 +23,17 @@ Then, reference the preffered theme from your `App.xaml` file:
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dialog="clr-namespace:Egorozh.ColorPicker.Dialog;assembly=Egorozh.ColorPicker.Avalonia.Dialog"
              x:Class="YourNamespace.App">
-  <Application.Styles>  
-      <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-      <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
-    
-      <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia.Dialog/Themes/Default.axaml" />
-    
-      <!-- To use other themes:-->
-      <!--
-      <FluentTheme Mode="Light" />
-      <dialog:FluentColorPickerTheme Mode="Light" />
-      -->
+  <Application.Styles>
+      
+      <SimpleTheme Mode="Dark"/>
+      <dialog:SimpleColorTheme Mode="Dark"/>
 
-      <!--
-      <FluentTheme Mode="Dark" />
-      <dialog:FluentColorPickerTheme Mode="Dark" />
-      -->
+      <!-- To use other themes:-->
+      <!-- <FluentTheme Mode="Light" /> -->
+      <!-- <dialog:FluentColorPickerTheme Mode="Light" /> -->
+
+      <!-- <FluentTheme Mode="Dark" />  -->
+      <!-- <dialog:FluentColorPickerTheme Mode="Dark" /> -->
   </Application.Styles>
 </Application>
 ```

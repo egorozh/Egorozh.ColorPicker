@@ -22,19 +22,22 @@ public class SaturationColorNumUpDown : LabelNumericUpDown
 
         var hsv = new HsvColor(color);
 
-        Value = hsv.S * 100;
+        Value = (decimal) (hsv.S * 100);
     }
 
     protected override void OnValueChanged()
     {
         base.OnValueChanged();
 
-        var hsv = new HsvColor(ColorManager.CurrentColor)
+        if (Value.HasValue)
         {
-            S = Value / 100.0
-        };
+            var hsv = new HsvColor(ColorManager.CurrentColor)
+            {
+                S = (double) (Value.Value / 100.0M)
+            };
 
-        ColorManager.CurrentColor = hsv.ToRgbColor();
+            ColorManager.CurrentColor = hsv.ToRgbColor();
+        }
     }
 
     #endregion
