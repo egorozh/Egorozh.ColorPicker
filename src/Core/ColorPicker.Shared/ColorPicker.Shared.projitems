@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>F3A531B5-7C23-471C-99F3-4238328C55B1</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ColorPicker.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ColorManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\HslColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\HsvColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\IColorClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\IColorManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\RgbaChannel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ColorWheelHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\HexComboBoxHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NamedColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\ColorPalettes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\ColorPaletteType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\AdobeColorTablePaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\AdobePhotoshopColorSwatchSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\Core\IPaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\Core\PaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\GimpPaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\InterleavedBitmapPaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\JascPaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\PaintNetPaletteSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Palette\Serializers\RawPaletteSerializer.cs" />
+  </ItemGroup>
+</Project>

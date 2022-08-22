@@ -29,10 +29,6 @@
     <Resource Include="Resources\HsvWheelEffect.ps" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Egorozh.ColorPicker.Core\Egorozh.ColorPicker.Core.csproj" />
-  </ItemGroup>
-
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
     <Reference Include="PresentationFramework.Aero" />
   </ItemGroup>
