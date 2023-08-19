@@ -8,14 +8,8 @@ public class RgbaColorSlider : ColorSlider
     #region Dependency Properties
 
     public static readonly StyledProperty<RgbaChannel> ChannelProperty =
-        AvaloniaProperty.Register<RgbaColorSlider, RgbaChannel>(nameof(RgbaChannel), notifying: ChannelChanged);
-
-    private static void ChannelChanged(IAvaloniaObject obj, bool isAfter)
-    {
-        if (obj is RgbaColorSlider rgbaSlider)
-            rgbaSlider.ChannelChanged();
-    }
-
+        AvaloniaProperty.Register<RgbaColorSlider, RgbaChannel>(nameof(RgbaChannel));
+    
     #endregion
 
     #region Public Properties
@@ -39,17 +33,28 @@ public class RgbaColorSlider : ColorSlider
     #endregion
 
     #region Protected Methods
+    
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
 
+        if (change.Property == ChannelProperty)
+        {
+            ChannelChanged();
+        }
+    }
+    
+    
     protected override List<Color> CreateBackgroundColors(in Color color)
     {
         var colors = new List<Color>();
 
         for (byte i = 0; i < 254; i++)
         {
-            var a = color.A;
-            var r = color.R;
-            var g = color.G;
-            var b = color.B;
+            byte a = color.A;
+            byte r = color.R;
+            byte g = color.G;
+            byte b = color.B;
 
             switch (Channel)
             {
@@ -90,10 +95,10 @@ public class RgbaColorSlider : ColorSlider
 
         for (uint i = 0; i < count; i += step)
         {
-            var a = color.A;
-            var r = color.R;
-            var g = color.G;
-            var b = color.B;
+            byte a = color.A;
+            byte r = color.R;
+            byte g = color.G;
+            byte b = color.B;
 
             switch (Channel)
             {
@@ -111,7 +116,7 @@ public class RgbaColorSlider : ColorSlider
                     break;
             }
 
-            var offset = i switch
+            double offset = i switch
             {
                 0 => 0,
                 count - 1 => 1,
@@ -149,10 +154,10 @@ public class RgbaColorSlider : ColorSlider
 
         var color = ColorManager.CurrentColor;
 
-        var r = color.R;
-        var g = color.G;
-        var b = color.B;
-        var a = color.A;
+        byte r = color.R;
+        byte g = color.G;
+        byte b = color.B;
+        byte a = color.A;
 
         switch (Channel)
         {

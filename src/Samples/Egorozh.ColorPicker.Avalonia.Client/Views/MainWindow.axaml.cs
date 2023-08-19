@@ -1,20 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Egorozh.ColorPicker.Dialog;
 
 namespace Egorozh.ColorPicker.Avalonia.Client
 {
-    public class MainWindow : Window
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
         }
     }
 

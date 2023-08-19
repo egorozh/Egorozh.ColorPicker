@@ -22,9 +22,7 @@
             <ItemsPresenter Name="PART_ItemsPresenter"
                             DockPanel.Dock="Top"
                             Margin="0 0 0 10"
-                            Items="{TemplateBinding Items}"
-                            ItemsPanel="{TemplateBinding ItemsPanel}"
-                            ItemTemplate="{TemplateBinding ItemTemplate}">
+                            ItemsPanel="{TemplateBinding ItemsPanel}">
             </ItemsPresenter>
             <ContentPresenter
               Name="PART_SelectedContentHost"

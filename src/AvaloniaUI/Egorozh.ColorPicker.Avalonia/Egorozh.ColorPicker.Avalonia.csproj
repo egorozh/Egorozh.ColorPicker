@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;</TargetFrameworks>
+    <TargetFrameworks>net7.0;</TargetFrameworks>
   
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
   
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia" Version="11.0.0" />
     <PackageReference Include="TextCopy" Version="6.1.0" />
   </ItemGroup>
 

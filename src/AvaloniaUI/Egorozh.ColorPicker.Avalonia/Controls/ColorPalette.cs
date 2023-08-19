@@ -1,12 +1,15 @@
-﻿using Avalonia.Media;
+﻿using System.Collections.ObjectModel;
+using Avalonia.Media;
 using Color = System.Drawing.Color;
 
 namespace Egorozh.ColorPicker;
 
-public class ColorPalette : ListBox, IStyleable, IColorClient
+public class ColorPalette : ListBox, IColorClient
 {
     #region Private Fields
-
+    
+    private readonly ObservableCollection<ListBoxItem> _itemsSource;
+    
     private IColorManager? _colorManager;
 
     private MenuItem _addContextMenuItem;
@@ -18,13 +21,7 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
     private readonly ListBoxItem _addItem;
 
     #endregion
-
-    #region IStyleable
-
-    Type IStyleable.StyleKey => typeof(ColorPalette);
-
-    #endregion
-
+    
     #region Dependency Properties
 
     public static readonly StyledProperty<LoadPaletteHandlerAsync?> LoadPaletteHandlerProperty =
@@ -37,15 +34,8 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
         AvaloniaProperty.Register<ColorPalette, GetColorHandler?>(nameof(GetColorHandler));
 
     public static readonly StyledProperty<IEnumerable<Avalonia.Media.Color>?> ColorsProperty =
-        AvaloniaProperty.Register<ColorPalette, IEnumerable<Avalonia.Media.Color>?>(
-            nameof(Colors), notifying: ColorsPropertyChanged);
-
-    private static void ColorsPropertyChanged(IAvaloniaObject arg1, bool arg2)
-    {
-        if (arg1 is ColorPalette colorPalette)
-            colorPalette.ColorsPropertyChanged();
-    }
-
+        AvaloniaProperty.Register<ColorPalette, IEnumerable<Avalonia.Media.Color>?>(nameof(Colors));
+    
     public static readonly StyledProperty<string> RemoveColorContextMenuTextProperty =
         AvaloniaProperty.Register<ColorPalette, string>(nameof(RemoveColorContextMenuText), "Remove color");
 
@@ -147,14 +137,16 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
     {
         SelectionMode = SelectionMode.Multiple;
 
-        _addItem = new ListBoxItem()
-        {
-            Classes = new Classes("Add")
-        };
+        _addItem = new ListBoxItem();
+            
+        _addItem.Classes.Add("Add");
 
         _addItem.Tapped += AddItemOnTapped;
 
         SelectionChanged += OnSelectionChanged;
+        
+        _itemsSource = new ObservableCollection<ListBoxItem>();
+        ItemsSource = _itemsSource;
     }
 
     #endregion
@@ -192,6 +184,17 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
         ColorsPropertyChanged();
     }
 
+    
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ColorsProperty)
+        {
+            ColorsPropertyChanged();
+        }
+    }
+    
     #endregion
 
     #region Private Methods
@@ -214,7 +217,7 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
 
     private async void AddItemOnTapped(object? sender, RoutedEventArgs e)
     {
-        if (Items is not IList<object> items || GetColorHandler == null)
+        if (GetColorHandler == null)
             return;
 
         var (success, newColor) = await GetColorHandler.Invoke(_colorManager.CurrentColor.ToColor());
@@ -222,27 +225,27 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
         if (!success)
             return;
 
-        items.Insert(items.Count - 1, CreateColorItem(newColor));
+        _itemsSource.Insert(_itemsSource.Count - 1, CreateColorItem(newColor));
 
         UpdateColors();
     }
 
     private void ColorsPropertyChanged()
     {
-        if (Items is not IList<object> items || Colors == null)
+        if (Colors == null)
             return;
 
-        items.Clear();
+        _itemsSource.Clear();
 
         foreach (var color in Colors)
-            items.Add(CreateColorItem(color));
+            _itemsSource.Add(CreateColorItem(color));
 
-        items.Add(_addItem);
+        _itemsSource.Add(_addItem);
     }
 
     private async void AddItemOnClick(object? sender, RoutedEventArgs e)
     {
-        if (Items is not IList<object> items || GetColorHandler == null)
+        if (GetColorHandler == null)
             return;
 
         var (success, newColor) = await GetColorHandler.Invoke(_colorManager.CurrentColor.ToColor());
@@ -254,22 +257,22 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
 
         if (SelectedItems.Count > 0)
         {
-            var selectedItem = SelectedItems[SelectedItems.Count - 1];
+            ListBoxItem? selectedItem = (ListBoxItem?) SelectedItems[SelectedItems.Count - 1];
 
             if (selectedItem != _addItem)
             {
-                var index = items.IndexOf(selectedItem);
+                var index = _itemsSource.IndexOf(selectedItem);
 
-                items.Insert(index, newColorItem);
+                _itemsSource.Insert(index, newColorItem);
             }
             else
             {
-                items.Insert(items.Count - 1, newColorItem);
+                _itemsSource.Insert(_itemsSource.Count - 1, newColorItem);
             }
         }
         else
         {
-            items.Insert(items.Count - 1, newColorItem);
+            _itemsSource.Insert(_itemsSource.Count - 1, newColorItem);
         }
 
         UpdateColors();
@@ -329,13 +332,10 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
 
     private void RemoveItem(ListBoxItem removedItem)
     {
-        if (Items is not IList<object> items)
-            return;
-
         removedItem.Tapped -= ItemOnTapped;
         removedItem.DoubleTapped -= ItemOnDoubleTapped;
 
-        items.Remove(removedItem);
+        _itemsSource.Remove(removedItem);
     }
 
     private void SavePaletteContextMenuItemOnClick(object? sender, RoutedEventArgs e)
@@ -356,7 +356,7 @@ public class ColorPalette : ListBox, IStyleable, IColorClient
 
     private void UpdateColors()
     {
-        if (Items is not IList<object> items)
+        if (ItemsSource is not IList<object> items)
             return;
 
         Colors = items.OfType<ListBoxItem>()

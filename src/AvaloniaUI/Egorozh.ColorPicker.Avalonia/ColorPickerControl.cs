@@ -2,7 +2,7 @@
 
 using Avalonia.Media;
 
-public class ColorPickerControl : TemplatedControl, IStyleable
+public class ColorPickerControl : TemplatedControl
 {
     #region Private Fields
 
@@ -10,13 +10,7 @@ public class ColorPickerControl : TemplatedControl, IStyleable
     private bool _lock;
 
     #endregion
-
-    #region IStyleable
-
-    Type IStyleable.StyleKey => typeof(ColorPickerControl);
-
-    #endregion
-
+    
     #region Dependency Properties
 
     public static readonly StyledProperty<LoadPaletteHandlerAsync?> LoadPaletteHandlerProperty =
@@ -32,15 +26,8 @@ public class ColorPickerControl : TemplatedControl, IStyleable
         AvaloniaProperty.Register<ColorPickerControl, IEnumerable<Color>>(nameof(Colors));
 
     public static readonly StyledProperty<Color> ColorProperty =
-        AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color), notifying: ColorChanged);
-
-
-    private static void ColorChanged(IAvaloniaObject obj, bool isAfter)
-    {
-        if (obj is ColorPickerControl colorPickerControl)
-            colorPickerControl.ColorChanged(colorPickerControl.Color);
-    }
-
+        AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(Color));
+    
     #endregion
 
     #region Public Properties
@@ -95,7 +82,19 @@ public class ColorPickerControl : TemplatedControl, IStyleable
         _manager.AddClient(colorWheel, colorPreview, alphaSlider,
             valuesSlider, colorEditor, colorPalette);
     }
+    
+    
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
 
+        if (change.Property == ColorsProperty)
+        {
+            ColorChanged(this.Color);
+        }
+    }
+
+    
     #endregion
 
     #region Private Methods

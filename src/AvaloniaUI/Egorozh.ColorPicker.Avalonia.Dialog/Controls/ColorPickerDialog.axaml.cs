@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Egorozh.ColorPicker.Dialog
 {
-    public class ColorPickerDialog : Window
+    public partial class ColorPickerDialog : Window
     {
         #region Private Fields
 

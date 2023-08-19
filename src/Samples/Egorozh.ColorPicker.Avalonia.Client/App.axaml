@@ -6,12 +6,12 @@
 
     <Application.Styles>
 
-        <SimpleTheme Mode="Dark"/>
-        <dialog:SimpleColorTheme Mode="Dark"/>
+        <SimpleTheme />
+        <dialog:SimpleTheme />
 
-        <!-- To use other themes:-->
-        <!-- <FluentTheme Mode="Light" /> -->
-        <!-- <dialog:FluentColorPickerTheme Mode="Light" /> -->
+        <!-- To use other themes: -->
+        <!-- <FluentTheme /> -->
+        <!-- <dialog:FluentTheme /> -->
 
         <!-- <FluentTheme Mode="Dark" />  -->
         <!-- <dialog:FluentColorPickerTheme Mode="Dark" /> -->

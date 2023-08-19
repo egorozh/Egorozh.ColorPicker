@@ -37,7 +37,7 @@ public class ColorHexComboBox : ComboBox, IStyleable, IColorClient
     {
         base.OnApplyTemplate(e);
 
-        Items = HexComboBoxHelpers.GetNamedColors();
+        ItemsSource = HexComboBoxHelpers.GetNamedColors();
         SelectionChanged += Hex_SelectionChanged;
 
         var copyButton = e.NameScope.Find<Button>("PART_CopyButton");
@@ -71,7 +71,7 @@ public class ColorHexComboBox : ComboBox, IStyleable, IColorClient
 
     private void SetSelectedItemInHex(Color color)
     {
-        var colors = (List<NamedColor>)Items;
+        var colors = (List<NamedColor>)ItemsSource;
 
         var namedColor = colors.FirstOrDefault(c => c.Color.A == color.A &&
                                                     c.Color.R == color.R &&

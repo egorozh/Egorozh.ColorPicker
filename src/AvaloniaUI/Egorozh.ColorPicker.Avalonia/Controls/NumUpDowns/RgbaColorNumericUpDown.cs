@@ -1,20 +1,16 @@
 ﻿using System.Drawing;
 
+
 namespace Egorozh.ColorPicker;
+
 
 public class RgbaColorNumericUpDown : LabelNumericUpDown
 {
     #region Dependency Properties
 
     public static readonly StyledProperty<RgbaChannel> ChannelProperty =
-        AvaloniaProperty.Register<RgbaColorNumericUpDown, RgbaChannel>(nameof(RgbaChannel), notifying: ChannelChanged);
-
-    private static void ChannelChanged(IAvaloniaObject obj, bool isAfter)
-    {
-        if (obj is RgbaColorNumericUpDown rgbaColorNumericUpDown)
-            rgbaColorNumericUpDown.ChannelChanged();
-    }
-
+        AvaloniaProperty.Register<RgbaColorNumericUpDown, RgbaChannel>(nameof(RgbaChannel));
+    
     #endregion
 
     #region Public Properties
@@ -39,6 +35,16 @@ public class RgbaColorNumericUpDown : LabelNumericUpDown
 
     #region Protected Methods
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ChannelProperty)
+        {
+            ChannelChanged();
+        }
+    }
+    
     protected override void UpdateColor(in Color color)
     {
         base.UpdateColor(in color);
@@ -59,10 +65,10 @@ public class RgbaColorNumericUpDown : LabelNumericUpDown
 
         var color = ColorManager.CurrentColor;
 
-        var r = color.R;
-        var g = color.G;
-        var b = color.B;
-        var a = color.A;
+        byte r = color.R;
+        byte g = color.G;
+        byte b = color.B;
+        byte a = color.A;
 
         switch (Channel)
         {
