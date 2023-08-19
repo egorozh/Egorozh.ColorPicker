@@ -3,6 +3,14 @@
 
         xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
 
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="../../Others/Brushes.axaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+    
     <Style Selector="local|ColorSlider:horizontal">
         <Setter Property="MinWidth" Value="40" />
         <Setter Property="MinHeight" Value="18" />

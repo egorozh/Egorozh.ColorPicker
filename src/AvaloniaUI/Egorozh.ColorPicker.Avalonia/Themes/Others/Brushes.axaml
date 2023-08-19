@@ -21,17 +21,10 @@
     </GeometryDrawing>
 
   </DrawingGroup>
-
-  <VisualBrush x:Key="TransparencyBrush"
-               TileMode="Tile"
-               DestinationRect="0 0 10 10">
-    <VisualBrush.Visual>
-      <Image>
-        <Image.Source>
-          <DrawingImage Drawing="{StaticResource TransparencyTile}"/>
-        </Image.Source>
-      </Image>
-    </VisualBrush.Visual>
-  </VisualBrush>
+  
+  <DrawingBrush x:Key="TransparencyBrush"
+                TileMode="Tile"
+                DestinationRect="0 0 10 10"
+                Drawing="{StaticResource TransparencyTile}" />
 
 </ResourceDictionary>

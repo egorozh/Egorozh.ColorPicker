@@ -3,6 +3,15 @@
 
         xmlns:local="clr-namespace:Egorozh.ColorPicker;assembly=Egorozh.ColorPicker.Avalonia">
 
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="../../Others/Brushes.axaml"/>
+                <ResourceInclude Source="../../Others/Icons.axaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
 
     <Style Selector="local|ColorPalette">
 

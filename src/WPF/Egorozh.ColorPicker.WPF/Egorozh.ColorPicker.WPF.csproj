@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net47;net5.0-windows;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net7.0-windows;</TargetFrameworks>
    
     <UseWPF>true</UseWPF>
   
@@ -32,5 +32,7 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
     <Reference Include="PresentationFramework.Aero" />
   </ItemGroup>
+
+  <Import Project="..\..\Core\ColorPicker.Shared\ColorPicker.Shared.projitems" Label="Shared" />
 
 </Project>

@@ -1,15 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-  <Styles.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Others/Brushes.axaml" />
-        <ResourceInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Others/Icons.axaml" />
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </Styles.Resources> 
-  
+    
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/LabelNumericUpDown.axaml" />
 
   <StyleInclude Source="avares://Egorozh.ColorPicker.Avalonia/Themes/Controls/Default/ColorWheel.axaml" />
