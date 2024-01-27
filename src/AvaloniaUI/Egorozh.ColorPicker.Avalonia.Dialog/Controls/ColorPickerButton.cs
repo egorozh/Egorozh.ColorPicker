@@ -1,21 +1,20 @@
 ﻿using System.Threading.Tasks;
 
-namespace Egorozh.ColorPicker.Dialog
+namespace Egorozh.ColorPicker.Dialog;
+
+public class ColorPickerButton : ColorPickerButtonBase
 {
-    public class ColorPickerButton : ColorPickerButtonBase
+    protected override async Task ChangeColor()
     {
-        protected override async Task ChangeColor()
+        ColorPickerDialog dialog = new()
         {
-            ColorPickerDialog dialog = new()
-            {
-                Color = Color,
-                Colors = Colors
-            };
+            Color = Color,
+            Colors = Colors
+        };
 
-            var res = await dialog.ShowDialog<bool>(Owner);
+        var res = await dialog.ShowDialog<bool>(Owner);
 
-            if (res)
-                Color = dialog.Color;
-        }
+        if (res)
+            Color = dialog.Color;
     }
 }

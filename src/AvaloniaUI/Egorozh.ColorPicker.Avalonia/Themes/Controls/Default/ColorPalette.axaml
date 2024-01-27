@@ -92,7 +92,7 @@
         </Setter>
     </Style>
 
-    <Style Selector="ListBoxItem">
+    <Style Selector="local|ColorListItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="2" />
@@ -116,7 +116,8 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    <Style Selector="ListBoxItem.Add">
+    
+    <Style Selector="local|ColorListItem.Add">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="2" />
@@ -143,13 +144,16 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    <Style Selector="ListBoxItem:pointerover /template/ Border">
+    
+    <Style Selector="local|ColorListItem:pointerover /template/ Border">
         <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderHighBrush}" />
     </Style>
-    <Style Selector="ListBoxItem:pressed  /template/ Border">
+    
+    <Style Selector="local|ColorListItem:pressed  /template/ Border">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
     </Style>
-    <Style Selector="ListBoxItem:selected  /template/ Border">
+    
+    <Style Selector="local|ColorListItem:selected  /template/ Border">
         <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
     </Style>
 </Styles>

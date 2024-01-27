@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using Avalonia.Media;
-using Color = System.Drawing.Color;
+using System.Drawing;
+
 
 namespace Egorozh.ColorPicker;
 
@@ -8,7 +8,7 @@ public class ColorPalette : ListBox, IColorClient
 {
     #region Private Fields
     
-    private readonly ObservableCollection<ListBoxItem> _itemsSource;
+    private readonly ObservableCollection<ColorListItem> _itemsSource;
     
     private IColorManager? _colorManager;
 
@@ -18,7 +18,7 @@ public class ColorPalette : ListBox, IColorClient
     private MenuItem _loadPaletteContextMenuItem;
     private MenuItem _savePaletteContextMenuItem;
 
-    private readonly ListBoxItem _addItem;
+    private readonly ColorListItem _addItem;
 
     #endregion
     
@@ -137,7 +137,7 @@ public class ColorPalette : ListBox, IColorClient
     {
         SelectionMode = SelectionMode.Multiple;
 
-        _addItem = new ListBoxItem();
+        _addItem = new ColorListItem();
             
         _addItem.Classes.Add("Add");
 
@@ -145,7 +145,7 @@ public class ColorPalette : ListBox, IColorClient
 
         SelectionChanged += OnSelectionChanged;
         
-        _itemsSource = new ObservableCollection<ListBoxItem>();
+        _itemsSource = new ObservableCollection<ColorListItem>();
         ItemsSource = _itemsSource;
     }
 
@@ -201,11 +201,11 @@ public class ColorPalette : ListBox, IColorClient
 
     private void RemoveItemOnClick(object? sender, RoutedEventArgs e)
     {
-        List<ListBoxItem> removedItems = new();
+        List<ColorListItem> removedItems = new();
 
         foreach (var selectedItem in SelectedItems)
         {
-            if (selectedItem is ListBoxItem removedItem && selectedItem != _addItem)
+            if (selectedItem is ColorListItem removedItem && selectedItem != _addItem)
                 removedItems.Add(removedItem);
         }
 
@@ -257,7 +257,7 @@ public class ColorPalette : ListBox, IColorClient
 
         if (SelectedItems.Count > 0)
         {
-            ListBoxItem? selectedItem = (ListBoxItem?) SelectedItems[SelectedItems.Count - 1];
+            ColorListItem? selectedItem = (ColorListItem?) SelectedItems[SelectedItems.Count - 1];
 
             if (selectedItem != _addItem)
             {
@@ -288,11 +288,11 @@ public class ColorPalette : ListBox, IColorClient
 
         var color = GetColorFromItem(colorItem);
 
-        var (success, newColor) = await GetColorHandler.Invoke(color);
+        (bool success, var newColor) = await GetColorHandler.Invoke(color);
 
         if (success)
         {
-            colorItem.Background = new SolidColorBrush(newColor);
+            colorItem.Background = new Avalonia.Media.SolidColorBrush(newColor);
 
             UpdateColors();
         }
@@ -317,12 +317,9 @@ public class ColorPalette : ListBox, IColorClient
         _removeItem.Header = SelectedItems.Count > 1 ? RemoveColorsContextMenuText : RemoveColorContextMenuText;
     }
 
-    private ListBoxItem CreateColorItem(Avalonia.Media.Color color)
+    private ColorListItem CreateColorItem(Avalonia.Media.Color color)
     {
-        ListBoxItem item = new()
-        {
-            Background = new SolidColorBrush(color)
-        };
+        ColorListItem item = new(color);
 
         item.Tapped += ItemOnTapped;
         item.DoubleTapped += ItemOnDoubleTapped;
@@ -330,7 +327,7 @@ public class ColorPalette : ListBox, IColorClient
         return item;
     }
 
-    private void RemoveItem(ListBoxItem removedItem)
+    private void RemoveItem(ColorListItem removedItem)
     {
         removedItem.Tapped -= ItemOnTapped;
         removedItem.DoubleTapped -= ItemOnDoubleTapped;
@@ -367,7 +364,7 @@ public class ColorPalette : ListBox, IColorClient
 
     private static Avalonia.Media.Color GetColorFromItem(ListBoxItem item)
     {
-        var brush = item.Background as SolidColorBrush;
+        var brush = item.Background as Avalonia.Media.SolidColorBrush;
 
         return brush.Color;
     }

@@ -6,7 +6,6 @@
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="../../Others/Brushes.axaml"/>
                 <ResourceInclude Source="../../Others/Icons.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -87,7 +86,7 @@
         </Setter>
     </Style>
 
-    <Style Selector="ListBoxItem">
+    <Style Selector="local|ColorListItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{Binding $self.Background}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -112,7 +111,7 @@
         </Setter>
     </Style>
 
-    <Style Selector="ListBoxItem.Add">
+    <Style Selector="local|ColorListItem.Add">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{Binding $self.Background}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -140,13 +139,13 @@
         </Setter>
     </Style>
 
-    <Style Selector="ListBoxItem:pointerover /template/ Border">
+    <Style Selector="local|ColorListItem:pointerover /template/ Border">
         <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
     </Style>
-    <Style Selector="ListBoxItem:pressed  /template/ Border">
+    <Style Selector="local|ColorListItem:pressed  /template/ Border">
         <Setter Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
     </Style>
-    <Style Selector="ListBoxItem:selected  /template/ Border">
+    <Style Selector="local|ColorListItem:selected  /template/ Border">
         <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
     </Style>
 

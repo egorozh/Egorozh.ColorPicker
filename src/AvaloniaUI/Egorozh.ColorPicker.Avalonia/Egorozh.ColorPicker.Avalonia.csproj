@@ -1,28 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;</TargetFrameworks>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
   
     <RootNamespace>Egorozh.ColorPicker</RootNamespace>
   
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>Color, ColorPicker, Avalonia, AvaloniaUI</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <Description>ColorPicker control for Avalonia</Description>
     
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.0" />
-    <PackageReference Include="TextCopy" Version="6.1.0" />
+    <PackageReference Include="TextCopy" Version="6.2.1" />
   </ItemGroup>
 
   <Import Project="..\..\Core\ColorPicker.Shared\ColorPicker.Shared.projitems" Label="Shared" />
