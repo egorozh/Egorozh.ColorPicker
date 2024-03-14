@@ -22,7 +22,7 @@ namespace Egorozh.ColorPicker.Dialog
 
         #region Dependency Properties
 
-        public static readonly AvaloniaProperty<Color> ColorProperty =
+        public static readonly StyledProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPickerDialog, Color>(nameof(Color));
 
         public static readonly StyledProperty<IEnumerable<Color>> ColorsProperty =
@@ -35,7 +35,7 @@ namespace Egorozh.ColorPicker.Dialog
 
         public Color Color
         {
-            get => (Color) GetValue(ColorProperty);
+            get => GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
 

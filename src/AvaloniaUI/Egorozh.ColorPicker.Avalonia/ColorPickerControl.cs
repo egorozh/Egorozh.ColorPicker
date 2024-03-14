@@ -88,7 +88,7 @@ public class ColorPickerControl : TemplatedControl
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == ColorsProperty)
+        if (change.Property == ColorProperty)
         {
             ColorChanged(this.Color);
         }
